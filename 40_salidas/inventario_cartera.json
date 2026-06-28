@@ -1,0 +1,678 @@
+{
+  "esquema": "1",
+  "n_proyectos": 16,
+  "proyectos": [
+    {
+      "slug": "slep_alertas_ael",
+      "nombre_real": "Sistema de alertas de Anótate en la Lista",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 2,
+        "total_sesiones": 2,
+        "grafia": "traspaso-cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-10",
+        "escaner": "2026-06-10",
+        "actividad": "2026-06-10",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "9d5ac990f54efc4505dd96f8938ad088",
+        "md5_resena": "05f2cc48eed58c3a1059955da9d1bd15",
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": "slep_alertas_ael/50_documentacion/activa/resena_slep_alertas_ael.md",
+        "traspaso": "slep_alertas_ael/50_documentacion/traspasos/traspaso-cierre-v02.md",
+        "backlog": null,
+        "escaner": "slep_alertas_ael/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_alertas_ael/README.md",
+        "claude": "slep_alertas_ael/CLAUDE.md",
+        "gobernanza": "slep_alertas_ael/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_aprendizajes_ep",
+      "nombre_real": "Monitoreo de aprendizajes en la educación parvularia",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 83,
+        "total_sesiones": 83,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-26",
+        "escaner": "2026-06-26",
+        "actividad": "2026-06-26",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "0f855482040111714b774b588682b7e8",
+        "md5_resena": "7b118545a16ce6c30bd10552a2deb153",
+        "md5_backlog": "b3ce5aefdd1f0ffcd9402f950371810f"
+      },
+      "documentos": {
+        "resena": "slep_aprendizajes_ep/50_documentacion/activa/resena_slep_aprendizajes_ep.md",
+        "traspaso": "slep_aprendizajes_ep/50_documentacion/traspasos/traspaso_cierre_v83.md",
+        "backlog": "slep_aprendizajes_ep/50_documentacion/activa/backlog_consolidado.md",
+        "escaner": "slep_aprendizajes_ep/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_aprendizajes_ep/README.md",
+        "claude": "slep_aprendizajes_ep/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_categoria_desempeno",
+      "nombre_real": "Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 25,
+        "total_sesiones": 25,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-20",
+        "escaner": "2026-06-21",
+        "actividad": "2026-06-21",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "5f4f7a12e7371f42b83935016b2a4b2a",
+        "md5_resena": "1a9f4338ce4a07e765962a279dfe0440",
+        "md5_backlog": "658487c6afd9e3b3e2343acdbe181757"
+      },
+      "documentos": {
+        "resena": "slep_categoria_desempeno/50_documentacion/activa/resena_slep_categoria_desempeno.md",
+        "traspaso": "slep_categoria_desempeno/50_documentacion/traspasos/traspaso_cierre_v25.md",
+        "backlog": "slep_categoria_desempeno/50_documentacion/activa/backlog_consolidado.md",
+        "escaner": "slep_categoria_desempeno/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_categoria_desempeno/README.md",
+        "claude": "slep_categoria_desempeno/CLAUDE.md",
+        "gobernanza": "slep_categoria_desempeno/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_costapresente",
+      "nombre_real": "CostaPresente",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 1,
+        "total_sesiones": 1,
+        "grafia": "traspaso-cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-05-31",
+        "escaner": "2026-06-24",
+        "actividad": "2026-06-24",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "5fd8b85bdb99268df79fd1781176ac4f",
+        "md5_resena": "d68ecd0ac35cd72d580c3dce36cde07e",
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": "slep_costapresente/50_documentacion/activa/resena_slep_costapresente.md",
+        "traspaso": "slep_costapresente/50_documentacion/traspasos/traspaso-cierre-v01.md",
+        "backlog": null,
+        "escaner": "slep_costapresente/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_costapresente/README.md",
+        "claude": "slep_costapresente/CLAUDE.md",
+        "gobernanza": "slep_costapresente/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_dashboard_personal_monitoreo",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 17,
+        "total_sesiones": 15,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-05-26",
+        "escaner": null,
+        "actividad": "2026-05-26",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "36f61886a281487431e31e0b1336fd37",
+        "md5_resena": null,
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": "slep_dashboard_personal_monitoreo/50_documentacion/traspasos/traspaso_cierre_v17.md",
+        "backlog": null,
+        "escaner": null,
+        "readme": "slep_dashboard_personal_monitoreo/README.md",
+        "claude": "slep_dashboard_personal_monitoreo/CLAUDE.md",
+        "gobernanza": "slep_dashboard_personal_monitoreo/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": false
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_georreferenciacion",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 4,
+        "total_sesiones": 4,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-28",
+        "escaner": "2026-06-28",
+        "actividad": "2026-06-28",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "9934a77c3491b5ee5c8262c81d11db46",
+        "md5_resena": null,
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": "slep_georreferenciacion/50_documentacion/traspasos/traspaso_cierre_v04.md",
+        "backlog": null,
+        "escaner": "slep_georreferenciacion/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_georreferenciacion/README.md",
+        "claude": "slep_georreferenciacion/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_idps",
+      "nombre_real": "Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 25,
+        "total_sesiones": 25,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-25",
+        "escaner": "2026-06-25",
+        "actividad": "2026-06-25",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "b1706aa7e029220614d95b0091360a7e",
+        "md5_resena": "364c624f97d2bd9bd2ca867f100c9523",
+        "md5_backlog": "c1d6b4b95a5b2b468199c581071f9904"
+      },
+      "documentos": {
+        "resena": "slep_idps/50_documentacion/activa/resena_slep_idps.md",
+        "traspaso": "slep_idps/50_documentacion/traspasos/traspaso_cierre_v25.md",
+        "backlog": "slep_idps/50_documentacion/activa/backlog_historico.md",
+        "escaner": "slep_idps/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_idps/README.md",
+        "claude": "slep_idps/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_minuta_asistencia",
+      "nombre_real": "Minuta Mensual de Asistencia SLEP Costa Central",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 64,
+        "total_sesiones": 52,
+        "grafia": "traspaso-cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-15",
+        "escaner": "2026-06-23",
+        "actividad": "2026-06-23",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "f4f231fa8d82dfa47581e67a8279ad24",
+        "md5_resena": "71404d13d4d2b6b7bb438da7eb562627",
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": "slep_minuta_asistencia/50_documentacion/activa/resena_slep_minuta_asistencia.md",
+        "traspaso": "slep_minuta_asistencia/50_documentacion/traspasos/traspaso-cierre-v64.md",
+        "backlog": null,
+        "escaner": "slep_minuta_asistencia/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_minuta_asistencia/README.md",
+        "claude": "slep_minuta_asistencia/CLAUDE.md",
+        "gobernanza": "slep_minuta_asistencia/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_minuta_desvinculacion",
+      "nombre_real": "Análisis de trayectorias interrumpidas de estudiantes del SLEP Costa Central",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 28,
+        "total_sesiones": 28,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-28",
+        "escaner": "2026-06-28",
+        "actividad": "2026-06-28",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "e94224014d5a21fd6d44744909064f73",
+        "md5_resena": "92eb094a9fc4ca8c05a18ab7050576d7",
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": "slep_minuta_desvinculacion/50_documentacion/activa/resena_slep_minuta_desvinculacion.md",
+        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v28.md",
+        "backlog": null,
+        "escaner": "slep_minuta_desvinculacion/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_minuta_desvinculacion/README.md",
+        "claude": "slep_minuta_desvinculacion/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_monitoreo",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "auxiliar",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 6,
+        "total_sesiones": 6,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-26",
+        "escaner": "2026-06-26",
+        "actividad": "2026-06-26",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "8bd6021f8781dfc28003c3f226eb88c2",
+        "md5_resena": null,
+        "md5_backlog": "60b2afcc3e12a6c4ba7ec11f69f0763c"
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": "slep_monitoreo/50_documentacion/traspasos/traspaso_cierre_v06.md",
+        "backlog": "slep_monitoreo/50_documentacion/traspasos/backlog_acumulado.md",
+        "escaner": "slep_monitoreo/50_documentacion/estructura/estructura_actual.md",
+        "readme": null,
+        "claude": "slep_monitoreo/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_rendimiento_historico",
+      "nombre_real": "Diagnóstico histórico del rendimiento escolar",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 5,
+        "total_sesiones": 5,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-15",
+        "escaner": "2026-06-15",
+        "actividad": "2026-06-15",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "e7ab018d126accaaab5487afeb79197f",
+        "md5_resena": "78b48bae5663f7019e73cf06ed27877d",
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": "slep_rendimiento_historico/50_documentacion/activa/resena_slep_rendimiento_historico.md",
+        "traspaso": "slep_rendimiento_historico/50_documentacion/traspasos/traspaso_cierre_v05.md",
+        "backlog": null,
+        "escaner": "slep_rendimiento_historico/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_rendimiento_historico/README.md",
+        "claude": "slep_rendimiento_historico/CLAUDE.md",
+        "gobernanza": "slep_rendimiento_historico/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_reportes_modelo_resguardo_asistencia",
+      "nombre_real": "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 38,
+        "total_sesiones": 38,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-21",
+        "escaner": "2026-06-21",
+        "actividad": "2026-06-21",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "147be45bc1d6f69394a4dfc99c100e1d",
+        "md5_resena": "6021d405257d19745b2e9ec79a85b7a5",
+        "md5_backlog": "25807bbda3f99ee9a917328820bfdbae"
+      },
+      "documentos": {
+        "resena": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/activa/resena_slep_reportes_modelo_resguardo_asistencia.md",
+        "traspaso": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/traspasos/traspaso_cierre_v38.md",
+        "backlog": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/activa/backlog_acumulativo.md",
+        "escaner": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_reportes_modelo_resguardo_asistencia/README.md",
+        "claude": null,
+        "gobernanza": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_resena_proyectos",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "auxiliar",
+      "estructura": "no_canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": null,
+        "total_sesiones": 0,
+        "grafia": null,
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": null,
+        "escaner": null,
+        "actividad": null,
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": null,
+        "md5_resena": null,
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": null,
+        "backlog": null,
+        "escaner": null,
+        "readme": null,
+        "claude": null,
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": false,
+        "backlog": false,
+        "escaner": false
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_seguimiento_educacion_inicial",
+      "nombre_real": "Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 34,
+        "total_sesiones": 26,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-15",
+        "escaner": "2026-06-24",
+        "actividad": "2026-06-24",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "607d7e4de4396b570ffe4bc867e16fc0",
+        "md5_resena": "513c851e0433833a8d57f945b405cf17",
+        "md5_backlog": "10af6185ebc7567c10f26cf188d07890"
+      },
+      "documentos": {
+        "resena": "slep_seguimiento_educacion_inicial/50_documentacion/activa/resena_slep_seguimiento_educacion_inicial.md",
+        "traspaso": "slep_seguimiento_educacion_inicial/50_documentacion/traspasos/traspaso_cierre_v34.md",
+        "backlog": "slep_seguimiento_educacion_inicial/50_documentacion/activa/backlog_consolidado.md",
+        "escaner": "slep_seguimiento_educacion_inicial/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_seguimiento_educacion_inicial/README.md",
+        "claude": "slep_seguimiento_educacion_inicial/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_simce_adecuado",
+      "nombre_real": "Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce",
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 23,
+        "total_sesiones": 23,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-06-26",
+        "escaner": "2026-06-26",
+        "actividad": "2026-06-26",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "a7dfd70fbb6250b436070b6187e8b549",
+        "md5_resena": "5ed177d7664e25ea549e3326e74bf05a",
+        "md5_backlog": "448362eaf53e1caa7e0bc241cbe52575"
+      },
+      "documentos": {
+        "resena": "slep_simce_adecuado/50_documentacion/activa/resena_slep_simce_adecuado.md",
+        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v23.md",
+        "backlog": "slep_simce_adecuado/50_documentacion/activa/backlog_historico.md",
+        "escaner": "slep_simce_adecuado/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_simce_adecuado/README.md",
+        "claude": "slep_simce_adecuado/CLAUDE.md",
+        "gobernanza": "slep_simce_adecuado/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": true,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "notas": null
+    },
+    {
+      "slug": "slep_simce_estandares_aprendizaje",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 14,
+        "total_sesiones": 14,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-05-28",
+        "escaner": "2026-05-28",
+        "actividad": "2026-05-28",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "efbd546df4026f319dd29b7a4f260d64",
+        "md5_resena": null,
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": "slep_simce_estandares_aprendizaje/50_documentacion/traspasos/traspaso_cierre_v14.md",
+        "backlog": null,
+        "escaner": "slep_simce_estandares_aprendizaje/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_simce_estandares_aprendizaje/README.md",
+        "claude": "slep_simce_estandares_aprendizaje/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": true,
+        "backlog": false,
+        "escaner": true
+      },
+      "notas": null
+    }
+  ]
+}

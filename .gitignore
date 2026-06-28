@@ -1,0 +1,38 @@
+# .gitignore estandar Rama A (proyecto publico, raiz unificada).
+# POLITICA_PROYECTO.md seccion 6.3: se OMITE el bloque de datos
+# (este proyecto no produce ni almacena datos sensibles propios).
+
+# Sistema
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+# Nota: *.Rproj SI se versiona (ancla de here::here() en otra maquina).
+
+# Snapshots y backups locales
+_archivo/
+*.bak
+
+# Outputs accidentales en raiz y scripts de diagnostico
+/*.docx
+/*.pdf
+/*.html
+/diagnostico_*.md
+/verificar_*.R
+/listar_*.R
+
+# Outputs temporales
+*_freeze/
+.quarto/
+
+# Credenciales (defensa en profundidad; el proyecto no usa ninguna)
+.env
+.Renviron
+*credentials*
+*secret*
+*token*
+*password*

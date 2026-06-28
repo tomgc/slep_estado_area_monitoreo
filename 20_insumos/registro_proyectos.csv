@@ -1,0 +1,17 @@
+slug,nombre_real,alias_corto,categoria,notas
+slep_alertas_ael,Sistema de alertas de Anótate en la Lista,NA,activo,NA
+slep_aprendizajes_ep,Monitoreo de aprendizajes en la educación parvularia,NA,activo,NA
+slep_categoria_desempeno,Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país,NA,activo,NA
+slep_costapresente,CostaPresente,NA,activo,NA
+slep_dashboard_personal_monitoreo,NA,NA,activo,NA
+slep_georreferenciacion,NA,NA,activo,NA
+slep_idps,Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS),NA,activo,NA
+slep_minuta_asistencia,Minuta Mensual de Asistencia SLEP Costa Central,NA,activo,NA
+slep_minuta_desvinculacion,Análisis de trayectorias interrumpidas de estudiantes del SLEP Costa Central,NA,activo,NA
+slep_monitoreo,NA,NA,auxiliar,NA
+slep_rendimiento_historico,Diagnóstico histórico del rendimiento escolar,NA,activo,NA
+slep_reportes_modelo_resguardo_asistencia,Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio,NA,activo,NA
+slep_resena_proyectos,NA,NA,auxiliar,NA
+slep_seguimiento_educacion_inicial,Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles,NA,activo,NA
+slep_simce_adecuado,Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce,NA,activo,NA
+slep_simce_estandares_aprendizaje,NA,NA,activo,NA
