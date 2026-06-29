@@ -44,6 +44,12 @@ R: tidyverse, pipe nativo `|>`, `dplyr >= 1.1` con `.by=`, `here`/`rprojroot`,
 
 ## Ultimos cambios (max 5, recientes primero)
 
-1. 2026-06-28 (v01): andamiaje Rama A completo; pipeline 31->35 funcional;
+1. 2026-06-29 (v02): operacion/regeneracion tras cierre parcial de H4; 3 caches
+   re-sintetizados (georreferenciacion v05, minuta_desvinculacion v29,
+   simce_adecuado v24), 11 reutilizados literal; maneja_sensibles FALSE->TRUE en
+   los 3 de H4; registro curado por el titular preservado; reporte de cobertura
+   actualizado. Aprendizaje: el orquestador lee el WORKING TREE (un gobernanza
+   en rama no mergeada se ve presente; seguimiento_ed_inicial en docs/suitedoc).
+2. 2026-06-28 (v01): andamiaje Rama A completo; pipeline 31->35 funcional;
    registro sembrado; inventario + panorama generados; reporte de cobertura;
    esbozo Fase 2; tests en verde; primer commit.
