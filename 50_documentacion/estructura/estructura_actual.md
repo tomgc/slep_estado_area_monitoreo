@@ -1,7 +1,7 @@
 # Estructura del proyecto (escaner)
 
 - Raiz       : slep_estado_proyectos_monitoreo
-- Fecha      : 2026-06-29 15:59:05
+- Fecha      : 2026-06-29 16:38:54
 - Directorios: 12
 - Archivos   : 44
 - Tamano     : 284K
@@ -44,20 +44,20 @@ slep_estado_proyectos_monitoreo/
   panorama.md  (27.2K)
 50_documentacion/
   activa/
-    POLITICA_PROYECTO.md  (29.7K)
-    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (37.3K)
     decisiones/
       20260628_decision_arquitectura_orquestador.md  (4.21K)
     esbozo_fase2_estado_estandarizado.md  (4.36K)
+    POLITICA_PROYECTO.md  (29.7K)
     reporte_cobertura_documental.md  (6.46K)
+    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (37.3K)
   andamios/
   estructura/
-    20260628_110827_estructura.md  (2.15K)
-    20260628_110827_estructura.txt  (2.15K)
     20260629_155533_estructura.md  (2.15K)
     20260629_155533_estructura.txt  (2.15K)
-    estructura_actual.md  (2.15K)
-    estructura_actual.txt  (2.15K)
+    20260629_155905_estructura.md  (2.18K)
+    20260629_155905_estructura.txt  (2.18K)
+    estructura_actual.md  (2.18K)
+    estructura_actual.txt  (2.18K)
   traspasos/
     traspaso_cierre_v01.md  (13.1K)
     traspaso_cierre_v02.md  (15.2K)
@@ -74,8 +74,8 @@ tests/
   md                 27
   R                  10
   txt                3
-  Rproj              1
   csv                1
   json               1
   parquet            1
+  Rproj              1
 ```
