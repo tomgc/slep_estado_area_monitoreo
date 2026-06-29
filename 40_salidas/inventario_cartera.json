@@ -638,7 +638,7 @@
       "alias_corto": "Minuta Simce",
       "categoria": "activo",
       "estructura": "canonica",
-      "maneja_sensibles": false,
+      "maneja_sensibles": true,
       "traspaso": {
         "correlativo": 14,
         "total_sesiones": 14,
@@ -664,7 +664,7 @@
         "escaner": "slep_simce_estandares_aprendizaje/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_simce_estandares_aprendizaje/README.md",
         "claude": "slep_simce_estandares_aprendizaje/CLAUDE.md",
-        "gobernanza": null
+        "gobernanza": "slep_simce_estandares_aprendizaje/50_documentacion/activa/gobernanza_datos.md"
       },
       "cobertura": {
         "resena": false,
