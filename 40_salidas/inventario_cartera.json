@@ -5,7 +5,7 @@
     {
       "slug": "slep_alertas_ael",
       "nombre_real": "Sistema de alertas de Anótate en la Lista",
-      "alias_corto": null,
+      "alias_corto": "AEL",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -42,15 +42,15 @@
         "backlog": false,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 9)."
     },
     {
       "slug": "slep_aprendizajes_ep",
       "nombre_real": "Monitoreo de aprendizajes en la educación parvularia",
-      "alias_corto": null,
+      "alias_corto": "Aprendizajes EP",
       "categoria": "activo",
       "estructura": "canonica",
-      "maneja_sensibles": false,
+      "maneja_sensibles": true,
       "traspaso": {
         "correlativo": 83,
         "total_sesiones": 83,
@@ -60,8 +60,8 @@
       },
       "fechas": {
         "traspaso": "2026-06-26",
-        "escaner": "2026-06-26",
-        "actividad": "2026-06-26",
+        "escaner": "2026-06-29",
+        "actividad": "2026-06-29",
         "commit": null
       },
       "sellos": {
@@ -76,7 +76,7 @@
         "escaner": "slep_aprendizajes_ep/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_aprendizajes_ep/README.md",
         "claude": "slep_aprendizajes_ep/CLAUDE.md",
-        "gobernanza": null
+        "gobernanza": "slep_aprendizajes_ep/50_documentacion/activa/gobernanza_datos.md"
       },
       "cobertura": {
         "resena": true,
@@ -84,12 +84,12 @@
         "backlog": true,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 6)."
     },
     {
       "slug": "slep_categoria_desempeno",
       "nombre_real": "Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país",
-      "alias_corto": null,
+      "alias_corto": "Categoría de Desempeño",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -126,12 +126,12 @@
         "backlog": true,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 5)."
     },
     {
       "slug": "slep_costapresente",
       "nombre_real": "CostaPresente",
-      "alias_corto": null,
+      "alias_corto": "CostaPresente",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -168,12 +168,12 @@
         "backlog": false,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 8)."
     },
     {
       "slug": "slep_dashboard_personal_monitoreo",
-      "nombre_real": null,
-      "alias_corto": null,
+      "nombre_real": "Dashboard personal de monitoreo",
+      "alias_corto": "Dashboard personal",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -210,36 +210,36 @@
         "backlog": false,
         "escaner": false
       },
-      "notas": null
+      "notas": "Herramienta interna; no figura en el sitio del Área. Nombre funcional."
     },
     {
       "slug": "slep_georreferenciacion",
-      "nombre_real": null,
-      "alias_corto": null,
+      "nombre_real": "Georreferenciación de establecimientos del territorio",
+      "alias_corto": "Georreferenciación",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": false,
       "traspaso": {
-        "correlativo": 4,
-        "total_sesiones": 4,
+        "correlativo": 5,
+        "total_sesiones": 5,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-06-28",
-        "escaner": "2026-06-28",
-        "actividad": "2026-06-28",
+        "traspaso": "2026-06-29",
+        "escaner": "2026-06-29",
+        "actividad": "2026-06-29",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "9934a77c3491b5ee5c8262c81d11db46",
+        "md5_traspaso": "effda8446b93528556323c4243715bf1",
         "md5_resena": null,
         "md5_backlog": null
       },
       "documentos": {
         "resena": null,
-        "traspaso": "slep_georreferenciacion/50_documentacion/traspasos/traspaso_cierre_v04.md",
+        "traspaso": "slep_georreferenciacion/50_documentacion/traspasos/traspaso_cierre_v05.md",
         "backlog": null,
         "escaner": "slep_georreferenciacion/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_georreferenciacion/README.md",
@@ -252,12 +252,12 @@
         "backlog": false,
         "escaner": true
       },
-      "notas": null
+      "notas": "No figura en el sitio del Área (insumo/afiche). Nombre funcional."
     },
     {
       "slug": "slep_idps",
       "nombre_real": "Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)",
-      "alias_corto": null,
+      "alias_corto": "IDPS",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": false,
@@ -294,12 +294,12 @@
         "backlog": true,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 4)."
     },
     {
       "slug": "slep_minuta_asistencia",
-      "nombre_real": "Minuta Mensual de Asistencia SLEP Costa Central",
-      "alias_corto": null,
+      "nombre_real": "Minuta de asistencia mensual",
+      "alias_corto": "Minuta asistencia",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -336,41 +336,41 @@
         "backlog": false,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 1)."
     },
     {
       "slug": "slep_minuta_desvinculacion",
-      "nombre_real": "Análisis de trayectorias interrumpidas de estudiantes del SLEP Costa Central",
-      "alias_corto": null,
+      "nombre_real": "Análisis de trayectorias educativas interrumpidas",
+      "alias_corto": "Trayectorias interrumpidas",
       "categoria": "activo",
       "estructura": "canonica",
-      "maneja_sensibles": false,
+      "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 28,
-        "total_sesiones": 28,
+        "correlativo": 29,
+        "total_sesiones": 29,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-06-28",
-        "escaner": "2026-06-28",
-        "actividad": "2026-06-28",
+        "traspaso": "2026-06-29",
+        "escaner": "2026-06-29",
+        "actividad": "2026-06-29",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "e94224014d5a21fd6d44744909064f73",
+        "md5_traspaso": "831d4d554eefc79ad2378327aa0dd511",
         "md5_resena": "92eb094a9fc4ca8c05a18ab7050576d7",
         "md5_backlog": null
       },
       "documentos": {
         "resena": "slep_minuta_desvinculacion/50_documentacion/activa/resena_slep_minuta_desvinculacion.md",
-        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v28.md",
+        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v29.md",
         "backlog": null,
         "escaner": "slep_minuta_desvinculacion/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_minuta_desvinculacion/README.md",
         "claude": "slep_minuta_desvinculacion/CLAUDE.md",
-        "gobernanza": null
+        "gobernanza": "slep_minuta_desvinculacion/50_documentacion/activa/gobernanza_datos.md"
       },
       "cobertura": {
         "resena": true,
@@ -378,12 +378,12 @@
         "backlog": false,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 10; estado desarrollo)."
     },
     {
       "slug": "slep_monitoreo",
-      "nombre_real": null,
-      "alias_corto": null,
+      "nombre_real": "Portafolio del Área (escaparate web)",
+      "alias_corto": "Portafolio",
       "categoria": "auxiliar",
       "estructura": "canonica",
       "maneja_sensibles": false,
@@ -420,12 +420,12 @@
         "backlog": true,
         "escaner": true
       },
-      "notas": null
+      "notas": "Sitio web del Área que aloja este data.js. No es pipeline analítico."
     },
     {
       "slug": "slep_rendimiento_historico",
       "nombre_real": "Diagnóstico histórico del rendimiento escolar",
-      "alias_corto": null,
+      "alias_corto": "Rendimiento histórico",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -462,12 +462,12 @@
         "backlog": false,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 11; estado desarrollo)."
     },
     {
       "slug": "slep_reportes_modelo_resguardo_asistencia",
       "nombre_real": "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio",
-      "alias_corto": null,
+      "alias_corto": "Resguardo asistencia",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -504,12 +504,12 @@
         "backlog": true,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 2)."
     },
     {
       "slug": "slep_resena_proyectos",
-      "nombre_real": null,
-      "alias_corto": null,
+      "nombre_real": "Reseñas del portafolio",
+      "alias_corto": "Reseñas",
       "categoria": "auxiliar",
       "estructura": "no_canonica",
       "maneja_sensibles": false,
@@ -546,15 +546,15 @@
         "backlog": false,
         "escaner": false
       },
-      "notas": null
+      "notas": "Insumo del portafolio; solo aloja resenas_portafolio_traspaso.md."
     },
     {
       "slug": "slep_seguimiento_educacion_inicial",
       "nombre_real": "Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles",
-      "alias_corto": null,
+      "alias_corto": "Educación inicial",
       "categoria": "activo",
       "estructura": "canonica",
-      "maneja_sensibles": false,
+      "maneja_sensibles": true,
       "traspaso": {
         "correlativo": 34,
         "total_sesiones": 26,
@@ -580,7 +580,7 @@
         "escaner": "slep_seguimiento_educacion_inicial/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_seguimiento_educacion_inicial/README.md",
         "claude": "slep_seguimiento_educacion_inicial/CLAUDE.md",
-        "gobernanza": null
+        "gobernanza": "slep_seguimiento_educacion_inicial/50_documentacion/activa/gobernanza_datos.md"
       },
       "cobertura": {
         "resena": true,
@@ -588,36 +588,36 @@
         "backlog": true,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 7)."
     },
     {
       "slug": "slep_simce_adecuado",
       "nombre_real": "Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce",
-      "alias_corto": null,
+      "alias_corto": "Simce estándares",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 23,
-        "total_sesiones": 23,
+        "correlativo": 24,
+        "total_sesiones": 24,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-06-26",
-        "escaner": "2026-06-26",
-        "actividad": "2026-06-26",
+        "traspaso": "2026-06-29",
+        "escaner": "2026-06-29",
+        "actividad": "2026-06-29",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "a7dfd70fbb6250b436070b6187e8b549",
-        "md5_resena": "5ed177d7664e25ea549e3326e74bf05a",
-        "md5_backlog": "448362eaf53e1caa7e0bc241cbe52575"
+        "md5_traspaso": "150aafced4c1f626806dcbf2ee04342e",
+        "md5_resena": "826fb8a4dc9b21f986cab1309dc369c0",
+        "md5_backlog": "e91b1799a5f6103839e593f0d976523f"
       },
       "documentos": {
         "resena": "slep_simce_adecuado/50_documentacion/activa/resena_slep_simce_adecuado.md",
-        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v23.md",
+        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v24.md",
         "backlog": "slep_simce_adecuado/50_documentacion/activa/backlog_historico.md",
         "escaner": "slep_simce_adecuado/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_simce_adecuado/README.md",
@@ -630,12 +630,12 @@
         "backlog": true,
         "escaner": true
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área (orden 3)."
     },
     {
       "slug": "slep_simce_estandares_aprendizaje",
-      "nombre_real": null,
-      "alias_corto": null,
+      "nombre_real": "Minuta de resultados Simce por estándares de aprendizaje",
+      "alias_corto": "Minuta Simce",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": false,
@@ -672,7 +672,7 @@
         "backlog": false,
         "escaner": true
       },
-      "notas": null
+      "notas": "No figura en el sitio (antecesor de slep_simce_adecuado). Nombre funcional."
     }
   ]
 }

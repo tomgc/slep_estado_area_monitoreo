@@ -1,6 +1,6 @@
 # Panorama de la cartera - Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
 
-> Generado: 2026-06-28 · Proyectos activos: 14 · Auxiliares: 2
+> Generado: 2026-06-29 · Proyectos activos: 14 · Auxiliares: 2
 
 ## Alertas
 
@@ -8,26 +8,26 @@
 - **Nuevos detectados:** ninguno.
 - **Dados de baja:** ninguno.
 - **Documentacion obsoleta (>21 dias):** slep_dashboard_personal_monitoreo, slep_simce_estandares_aprendizaje.
-- **Pendientes de sintesis:** slep_georreferenciacion.
+- **Pendientes de sintesis:** ninguno.
 
 ## L1 - Tabla semaforo
 
 | Codigo | Nombre | Semaforo | Ultima actividad | Proximo paso |
 |---|---|---|---|---|
-| slep_alertas_ael | Sistema de alertas de Anótate en la Lista | pausa | 2026-06-10 (hace 18 dias) | verificar tipografia del documento, mover residuos, agregar tests unitarios |
-| slep_aprendizajes_ep | Monitoreo de aprendizajes en la educación parvularia | activo | 2026-06-26 (hace 2 dias) | versionar v83 y abordar capa 2 del ETL |
-| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | pausa | 2026-06-21 (hace 7 dias) | versionar traspaso v25 y snapshot del escaner al reabrir |
-| slep_costapresente | CostaPresente | pausa | 2026-06-24 (hace 4 dias) | validar pipeline cross-OS en maquina Windows |
-| slep_dashboard_personal_monitoreo | slep_dashboard_personal_monitoreo | pausa | 2026-05-26 (hace 33 dias) | ejecutar migracion estructural y materializar plantilla y contratos de consolidado |
-| slep_georreferenciacion | slep_georreferenciacion | cerrado | 2026-06-28 (hace 0 dias) | validar etiquetas como texto en Affinity Publisher |
-| slep_idps | Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS) | activo | 2026-06-25 (hace 3 dias) | higiene de backlog y limpieza CSS pendientes en sesion 26 |
-| slep_minuta_asistencia | Minuta Mensual de Asistencia SLEP Costa Central | activo | 2026-06-23 (hace 5 dias) | limpieza de estructura de documentacion, luego refactor del orquestador canonico |
-| slep_minuta_desvinculacion | Análisis de trayectorias interrumpidas de estudiantes del SLEP Costa Central | activo | 2026-06-28 (hace 0 dias) | construir capa de datos del reporte (script 39, P-DOC) |
-| slep_rendimiento_historico | Diagnóstico histórico del rendimiento escolar | activo | 2026-06-15 (hace 13 dias) | confirmar verificaciones visuales y tomar warning de duplicados en cohortes |
-| slep_reportes_modelo_resguardo_asistencia | Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio | activo | 2026-06-21 (hace 7 dias) | auditoria portabilidad cross-OS Windows que destraba variable canonica fase 2 |
-| slep_seguimiento_educacion_inicial | Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles | activo | 2026-06-24 (hace 4 dias) | validar visualmente panel de detalle fijo del diagrama y commitear |
-| slep_simce_adecuado | Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce | activo | 2026-06-26 (hace 2 dias) | anexar delta s23 al backlog y validar precargado en navegador |
-| slep_simce_estandares_aprendizaje | slep_simce_estandares_aprendizaje | pausa | 2026-05-28 (hace 31 dias) | incorporar datos de un ano nuevo y actualizar minuta |
+| slep_alertas_ael | Sistema de alertas de Anótate en la Lista | pausa | 2026-06-10 (hace 19 dias) | verificar tipografia del documento, mover residuos, agregar tests unitarios |
+| slep_aprendizajes_ep | Monitoreo de aprendizajes en la educación parvularia | activo | 2026-06-29 (hace 0 dias) | versionar v83 y abordar capa 2 del ETL |
+| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | pausa | 2026-06-21 (hace 8 dias) | versionar traspaso v25 y snapshot del escaner al reabrir |
+| slep_costapresente | CostaPresente | pausa | 2026-06-24 (hace 5 dias) | validar pipeline cross-OS en maquina Windows |
+| slep_dashboard_personal_monitoreo | Dashboard personal de monitoreo | pausa | 2026-05-26 (hace 34 dias) | ejecutar migracion estructural y materializar plantilla y contratos de consolidado |
+| slep_georreferenciacion | Georreferenciación de establecimientos del territorio | pausa | 2026-06-29 (hace 0 dias) | esperar validacion del director sobre ambas variantes del afiche |
+| slep_idps | Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS) | activo | 2026-06-25 (hace 4 dias) | higiene de backlog y limpieza CSS pendientes en sesion 26 |
+| slep_minuta_asistencia | Minuta de asistencia mensual | activo | 2026-06-23 (hace 6 dias) | limpieza de estructura de documentacion, luego refactor del orquestador canonico |
+| slep_minuta_desvinculacion | Análisis de trayectorias educativas interrumpidas | activo | 2026-06-29 (hace 0 dias) | construir el .qmd del reporte como consumidor del dataset |
+| slep_rendimiento_historico | Diagnóstico histórico del rendimiento escolar | activo | 2026-06-15 (hace 14 dias) | confirmar verificaciones visuales y tomar warning de duplicados en cohortes |
+| slep_reportes_modelo_resguardo_asistencia | Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio | activo | 2026-06-21 (hace 8 dias) | auditoria portabilidad cross-OS Windows que destraba variable canonica fase 2 |
+| slep_seguimiento_educacion_inicial | Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles | activo | 2026-06-24 (hace 5 dias) | validar visualmente panel de detalle fijo del diagrama y commitear |
+| slep_simce_adecuado | Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce | cerrado | 2026-06-29 (hace 0 dias) | mantenimiento documental concluido; estable y desplegado sin pendientes activos |
+| slep_simce_estandares_aprendizaje | Minuta de resultados Simce por estándares de aprendizaje | pausa | 2026-05-28 (hace 32 dias) | incorporar datos de un ano nuevo y actualizar minuta |
 
 ## L2 - Fichas ejecutivas por proyecto activo
 
@@ -67,7 +67,7 @@ La ultima sesion cerro la estabilizacion de infraestructura post-migracion: cent
 
 Procedencia: traspaso-cierre-v01 (2026-06-24); resena.
 
-### slep_dashboard_personal_monitoreo - slep_dashboard_personal_monitoreo
+### slep_dashboard_personal_monitoreo - Dashboard personal de monitoreo
 **Tipo de producto:** tablero/app.
 
 Sin resena; estado derivado del ultimo traspaso. Objetivo (declarado en README/traspaso): herramienta personal interna de monitoreo y seguimiento que consolida indicadores esenciales en un dashboard HTML autocontenido, regenerado reproduciblemente desde datos crudos, cubriendo dominios de asistencia, desvinculacion, SIMCE, educacion inicial y contexto territorial mas una vista ejecutiva. La ultima sesion cerro un pendiente de incorporacion documental via PR, diagnostico que la validacion numerica esta bloqueada y pivoto a disenar contratos formales entre el dashboard y sus sistemas emisores. Productos a la fecha: estructura base y helpers de render operativos contra un fixture demo sanitizado; funciones de calculo para dos dominios maduros; plantilla de contrato de consolidado aprobada (aun no escrita al repo) y mapa de dominios/emisores.
@@ -76,14 +76,14 @@ Pendientes priorizados: migracion estructural del repo, materializacion de plant
 
 Procedencia: traspaso_cierre_v17 (2026-05-26); sin resena.
 
-### slep_georreferenciacion - slep_georreferenciacion
+### slep_georreferenciacion - Georreferenciación de establecimientos del territorio
 **Tipo de producto:** cartografia.
 
-Sin resena; estado derivado del ultimo traspaso. El objetivo, segun el traspaso y el README, es producir un afiche cartografico estatico A0 imprimible que georreferencia el universo de establecimientos educacionales de un SLEP costero (cuatro comunas), reproduciendo con fidelidad un handoff de diseno e inyectando datos reales del maestro. La ultima sesion cerro con entregable aprobado y auditado: afiche completado en doble formato (HTML autocontenido y PDF A0 vertical editable), tras ocho ciclos de encargo formal a un protocolo dual con auditoria adversarial. Productos concretos: afiche con mapa principal e inset, tile sin rotulos, limites comunales de alta resolucion, pines anti-colision coloreados por tipo, numeracion geografica estricta N->S, etiquetas de comuna como texto HTML editable e indice lateral.
+Sin resena; estado derivado del ultimo traspaso. El objetivo declarado es un afiche cartografico A0 (imprimible en plotter) que georreferencia los establecimientos educacionales del SLEP Costa Central en cuatro comunas costeras, en dos variantes: una con inset y otra de escala unica continua. La sesion v05 (CONTINUATION) construyo y audito la variante de escala unica encargada en v04: verificacion del repo tras una purga de historial, ejecucion y auditoria de la Fase 1, correccion de una regresion de posicionamiento de una etiqueta de comuna (offset calibrado por codigo mas un switch de reuso de render) y pulido editorial manual de cuatro etiquetas en una herramienta externa, con exportacion del PDF apto para plotter.
 
-Pendientes priorizados: validacion in situ en Affinity (seleccion de texto, fuentes), revisar posiciones de dos etiquetas con riesgo de recorte, instalar tipografias institucionales. Sin bloqueantes. Deuda tecnica: scripts de preparacion y calibracion fuera del repo versionado, constantes muertas, dependencia de locale UTF-8 sin documentar, duplicidad de salidas. Publicacion: entregable regenerable; PDF excluido del control de versiones. Gobernanza: no maneja datos sensibles (solo identificadores publicos de establecimientos, sin datos personales).
+Productos a la fecha: ambas variantes generadas, auditadas y commiteadas; la variante original permanece byte-identica. Pendientes priorizados: validacion externa con el director (bloqueante para publicar), validacion in situ de fuentes y posiciones de etiquetas en la herramienta editorial, y deudas menores (documentar locale UTF-8 y origen redescargable de los limites comunales, verificar constantes muertas, re-correr el escaner de estructura, decidir si cablear pasos opcionales al orquestador). Bloqueantes: aprobacion del director pendiente; el proyecto queda en espera. Dependencias: locale UTF-8 obligatorio, navegador para exportar PDF, herramienta editorial externa para el pulido no reproducible. Deuda tecnica/riesgos: el pulido editorial de etiquetas no es reproducible por diseno; escaner desactualizado. Publicacion: en espera de validacion. Gobernanza: identificadores institucionales publicos; sin datos personales ni de estudiantes.
 
-Procedencia: traspaso_cierre_v03 (2026-06-28); sin resena.
+Procedencia: traspaso_cierre_v05 (2026-06-29); sin resena.
 
 ### slep_idps - Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)
 **Tipo de producto:** tablero/app.
@@ -94,7 +94,7 @@ Productos a la fecha: motor desplegado en produccion, parquet intacto, backlog c
 
 Procedencia: traspaso_cierre_v25 (2026-06-25); resena; backlog_historico.
 
-### slep_minuta_asistencia - Minuta Mensual de Asistencia SLEP Costa Central
+### slep_minuta_asistencia - Minuta de asistencia mensual
 **Tipo de producto:** reporte.
 
 La Minuta Mensual de Asistencia del SLEP Costa Central es un pipeline reproducible en R/Quarto que consolida los registros diarios de asistencia provistos por el Ministerio de Educacion y produce un reporte ejecutivo (Word mas graficos) con tasas de asistencia por territorio, comuna, macrogrupo de ensenanza, nivel y establecimiento educacional, ademas de rachas de inasistencia y alertas por umbrales de gestion. Esta dirigido a la conduccion del Servicio para apoyar la priorizacion y el seguimiento de metas. La ultima sesion fue multifrente: normalizo la configuracion de entorno, genero y audito las minutas de marzo, abril y mayo de 2026 (aptas para distribucion), y cerro el diseno de un proyecto separado de reporte para directores.
@@ -103,14 +103,14 @@ Productos entregados: minutas mensuales operativas y auditadas hasta mayo 2026. 
 
 Procedencia: traspaso-cierre-v64 (2026-06-23); resena.
 
-### slep_minuta_desvinculacion - Análisis de trayectorias interrumpidas de estudiantes del SLEP Costa Central
+### slep_minuta_desvinculacion - Análisis de trayectorias educativas interrumpidas
 **Tipo de producto:** reporte.
 
-El proyecto produce un analisis periodico de las trayectorias interrumpidas de estudiantes en el territorio del Servicio, para caracterizar la desvinculacion escolar y anticiparla mediante alerta temprana basada en asistencia previa. Combina registros administrativos de matricula/situacion y panel de asistencia con caracterizacion propia de los establecimientos educacionales, reconstruye la poblacion por periodo, identifica casos de desvinculacion en una ventana definida y estima riesgo con un modelo entrenado con anos anteriores. La ultima sesion cerro un commit de orquestacion, verifico que la validacion predictiva ya es produccion, resolvio el feedback de los indicadores (decisiones de alcance y discretizacion de tramos de riesgo) y diagnostico que la capa de datos del reporte aun no existe.
+El proyecto produce un analisis periodico de trayectorias escolares interrumpidas para un servicio educativo territorial de cuatro comunas: identifica y caracteriza a estudiantes desvinculados (dos cohortes: retiro formal y no re-matricula) e incorpora alerta temprana mediante un modelo de riesgo entrenado con asistencia previa. La sesion v29 cerro la capa de datos del reporte: se creo el productor unico del conjunto de datos del documento (paso 8 del orquestador), que materializa un universo acotado de estudiantes por establecimiento con cobertura demografica casi completa y sin avisos de integridad; ejecucion validada. Productos a la fecha: pipeline completo de procesamiento, conjunto de entrenamiento, modelo predictivo validado y dataset del documento en disco.
 
-Productos a la fecha: pipeline de procesamiento operativo, dataset de entrenamiento y modelo validado. Pendientes priorizados: construir el productor unico de la capa de datos documental (bloqueante), luego el reporte Quarto; falta extraer la dimension de macrozona. Bloqueantes: insumo de planilla ausente para corrida integra; capa de datos documental inexistente. Deuda tecnica menor: residuos cosmeticos del renombrado de scripts. Sin despliegue publico; productos en contexto institucional cerrado. Gobernanza: si maneja datos personales sensibles de menores, confinados a entorno restringido y separados del codigo.
+Pendientes priorizados: empujar el commit de cierre al remoto; fijar la funcion de tramos de riesgo; y construir el reporte (Fase 4), entregable final aun no iniciado pero ya desbloqueado. Sin bloqueantes; dependencias internas entre tramos y secciones del reporte. Deuda tecnica: refactor de cruce de cohortes a funciones compartidas y ampliacion del catalogo de establecimientos para dos indicadores diferidos. Publicacion: circulacion institucional cerrada, sin exposicion publica. Gobernanza: SI maneja datos sensibles de NNA (identificadores, asistencia, matricula), con datos confinados a entorno restringido y separados del codigo; desde la sesion anterior se agrego gobernanza_datos.md (cierre de H4).
 
-Procedencia: traspaso_cierre_v28 (2026-06-28); resena.
+Procedencia: traspaso_cierre_v29 (2026-06-29); resena.
 
 ### slep_rendimiento_historico - Diagnóstico histórico del rendimiento escolar
 **Tipo de producto:** reporte.
@@ -142,13 +142,13 @@ Procedencia: traspaso_cierre_v34 (2026-06-24); resena; backlog_consolidado.
 ### slep_simce_adecuado - Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce
 **Tipo de producto:** tablero/app.
 
-Motor de comparacion interactivo de resultados Simce expresados segun los estandares de aprendizaje (Adecuado, Elemental, Insuficiente), navegable por establecimiento educacional, comuna, Servicio Local, region y pais, a lo largo de una decada y con segmentacion permanente por grupo socioeconomico. El producto es una aplicacion web autocontenida publicada en GitHub Pages, con una suite de documentacion standalone offline (cuatro archivos verificados sin referencias de red reales). La ultima sesion (cierre v23, hace dos dias) tuvo dos focos: fijar el estado por defecto del motor en las cuatro comunas del Servicio Local Costa Central con dependencia Servicio Local (derivacion en runtime, sin hardcodear codigos), en montaje y reset; y una auditoria minuciosa de la suite, que confirmo cero fugas (un conteo sospechoso resulto falso positivo de base64).
+Herramienta interactiva de comparacion de resultados de las pruebas Simce expresados segun los estandares de aprendizaje (Adecuado, Elemental, Insuficiente), con foco en el nivel Adecuado como indicador de logro, ponderada por numero de evaluados y segmentada por grupo socioeconomico. Permite navegar resultados por establecimiento educacional, comuna, Servicio Local, region y nivel nacional, para dos niveles escolares y dos pruebas, a lo largo de la serie disponible (mediados de la decada de 2010 hasta el ano en curso). Construida como aplicacion HTML standalone (React + D3, pipeline reproducible en R) y publicada como sitio estatico.
 
-Pendientes priorizados: anexar el delta de la sesion 23 al backlog (entradas 117-120) y la validacion visual en navegador del precargado, que es gate del titular. Pendientes menores heredados: cerrar y versionar el borrador de texto de difusion, afinar marcas de voz en la suite y, opcionalmente, separar la gobernanza por audiencia. Sin bloqueantes. Dependencia con el portafolio: la agregacion ponderada de este motor sirve de base metodologica a otros motores del Area. Deuda tecnica: el seed depende del match por nombre del Servicio Local; robusto pero sensible a cambios drasticos de nomenclatura. Estado de publicacion: desplegado y al dia. Gobernanza: maneja solo datos publicos agregados por establecimiento educacional; no contiene datos de estudiantes; identificadores personales residuales depurados going-forward.
+La sesion v24 fue integramente de mantenimiento documental: sin cambios al motor ni al pipeline. Se cerro el delta de backlog, se versiono la resena final, se retiraron marcas de revision en un script de documentacion y se normalizaron los tags del backlog a una taxonomia canonica de siete codigos. Productos a la fecha: motor desplegado, suite de documentacion standalone offline, backlog historico consolidado y resena final. Pendientes priorizados: sin pendientes activos; candidatos futuros son la actualizacion anual de insumos y la regeneracion de la suite si cambia su contenido. Sin bloqueantes. Deuda tecnica saldada. Gobernanza: maneja datos sensibles (cumplimiento Ley 21.719; identificador de persona natural retirado del insumo versionado going-forward).
 
-Procedencia: traspaso_cierre_v23 (2026-06-26); resena; backlog_historico.
+Procedencia: traspaso_cierre_v24 (2026-06-29); resena; backlog_historico.
 
-### slep_simce_estandares_aprendizaje - slep_simce_estandares_aprendizaje
+### slep_simce_estandares_aprendizaje - Minuta de resultados Simce por estándares de aprendizaje
 **Tipo de producto:** reporte.
 
 Sin resena; estado derivado del ultimo traspaso. Segun el traspaso y la documentacion raiz, el objetivo declarado es analizar resultados SIMCE por estandares de aprendizaje (Insuficiente/Elemental/Adecuado), ponderados por matricula evaluada, para los establecimientos educacionales de un servicio local, produciendo tablas de distribucion, graficos comparativos contra un benchmark regional y una minuta Word de apoyo a la toma de decisiones. La ultima sesion (sesion 14) no abordo analisis sustantivo: completo las fases finales de la migracion a GitHub, creando un workflow CI que bloquea datos, identificadores y credenciales, mas documentacion de contexto y README. La migracion quedo completa y el pipeline verificado de extremo a extremo.
@@ -160,8 +160,8 @@ Procedencia: traspaso_cierre_v14 (2026-05-28); sin resena.
 ## Anexos
 
 ### Proyectos auxiliares
-- **slep_monitoreo** - slep_monitoreo.
-- **slep_resena_proyectos** - slep_resena_proyectos.
+- **slep_monitoreo** - Portafolio del Área (escaparate web).
+- **slep_resena_proyectos** - Reseñas del portafolio.
 
 ### Proyectos nuevos detectados
 - ninguno.

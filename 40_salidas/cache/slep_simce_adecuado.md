@@ -1,15 +1,15 @@
 ---
 slug: slep_simce_adecuado
-sello_ruta: slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v23.md
-sello_mtime: 2026-06-26
-sello_hash: a7dfd70fbb6250b436070b6187e8b549
-semaforo: activo
-proximo_paso: anexar delta s23 al backlog y validar precargado en navegador
+sello_ruta: slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v24.md
+sello_mtime: 2026-06-29
+sello_hash: 150aafced4c1f626806dcbf2ee04342e
+semaforo: cerrado
+proximo_paso: mantenimiento documental concluido; estable y desplegado sin pendientes activos
 ---
 **Tipo de producto:** tablero/app.
 
-Motor de comparacion interactivo de resultados Simce expresados segun los estandares de aprendizaje (Adecuado, Elemental, Insuficiente), navegable por establecimiento educacional, comuna, Servicio Local, region y pais, a lo largo de una decada y con segmentacion permanente por grupo socioeconomico. El producto es una aplicacion web autocontenida publicada en GitHub Pages, con una suite de documentacion standalone offline (cuatro archivos verificados sin referencias de red reales). La ultima sesion (cierre v23, hace dos dias) tuvo dos focos: fijar el estado por defecto del motor en las cuatro comunas del Servicio Local Costa Central con dependencia Servicio Local (derivacion en runtime, sin hardcodear codigos), en montaje y reset; y una auditoria minuciosa de la suite, que confirmo cero fugas (un conteo sospechoso resulto falso positivo de base64).
+Herramienta interactiva de comparacion de resultados de las pruebas Simce expresados segun los estandares de aprendizaje (Adecuado, Elemental, Insuficiente), con foco en el nivel Adecuado como indicador de logro, ponderada por numero de evaluados y segmentada por grupo socioeconomico. Permite navegar resultados por establecimiento educacional, comuna, Servicio Local, region y nivel nacional, para dos niveles escolares y dos pruebas, a lo largo de la serie disponible (mediados de la decada de 2010 hasta el ano en curso). Construida como aplicacion HTML standalone (React + D3, pipeline reproducible en R) y publicada como sitio estatico.
 
-Pendientes priorizados: anexar el delta de la sesion 23 al backlog (entradas 117-120) y la validacion visual en navegador del precargado, que es gate del titular. Pendientes menores heredados: cerrar y versionar el borrador de texto de difusion, afinar marcas de voz en la suite y, opcionalmente, separar la gobernanza por audiencia. Sin bloqueantes. Dependencia con el portafolio: la agregacion ponderada de este motor sirve de base metodologica a otros motores del Area. Deuda tecnica: el seed depende del match por nombre del Servicio Local; robusto pero sensible a cambios drasticos de nomenclatura. Estado de publicacion: desplegado y al dia. Gobernanza: maneja solo datos publicos agregados por establecimiento educacional; no contiene datos de estudiantes; identificadores personales residuales depurados going-forward.
+La sesion v24 fue integramente de mantenimiento documental: sin cambios al motor ni al pipeline. Se cerro el delta de backlog, se versiono la resena final, se retiraron marcas de revision en un script de documentacion y se normalizaron los tags del backlog a una taxonomia canonica de siete codigos. Productos a la fecha: motor desplegado, suite de documentacion standalone offline, backlog historico consolidado y resena final. Pendientes priorizados: sin pendientes activos; candidatos futuros son la actualizacion anual de insumos y la regeneracion de la suite si cambia su contenido. Sin bloqueantes. Deuda tecnica saldada. Gobernanza: maneja datos sensibles (cumplimiento Ley 21.719; identificador de persona natural retirado del insumo versionado going-forward).
 
-Procedencia: traspaso_cierre_v23 (2026-06-26); resena; backlog_historico.
+Procedencia: traspaso_cierre_v24 (2026-06-29); resena; backlog_historico.
