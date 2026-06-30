@@ -224,12 +224,13 @@ n_total <- length(objetos)
 
 # ---- FASE 3: panorama_visual.html (autocontenido) ----------------------------
 
-# Paleta: tokens nombrados del portafolio. # REVISAR: valores hex aproximados;
-# sincronizar con colors_and_type.css del portafolio (no leido por R2).
+# Paleta: tokens nombrados del portafolio, sincronizados con los valores reales
+# de la marca SLEP Costa Central (colors_and_type.css del portafolio).
 css <- '
 :root{
-  --plum:#5b2a4e; --cream:#faf6ef; --ocean:#1f6f8b; --olive:#6b8e23;
-  --coral:#e8643c; --slate:#5a6b7b; --sand:#d6a64a; --ink:#241f25;
+  --plum:#4A2746; --cream:#FFF6E0; --ocean:#0062A0; --olive:#75924E;
+  --coral:#E88663; --slate:#747474; --sand:#BCA493; --ink:#1C1212;
+  --ink-2:#2E2230;
   --line:#e3dccf; --muted:#6f6a63; --card:#ffffff;
 }
 *{box-sizing:border-box}
