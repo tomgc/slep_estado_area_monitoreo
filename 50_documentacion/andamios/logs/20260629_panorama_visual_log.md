@@ -79,6 +79,25 @@ orquestador; lectura de hermanos limitada a `50_documentacion/` (R2).
   produce un cosmético "hace -1 dias" en el paso 35 (anomalía de dato del
   hermano, no del orquestador).
 
+## Corrección de bug detectado durante la ejecución
+
+Al verificar con `run_all`, se detectó que el **paso 31 estrechaba el registro a
+las 5 columnas canónicas** (`leer_registro_previo` hacía `prev[, cols]` y
+`construir_fila` armaba un data.frame de 5 columnas), borrando las columnas nuevas
+de FASE 0 en cada corrida. Sin arreglo, FASE 0 era inútil y FASE 1 nunca podría
+leer `datos_sensibles`/`estado_proyecto`. Corrección (commit `fix(paso 31)`):
+
+- `COLS_GESTIONADAS` declara las 5 columnas que 31 sincroniza.
+- `leer_registro_previo` ahora preserva las columnas extra (gestionadas primero,
+  extra después en su orden original).
+- `construir_fila` arrastra las columnas extra por slug (valor previo, o "" si es
+  nuevo).
+
+Verificado: tras `run_all`, el registro conserva las 7 columnas; idempotente; las
+5 columnas originales quedan byte-idénticas a la curación del titular. (Nota: este
+bug también explica por qué el primer intento de commit del registro no encontró
+cambios — el paso 31 ya lo había revertido a 5 columnas.)
+
 ## Notas para el revisor
 
 - `tiene_backlog = TRUE` en **5** proyectos (no 4 como anticipaba el encargo):

@@ -48,10 +48,16 @@ titulo_desde_resena <- function(ruta_resena) {
   if (nchar(titulo) == 0) NA_character_ else titulo
 }
 
-#' Lee el registro previo si existe; devuelve data.frame de columnas character
-#' con el esquema canonico, o un data.frame vacio con ese esquema.
+# Columnas que ESTE script gestiona/sincroniza. Cualquier OTRA columna del
+# registro (p. ej. datos_sensibles, estado_proyecto, curadas a mano por el
+# titular) se PRESERVA intacta: 31 nunca la pisa ni la elimina.
+COLS_GESTIONADAS <- c("slug", "nombre_real", "alias_corto", "categoria", "notas")
+
+#' Lee el registro previo si existe; devuelve data.frame de columnas character.
+#' Asegura las columnas gestionadas y PRESERVA cualquier columna extra (al final,
+#' en su orden original). Si no existe, devuelve un df vacio con las gestionadas.
 leer_registro_previo <- function(ruta) {
-  cols <- c("slug", "nombre_real", "alias_corto", "categoria", "notas")
+  cols <- COLS_GESTIONADAS
   vacio <- stats::setNames(
     data.frame(matrix("", nrow = 0, ncol = length(cols)), stringsAsFactors = FALSE),
     cols
@@ -62,7 +68,8 @@ leer_registro_previo <- function(ruta) {
     stringsAsFactors = FALSE
   )
   for (c in cols) if (is.null(prev[[c]])) prev[[c]] <- ""
-  prev[, cols, drop = FALSE]
+  extra <- setdiff(names(prev), cols)
+  prev[, c(cols, extra), drop = FALSE]
 }
 
 # ---- Flujo principal ---------------------------------------------------------
@@ -107,6 +114,9 @@ df_proyectos$nombre_real_sugerido <- vapply(
 
 prev <- leer_registro_previo(RUTA_REGISTRO)
 
+# Columnas extra del titular (no gestionadas por 31): se preservan tal cual.
+cols_extra <- setdiff(names(prev), COLS_GESTIONADAS)
+
 # Universo actual + bajas (slugs que estaban en el registro y desaparecieron).
 slugs_previos <- prev$slug
 proyectos_nuevos <- setdiff(df_proyectos$slug, slugs_previos)
@@ -134,10 +144,15 @@ construir_fila <- function(slug) {
     det$categoria_detectada
   }
 
-  data.frame(
+  base <- data.frame(
     slug = slug, nombre_real = nombre_real, alias_corto = alias_corto,
     categoria = categoria, notas = notas, stringsAsFactors = FALSE
   )
+  # Preserva las columnas extra del titular (valor previo, o "" si es nuevo).
+  for (col in cols_extra) {
+    base[[col]] <- if (tiene_prev) fila_prev[[col]] else ""
+  }
+  base
 }
 
 filas_activas <- if (length(df_proyectos$slug)) {
