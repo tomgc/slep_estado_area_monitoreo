@@ -224,6 +224,16 @@ n_total <- length(objetos)
 
 # ---- FASE 3: panorama_visual.html (autocontenido) ----------------------------
 
+# Bajo locale C, los literales no-ASCII de este script se parsean como
+# Encoding "unknown" con bytes UTF-8 validos. Al concatenarlos (paste0/sprintf)
+# con strings ya marcados UTF-8 (JSON embebido, datos de readLines), R recodifica
+# desde el locale nativo (C) hacia UTF-8 y, como C no representa esos bytes altos,
+# los escapa como texto literal "<c3><81>" (mojibake; misma familia que el em-dash
+# de la sesion 1, backlog #17). u8() declara el literal como UTF-8 ANTES de
+# mezclar: solo reetiqueta el Encoding, no altera los bytes, evitando el viaje
+# de ida y vuelta por el locale nativo.
+u8 <- function(x) { Encoding(x) <- "UTF-8"; x }
+
 # Paleta: tokens nombrados del portafolio, sincronizados con los valores reales
 # de la marca SLEP Costa Central (colors_and_type.css del portafolio).
 css <- '
@@ -262,7 +272,7 @@ footer.bot{margin-top:30px;border-top:1px solid var(--line);padding-top:14px;col
 footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 '
 
-js <- '
+js <- u8('
 const RAW = document.getElementById("datos-cartera").textContent;
 const CARTERA = JSON.parse(RAW);
 const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
@@ -314,15 +324,15 @@ function render(){
   Object.keys(cont).forEach(k=>{cdiv.appendChild(el("span",null,(ETIQUETA_ESTADO[k]||k)+": "+cont[k]));});
 }
 render();
-'
+')
 
 html <- paste0(
   "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n<meta charset=\"utf-8\">\n",
   "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n",
-  "<title>Panorama de la cartera — Área de Monitoreo</title>\n",
+  u8("<title>Panorama de la cartera — Área de Monitoreo</title>\n"),
   "<style>", css, "</style>\n</head>\n<body>\n<div class=\"wrap\">\n",
-  "<header class=\"top\">\n<h1>Panorama de la cartera — Área de Monitoreo</h1>\n",
-  "<div class=\"meta\">Generado: ", fecha_generacion, " · ", n_total, " proyectos</div>\n</header>\n",
+  u8("<header class=\"top\">\n<h1>Panorama de la cartera — Área de Monitoreo</h1>\n"),
+  "<div class=\"meta\">Generado: ", fecha_generacion, u8(" · "), n_total, " proyectos</div>\n</header>\n",
   "<main id=\"grid\" class=\"grid\"></main>\n",
   "<footer class=\"bot\">Total de proyectos: ", n_total,
   "<div class=\"conteos\" id=\"conteos\"></div></footer>\n",
@@ -342,23 +352,23 @@ et_estado <- function(e) {
 }
 m_lin <- character(0)
 ap <- function(...) m_lin <<- c(m_lin, ...)
-ap(sprintf("# Panorama visual de la cartera — Área de Monitoreo"), "",
-   sprintf("Generado: %s · %d proyectos", fecha_generacion, n_total), "",
-   "> Versión texto del panorama visual (mismo orden y campos que las cards).", "")
+ap(sprintf(u8("# Panorama visual de la cartera — Área de Monitoreo")), "",
+   sprintf(u8("Generado: %s · %d proyectos"), fecha_generacion, n_total), "",
+   u8("> Versión texto del panorama visual (mismo orden y campos que las cards)."), "")
 for (o in objetos) {
   ap(sprintf("## %s", if (is.na(o$nombre_real)) o$slug else o$nombre_real))
   ap(sprintf("- **slug:** `%s`", o$slug))
   ap(sprintf("- **estado:** %s", et_estado(o$estado_proyecto)))
   ds <- if (is.na(o$datos_sensibles)) "sin clasificar" else o$datos_sensibles
   ap(sprintf("- **datos sensibles:** %s", ds))
-  ap(sprintf("- **última actualización:** %s",
+  ap(sprintf(u8("- **última actualización:** %s"),
              if (is.na(o$fecha_actualizacion)) "sin traspaso" else o$fecha_actualizacion))
   sint <- if (!is.na(o$sintesis)) o$sintesis else if (!is.na(o$objetivo)) o$objetivo else NA
-  if (!is.na(sint)) ap(sprintf("- **síntesis:** %s", sint))
+  if (!is.na(sint)) ap(sprintf(u8("- **síntesis:** %s"), sint))
   if (isTRUE(o$tiene_backlog) && !is.na(o$resena_itinerario))
-    ap(sprintf("- **reseña del itinerario:** %s", o$resena_itinerario))
+    ap(sprintf(u8("- **reseña del itinerario:** %s"), o$resena_itinerario))
   if (!identical(o$proximos_pasos, NA) && length(o$proximos_pasos) > 0) {
-    ap("- **próximos pasos:**")
+    ap(u8("- **próximos pasos:**"))
     for (x in o$proximos_pasos) ap(sprintf("  - %s", x))
   }
   ap("")

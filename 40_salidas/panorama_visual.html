@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panorama de la cartera <e2><80><94> <c3><81>rea de Monitoreo</title>
+<title>Panorama de la cartera — Área de Monitoreo</title>
 <style>
 :root{
   --plum:#4A2746; --cream:#FFF6E0; --ocean:#0062A0; --olive:#75924E;
@@ -43,8 +43,8 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 <body>
 <div class="wrap">
 <header class="top">
-<h1>Panorama de la cartera <e2><80><94> <c3><81>rea de Monitoreo</h1>
-<div class="meta">Generado: 2026-06-29 <c2><b7> 16 proyectos</div>
+<h1>Panorama de la cartera — Área de Monitoreo</h1>
+<div class="meta">Generado: 2026-06-29 · 16 proyectos</div>
 </header>
 <main id="grid" class="grid"></main>
 <footer class="bot">Total de proyectos: 16<div class="conteos" id="conteos"></div></footer>
@@ -379,17 +379,17 @@ function render(){
     const b=el("div","badges");
     b.appendChild(badgeEstado(p.estado_proyecto));
     if(p.datos_sensibles==="si")b.appendChild(el("span","badge b-sensible","datos sensibles"));
-    else if(p.datos_sensibles==="no")b.appendChild(el("span","badge b-publico","datos p<c3><ba>blicos"));
+    else if(p.datos_sensibles==="no")b.appendChild(el("span","badge b-publico","datos públicos"));
     c.appendChild(b);
     const sint = p.sintesis || (p.objetivo? String(p.objetivo).split(/(?<=\.)\s/)[0] : null);
     if(sint) c.appendChild(el("p","sint",sint));
-    c.appendChild(el("div","fecha","<c3><9a>ltima actualizaci<c3><b3>n: "+fechaEs(p.fecha_actualizacion)));
+    c.appendChild(el("div","fecha","Última actualización: "+fechaEs(p.fecha_actualizacion)));
     if(p.tiene_backlog && p.resena_itinerario){
-      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Rese<c3><b1>a del itinerario"));
+      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Reseña del itinerario"));
       blk.appendChild(el("div",null,p.resena_itinerario)); c.appendChild(blk);
     }
     if(p.proximos_pasos && p.proximos_pasos.length){
-      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Pr<c3><b3>ximos pasos"));
+      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Próximos pasos"));
       const ul=el("ul"); p.proximos_pasos.forEach(x=>ul.appendChild(el("li",null,x)));
       blk.appendChild(ul); c.appendChild(blk);
     }
