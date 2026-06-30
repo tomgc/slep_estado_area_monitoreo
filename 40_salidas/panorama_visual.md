@@ -6,9 +6,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Análisis de trayectorias educativas interrumpidas
 - **slug:** `slep_minuta_desvinculacion`
+- **tipo:** Minuta · Dirección Ejecutiva
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-29
+- **síntesis:** La desvinculación escolar, entendida como la interrupción de la trayectoria educativa de un estudiante, es uno de los fenómenos más sensibles para un servicio educativo y, habitualmente, se aborda cuando ya ha ocurrido. Para revertir esta lógica, este reporte analiza las trayectorias interrumpidas e irregulares de los estudiantes del SLEP Costa Central con el fin de caracterizar este fenómeno en el territorio y, fundamentalmente, anticipar su ocurrencia. (+1 párrafos más)
 - **próximos pasos:**
   - Inventario de pendientes
   - §1.5 diferencia_matricula (caracterización EE, 6 cols actuales no la tienen).
@@ -16,9 +18,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce
 - **slug:** `slep_simce_adecuado`
+- **tipo:** Motor de comparación
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-29
+- **síntesis:** Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente. (+2 párrafos más)
 - **próximos pasos:**
   - Regenerar suite si cambia contenido de documentar.R (requiere npm + red).
   - Actualización anual de insumos Simce (cuando la Agencia publique 2025 final o 2026).
@@ -36,9 +40,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Monitoreo de aprendizajes en la educación parvularia
 - **slug:** `slep_aprendizajes_ep`
+- **tipo:** Monitoreo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-26
+- **síntesis:** En conjunto con la coordinación de Educación Parvularia del Área de Mejora Continua y siguiendo los principios de las Bases Curriculares de la Educación Parvularia vigentes, construimos un sistema de monitoreo de aprendizajes para la educación inicial del SLEP Costa Central. Este sistema organiza las evaluaciones realizadas por las educadoras por ámbito, núcleo y objetivo de aprendizaje y los presenta en informes interactivos que permiten segmentar los resultados por momento evaluativo (diagnóstico, primer semestre y segundo semestre) y diversos niveles de agrupación (territorio, jardín infantil, educadora y párvulo). (+1 párrafos más)
 
 ## Portafolio del Área (escaparate web)
 - **slug:** `slep_monitoreo`
@@ -53,9 +59,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)
 - **slug:** `slep_idps`
+- **tipo:** Motor de comparación
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-25
+- **síntesis:** Los Indicadores de Desarrollo Personal y Social (IDPS) que la Agencia mide junto al Simce capturan aspectos que, si bien están planteados como no estrictamente académicos, resultan fundamentales para comprender de manera integral la experiencia educativa de los estudiantes. Estos indicadores (autoestima académica y motivación, clima de convivencia, participación y formación ciudadana, y hábitos de vida saludable) sirven de barómetro para leer en contexto los resultados de las pruebas académicas del Simce. (+1 párrafos más)
 - **reseña del itinerario:** `slep_idps` es un motor de visualización interactivo de los Indicadores de Desarrollo Personal y Social (IDPS) de la Agencia de Calidad de la Educación. Produce un HTML autocontenido (React 18 + D3 v7 inline) publicado en GitHub Pages que muestra el dato por establecimiento educacional, sin agregación territorial, segmentado por grupo socioeconómico (GSE), con serie histórica 2014→2025. Para el equipo de Monitoreo y Seguimiento del SLEP Costa Central y, desde v05, para cualquier SLEP/comuna del país. Hermano de `slep_simce_adecuado` y `slep_categoria_desempeno`, de los que reutiliza catálogos…
 - **próximos pasos:**
   - Qué: se verificó que el histórico 2014–2025 ya está integrado en el parquet (rama 3b del 34), idempotente (md5 intacto tras re-correr), y s…
@@ -64,9 +72,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio
 - **slug:** `slep_reportes_modelo_resguardo_asistencia`
+- **tipo:** Reporte · Directores/as
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-20
+- **síntesis:** El Plan para el Fortalecimiento de la Asistencia Educativa del SLEP Costa Central fija como uno de sus objetivos establecer un marco institucional de trabajo en materia de asistencia para todos los establecimientos del territorio. Lo anterior se materializa a través del Modelo de Resguardo de la Asistencia Educativa del Territorio, el cual, además de orientaciones, planes de acción y actividades de socialización, evaluación y mejora, tiene como uno de sus componentes un reporte sobre esta temática dirigido a todos los directores y directoras del SLEP. (+1 párrafos más)
 - **reseña del itinerario:** `slep_reportes_modelo_resguardo_asistencia` genera, por lote y cada mes, un reporte por director/a para los 73 establecimientos del SLEP Costa Central, implementando el "Modelo de Resguardo de la Asistencia Educativa del Territorio": un PDF (Quarto + typst + tinytable) más una planilla xlsx por establecimiento. Cada reporte muestra la asistencia del propio EE y su posición frente al territorio de forma anonimizada (percentiles y medianas, sin nombrar a otros EE) y cierra con la identificación nominal de los estudiantes en alerta del propio EE. Es variante de la minuta ejecutiva (`slep_minuta_…
 - **próximos pasos:**
   - Inventario de pendientes
@@ -75,9 +85,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país
 - **slug:** `slep_categoria_desempeno`
+- **tipo:** Motor de comparación
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-19
+- **síntesis:** Las Categorías de Desempeño son uno de los componentes clave del Sistema de Aseguramiento de la Calidad de la Educación. Esta ordenación evalúa a cada establecimiento bajo un modelo de rendimiento ajustado al contexto, el cual cruza sus resultados educativos y formativos con el perfil de vulnerabilidad de sus estudiantes para determinar qué tan cerca o lejos están de lo esperado. (+1 párrafos más)
 - **reseña del itinerario:** slep_categoria_desempeno es un motor interactivo (R + HTML autocontenido) que compara la distribución de establecimientos por Categoría de Desempeño (Alto / Medio / Medio-Bajo / Insuficiente) de la Agencia de Calidad, entre comunas, SLEPs, regiones y el nivel nacional, separando básica y media. Pipeline en R (xlsx → parquet → JSON embebido → HTML), publicado en GitHub Pages. Para el equipo de Monitoreo del SLEP Costa Central, desde 2026. Datos públicos. (Nota v03: la opción "nacional" del selector se eliminó en la sesión 3 por volumen de EE; se agregó selección de establecimiento individual. …
 - **próximos pasos:**
   - Inventario de pendientes
@@ -86,9 +98,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Minuta de asistencia mensual
 - **slug:** `slep_minuta_asistencia`
+- **tipo:** Minuta · Dirección Ejecutiva
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-15
+- **síntesis:** La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio. (+1 párrafos más)
 - **próximos pasos:**
   - Inventario de pendientes
   - Tipo: deuda técnica / refactor estructural. Complejidad: Media. Estado: aprobado, no iniciado.
@@ -96,9 +110,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Diagnóstico histórico del rendimiento escolar
 - **slug:** `slep_rendimiento_historico`
+- **tipo:** Diagnóstico
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-15
+- **síntesis:** Diagnóstico longitudinal y multidimensional de las bases de rendimiento escolar del Mineduc (2002-2025) con el propósito de caracterizar las trayectorias educativas de los estudiantes de los establecimientos educacionales del SLEP Costa Central y cuantificar las variaciones en las tasas de promoción y reprobación. (+1 párrafos más)
 - **próximos pasos:**
   - Ancla de sanidad CEM: promoción municipal-nacional ≈ 94% (2023) en el HTML.
   - Abrir el .docx y confirmar estilos de marca.
@@ -106,9 +122,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles
 - **slug:** `slep_seguimiento_educacion_inicial`
+- **tipo:** Análisis longitudinal
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-14
+- **síntesis:** Para los párvulos y sus familias, las transiciones entre los niveles iniciales son momentos clave de su trayectoria educativa. Para un sostenedor, esta información es un insumo estratégico para la toma de decisiones en torno a las proyecciones del servicio educativo que ofrece. (+1 párrafos más)
 - **reseña del itinerario:** Seguimiento Educación Inicial es un sistema de análisis longitudinal de cohortes de párvulos para el SLEP Costa Central (Viña del Mar, Concón, Quintero, Puchuncaví). Rastrea transiciones de educación parvularia a básica en tres periodos académicos (2023→2024, 2024→2025, 2025→2026). Dos módulos: el privado (RUT real, retención en el directorio de 97 establecimientos SLEP CC) y el público (MRUN enmascarado, flujos territoriales entre todos los sostenedores de las cuatro comunas, sobre datos abiertos Mineduc). Interfaz Shiny offline unificada con selector de módulo, Sankey echarts4r, tablas reac…
 - **próximos pasos:**
   - Inventario de pendientes vigentes
@@ -117,9 +135,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## Sistema de alertas de Anótate en la Lista
 - **slug:** `slep_alertas_ael`
+- **tipo:** Sistema de alertas
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-09
+- **síntesis:** El sistema de alertas de Anótate en la Lista (AEL) automatiza una tarea recurrente del trabajo de monitoreo de listas de espera: avisar a los establecimientos del territorio cuando registran vacantes sin asignar en AEL, que canaliza la búsqueda de cupos y matrícula. A partir del reporte quincenal que emite la Dirección de Educación Pública (DEP) a partir de los datos del Mineduc, el sistema identifica los establecimientos con vacantes y lista de espera y prepara, para cada uno, una comunicación personalizada lista para enviar a cada director o directora. Este mensaje incluye, para cada nivel del establecimiento, los cupos declarados, la matrícula actual y las vacantes sin asignar.
 - **próximos pasos:**
   - Archivo(s) afectado(s): 30_procesamiento/31_alertas_establecimientos.R (usa validar_columnas() de 10_utils.R).
   - Categoría temática: Validación y robustez.
@@ -127,9 +147,11 @@ Generado: 2026-06-29 · 16 proyectos
 
 ## CostaPresente
 - **slug:** `slep_costapresente`
+- **tipo:** Plataforma · CostaPresente
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-05-31
+- **síntesis:** CostaPresente nace para apoyar el seguimiento de las trayectorias escolares de los estudiantes que, en algún momento de los últimos años, han pasado por algún establecimiento del SLEP Costa Central. A partir de registros mensuales de asistencia reconstruye, para cada estudiante, dónde ha estado matriculado y cómo ha evolucionado su escolaridad en términos de asistencia, promoción y retiros.
 - **próximos pasos:**
   - Pendiente 1 (P1): Validación cross-OS en Windows
   - Descripción: Clonar el repo en una máquina Windows, configurar ~/.Renviron, verificar NBSP en ruta OneDrive, ejecutar pipeline ETL + App en…

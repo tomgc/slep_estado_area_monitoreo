@@ -22,9 +22,11 @@ library(stringr)
 # ---- Constantes --------------------------------------------------------------
 
 # Ruta al data.js del portafolio (slep_monitoreo) para sintesis/objetivo/tipo
-# editoriales. NO vive en este repo. Si queda NA, se omite ese sub-paso sin
-# fallar (los campos quedan null) y se reporta como advertencia.
-RUTA_DATA_JS_PORTAFOLIO <- NA_character_  # completar: ruta absoluta a slep_monitoreo/data.js
+# editoriales. NO vive en este repo: se lee in situ desde su ruta externa (R2),
+# igual que los traspasos/backlogs de los hermanos; nunca se copia ni versiona.
+# Si el archivo no existe (o esto vuelve a NA), se degrada con gracia: los campos
+# quedan null y se reporta como advertencia.
+RUTA_DATA_JS_PORTAFOLIO <- file.path(RAIZ_PROYECTOS, "slep_monitoreo", "data.js")
 
 RUTA_PANORAMA_VISUAL_HTML <- file.path(RUTA_SALIDAS, "panorama_visual.html")
 RUTA_PANORAMA_VISUAL_MD   <- file.path(RUTA_SALIDAS, "panorama_visual.md")
@@ -34,9 +36,28 @@ RANGO_ESTADO <- c(inicial = 0L, en_desarrollo = 1L, con_productos = 2L,
                   en_pausa = 3L, concluido = 4L)
 MAX_RESENA <- 600L      # tope de caracteres de resena_itinerario.
 MAX_PROXIMOS <- 3L      # tope de entradas de proximos_pasos.
+N_PARRAFOS_SINTESIS_CARD <- 1L   # parrafos de sintesis[] que muestra la card (resto: "+N parrafos mas").
 
 # Nombre canonico EXACTO del backlog (no se aceptan variantes).
 SUBRUTA_BACKLOG_CANONICO <- file.path("50_documentacion", "activa", "backlog_acumulativo.md")
+
+# Mapeo orden (entero estable de data.js) -> slug del hermano. Aprobado por el
+# titular (sesion de cierre). Se clava por `orden` y NO por texto de titulo: si
+# data.js reordena el array, el desfase orden<->slug es detectable a simple vista
+# por el comentario inline (titulo literal de data.js al momento de aprobar).
+MAPEO_ORDEN_SLUG <- c(
+  `1`  = "slep_minuta_asistencia",                     # "Minuta de asistencia mensual"
+  `2`  = "slep_reportes_modelo_resguardo_asistencia",  # "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio"
+  `3`  = "slep_simce_adecuado",                        # "Motor de comparacion interactivo de los resultados de los estandares de aprendizaje medidos por las pruebas Simce"
+  `4`  = "slep_idps",                                  # "Motor de comparacion interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)"
+  `5`  = "slep_categoria_desempeno",                   # "Motor de comparacion interactivo de la Categoria de Desempeno de los establecimientos educacionales del pais"
+  `6`  = "slep_aprendizajes_ep",                       # "Monitoreo de aprendizajes en la educacion parvularia"
+  `7`  = "slep_seguimiento_educacion_inicial",         # "Analisis longitudinal de preferencias de matricula de egresados de jardines infantiles"
+  `8`  = "slep_costapresente",                         # "CostaPresente"
+  `9`  = "slep_alertas_ael",                           # "Sistema de alertas de Anotate en la Lista"
+  `10` = "slep_minuta_desvinculacion",                 # "Analisis de trayectorias educativas interrumpidas"
+  `11` = "slep_rendimiento_historico"                  # "Diagnostico historico del rendimiento escolar"
+)
 
 # ---- Helpers de lectura/parsing (tolerantes) ---------------------------------
 
@@ -136,6 +157,48 @@ o_null <- function(x) {
   if (is.na(x) || !nzchar(trimws(x))) NA_character_ else x
 }
 
+#' Parsea el arreglo PROYECTOS de un data.js del portafolio. Enfoque (B.2): el
+#' formato es JS plano y estable (claves sin comillas, valores con comillas
+#' dobles consistentes, sin trailing commas, sin funciones, comentarios fuera de
+#' los objetos), de uso interno. Por eso saneamos las 7 claves conocidas a
+#' comillas y delegamos en jsonlite -mas robusto para el array multilinea
+#' sintesis[] que una regex por campo-. tryCatch POR OBJETO: una entrada
+#' malformada se omite con advertencia sin abortar el resto (patron tolerante).
+#' Devuelve lista nombrada por `orden` (string), o NULL si el archivo no existe /
+#' no hay arreglo / ninguna entrada parsea (degradacion con gracia).
+parsear_data_js <- function(ruta_abs) {
+  if (is.null(ruta_abs) || is.na(ruta_abs) || !file.exists(ruta_abs)) return(NULL)
+  txt <- tryCatch(readr::read_file(ruta_abs), error = function(e) NA_character_)
+  if (is.na(txt)) return(NULL)
+  arr <- str_match(txt, "(?s)PROYECTOS\\s*=\\s*\\[(.*?)\\]\\s*;")[, 2]
+  if (is.na(arr)) {
+    log_msg("data.js: no se hallo el arreglo PROYECTOS; se omiten campos editoriales.",
+            "36_visual", "WARN")
+    return(NULL)
+  }
+  # Objetos top-level: { ... } sin llaves anidadas (formato plano observado).
+  objs <- str_match_all(arr, "(?s)\\{[^{}]*\\}")[[1]][, 1]
+  if (length(objs) == 0) return(NULL)
+  res <- list()
+  for (o in objs) {
+    obj <- tryCatch({
+      # Quotear SOLO las 7 claves conocidas, ancladas a inicio de linea (los
+      # valores string viven en su propia linea iniciada por comilla -> no matchean).
+      o2 <- str_replace_all(
+        o, "(?m)^(\\s*)(orden|tipo|titulo|objetivo|sintesis|estado|imgs)\\s*:", '\\1"\\2":')
+      jsonlite::fromJSON(o2, simplifyVector = FALSE)
+    }, error = function(e) {
+      log_msg(sprintf("data.js: entrada no parseable, se omite (%s).", conditionMessage(e)),
+              "36_visual", "WARN")
+      NULL
+    })
+    if (!is.null(obj) && !is.null(obj$orden)) {
+      res[[as.character(as.integer(obj$orden))]] <- obj
+    }
+  }
+  if (length(res) == 0) NULL else res
+}
+
 # ---- FASE 1: construir el objeto por proyecto --------------------------------
 
 if (!file.exists(RUTA_INVENTARIO_JSON)) {
@@ -149,11 +212,25 @@ registro <- as.data.frame(
   stringsAsFactors = FALSE
 )
 
-# Advertencia data.js (no configurado): se omiten sintesis/objetivo/tipo.
+# data.js del portafolio (in situ, R2): provee tipo/objetivo/sintesis editoriales.
+# Si no esta disponible, se degrada con gracia (campos null + advertencia).
 advertencias <- character(0)
-if (is.na(RUTA_DATA_JS_PORTAFOLIO)) {
+datos_data_js <- parsear_data_js(RUTA_DATA_JS_PORTAFOLIO)
+if (is.null(datos_data_js)) {
   advertencias <- c(advertencias,
-    "RUTA_DATA_JS_PORTAFOLIO no configurada (NA): se omiten sintesis/objetivo/tipo editoriales para todos los proyectos (quedan null).")
+    "data.js no disponible o sin entradas parseables: tipo/objetivo/sintesis quedan null para todos los proyectos.")
+}
+# Reindexado orden -> slug segun el mapeo aprobado (clave por orden estable).
+datos_por_slug <- list()
+if (!is.null(datos_data_js)) {
+  for (ord in names(datos_data_js)) {
+    if (ord %in% names(MAPEO_ORDEN_SLUG)) {
+      datos_por_slug[[ MAPEO_ORDEN_SLUG[[ord]] ]] <- datos_data_js[[ord]]
+    } else {
+      advertencias <- c(advertencias,
+        sprintf("data.js: orden %s sin slug en MAPEO_ORDEN_SLUG; entrada ignorada.", ord))
+    }
+  }
 }
 
 abs_de <- function(rel) {
@@ -175,6 +252,15 @@ construir_objeto <- function(p) {
   proximos <- extraer_proximos_pasos(ruta_traspaso)
   resena <- if (tiene_backlog) extraer_objetivo_backlog(ruta_backlog_canon) else NULL
 
+  # Editoriales de data.js (NULL si este slug no tiene entrada mapeada).
+  dj <- datos_por_slug[[slug]]
+  parrafos <- if (!is.null(dj)) unlist(dj$sintesis) else character(0)
+  # Card: primer(os) N_PARRAFOS_SINTESIS_CARD parrafo(s) completos, SIN truncar
+  # (MAX_RESENA es exclusivo de resena_itinerario del backlog).
+  sintesis_card <- if (length(parrafos) >= 1)
+    paste(head(parrafos, N_PARRAFOS_SINTESIS_CARD), collapse = "\n\n") else NA_character_
+  parrafos_extra <- max(0L, length(parrafos) - N_PARRAFOS_SINTESIS_CARD)
+
   list(
     slug             = slug,
     nombre_real      = if (tiene_rg) o_null(rg$nombre_real) else NA_character_,
@@ -182,9 +268,10 @@ construir_objeto <- function(p) {
     categoria        = if (tiene_rg) o_null(rg$categoria) else o_null(p$categoria),
     datos_sensibles  = if (tiene_rg) o_null(rg$datos_sensibles) else NA_character_,
     estado_proyecto  = if (tiene_rg) o_null(rg$estado_proyecto) else NA_character_,
-    sintesis         = NA_character_,   # de data.js si se configura (hoy null)
-    objetivo         = NA_character_,
-    tipo             = NA_character_,
+    sintesis         = sintesis_card,                          # primer parrafo de data.js (o null)
+    sintesis_parrafos_extra = parrafos_extra,                  # parrafos restantes no mostrados en la card
+    objetivo         = if (!is.null(dj)) o_null(dj$objetivo) else NA_character_,
+    tipo             = if (!is.null(dj)) o_null(dj$tipo) else NA_character_,
     fecha_actualizacion = if (is.null(fecha) || is.na(fecha)) NA_character_ else fecha,
     proximos_pasos   = if (is.null(proximos)) NA else as.list(proximos),
     tiene_backlog    = tiene_backlog,
@@ -264,7 +351,9 @@ header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
 .b-concluido{background:var(--plum)} .b-sinclasif{background:#9a948c}
 .b-sensible{background:var(--coral)} .b-publico{background:#b9c2a6;color:var(--ink)}
 .fecha{font-size:.82rem;color:var(--muted)}
+.tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em}
 .sint{font-size:.92rem}
+.mas{font-size:.78rem;color:var(--muted);font-style:italic}
 .blk{font-size:.85rem;background:var(--cream);border-left:3px solid var(--line);padding:8px 10px;border-radius:6px}
 .blk .lbl{display:block;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px}
 .blk ul{margin:4px 0 0;padding-left:18px} .blk li{margin:2px 0}
@@ -298,13 +387,18 @@ function render(){
     const c=el("div","card");
     c.appendChild(el("h2",null,p.nombre_real||p.slug));
     c.appendChild(el("div","slug",p.slug));
+    if(p.tipo) c.appendChild(el("div","tipo",p.tipo));
     const b=el("div","badges");
     b.appendChild(badgeEstado(p.estado_proyecto));
     if(p.datos_sensibles==="si")b.appendChild(el("span","badge b-sensible","datos sensibles"));
     else if(p.datos_sensibles==="no")b.appendChild(el("span","badge b-publico","datos públicos"));
     c.appendChild(b);
     const sint = p.sintesis || (p.objetivo? String(p.objetivo).split(/(?<=\\.)\\s/)[0] : null);
-    if(sint) c.appendChild(el("p","sint",sint));
+    if(sint){
+      c.appendChild(el("p","sint",sint));
+      if(p.sintesis_parrafos_extra>0)
+        c.appendChild(el("div","mas","+"+p.sintesis_parrafos_extra+" párrafos más"));
+    }
     c.appendChild(el("div","fecha","Última actualización: "+fechaEs(p.fecha_actualizacion)));
     if(p.tiene_backlog && p.resena_itinerario){
       const blk=el("div","blk"); blk.appendChild(el("span","lbl","Reseña del itinerario"));
@@ -358,13 +452,18 @@ ap(sprintf(u8("# Panorama visual de la cartera — Área de Monitoreo")), "",
 for (o in objetos) {
   ap(sprintf("## %s", if (is.na(o$nombre_real)) o$slug else o$nombre_real))
   ap(sprintf("- **slug:** `%s`", o$slug))
+  if (!is.na(o$tipo)) ap(sprintf("- **tipo:** %s", o$tipo))
   ap(sprintf("- **estado:** %s", et_estado(o$estado_proyecto)))
   ds <- if (is.na(o$datos_sensibles)) "sin clasificar" else o$datos_sensibles
   ap(sprintf("- **datos sensibles:** %s", ds))
   ap(sprintf(u8("- **última actualización:** %s"),
              if (is.na(o$fecha_actualizacion)) "sin traspaso" else o$fecha_actualizacion))
   sint <- if (!is.na(o$sintesis)) o$sintesis else if (!is.na(o$objetivo)) o$objetivo else NA
-  if (!is.na(sint)) ap(sprintf(u8("- **síntesis:** %s"), sint))
+  if (!is.na(sint)) {
+    mas <- if (o$sintesis_parrafos_extra > 0)
+      sprintf(u8(" (+%d párrafos más)"), o$sintesis_parrafos_extra) else ""
+    ap(sprintf(u8("- **síntesis:** %s%s"), sint, mas))
+  }
   if (isTRUE(o$tiene_backlog) && !is.na(o$resena_itinerario))
     ap(sprintf(u8("- **reseña del itinerario:** %s"), o$resena_itinerario))
   if (!identical(o$proximos_pasos, NA) && length(o$proximos_pasos) > 0) {
