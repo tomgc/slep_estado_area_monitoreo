@@ -23,20 +23,8 @@ leer_cache <- function(slug) {
   ruta <- file.path(RUTA_CACHE, paste0(slug, ".md"))
   if (!file.exists(ruta)) return(NULL)
   L <- readLines(ruta, warn = FALSE, encoding = "UTF-8")
-  idx <- which(trimws(L) == "---")
-  meta <- list(); cuerpo <- L
-  if (length(idx) >= 2 && idx[1] == 1) {
-    fm <- if (idx[2] > idx[1] + 1) L[(idx[1] + 1):(idx[2] - 1)] else character(0)
-    cuerpo <- if (idx[2] < length(L)) L[(idx[2] + 1):length(L)] else character(0)
-    for (ln in fm) {
-      if (grepl(":", ln)) {
-        k <- trimws(sub(":.*$", "", ln))
-        v <- trimws(sub("^[^:]*:\\s*", "", ln))
-        if (nzchar(k)) meta[[k]] <- v
-      }
-    }
-  }
-  list(meta = meta, cuerpo = trimws(paste(cuerpo, collapse = "\n")))
+  fm <- parsear_front_matter(L)   # mecanismo unico (10_utils.R)
+  list(meta = fm$meta, cuerpo = trimws(paste(fm$cuerpo, collapse = "\n")))
 }
 
 #' "hace N dias" a partir de una fecha YYYY-MM-DD; "" si NA.
@@ -74,21 +62,39 @@ inv <- inv[order(inv$slug), , drop = FALSE]
 activos    <- inv[inv$categoria == "activo", , drop = FALSE]
 auxiliares <- inv[inv$categoria == "auxiliar", , drop = FALSE]
 
-# Caches y derivados por proyecto activo.
+# Caches (Fase 1 PULL) y estado destilado (Fase 2 PUSH) por proyecto activo.
 caches <- lapply(activos$slug, leer_cache)
 names(caches) <- activos$slug
 
-activos$dias        <- vapply(activos$fecha_actividad, hace_dias, integer(1))
-activos$obsoleto    <- !is.na(activos$dias) & activos$dias > DIAS_OBSOLETO
-activos$sintesis    <- vapply(seq_len(nrow(activos)), function(i)
-  estado_sintesis(caches[[i]], activos$md5_traspaso[i]), character(1))
+# Decision de fuente por proyecto: PUSH si el hermano tiene ESTADO.md
+# sincronizado (resuelto en 32, lista_documentos[[slug]]$estado); si no, PULL
+# (comportamiento Fase 1: sintesis recomputada desde cache/traspaso).
+tiene_ld  <- exists("lista_documentos")
+estado_de <- function(slug) if (tiene_ld) lista_documentos[[slug]]$estado else NULL
+usa_push  <- vapply(activos$slug, function(s) {
+  e <- estado_de(s); isTRUE(e$presente) && isTRUE(e$sincronizado)
+}, logical(1))
+activos$fuente <- ifelse(usa_push, "PUSH", "PULL")
+
+# Cuerpo de la ficha L2: ESTADO.md (PUSH) o cache (PULL).
+cuerpos <- lapply(seq_len(nrow(activos)), function(i) {
+  if (usa_push[i]) estado_de(activos$slug[i])$cuerpo else caches[[i]]$cuerpo
+})
+
+activos$dias     <- vapply(activos$fecha_actividad, hace_dias, integer(1))
+activos$obsoleto <- !is.na(activos$dias) & activos$dias > DIAS_OBSOLETO
+# Frescura de la sintesis: PUSH es vigente por definicion (paso el chequeo de
+# desync en 32); PULL conserva el sello md5 del cache frente al traspaso.
+activos$sintesis <- vapply(seq_len(nrow(activos)), function(i) {
+  if (usa_push[i]) "vigente" else estado_sintesis(caches[[i]], activos$md5_traspaso[i])
+}, character(1))
 activos$semaforo <- vapply(seq_len(nrow(activos)), function(i) {
-  m <- caches[[i]]$meta$semaforo
+  m <- if (usa_push[i]) estado_de(activos$slug[i])$meta$semaforo else caches[[i]]$meta$semaforo
   if (is.null(m) || !nzchar(m)) "(pendiente)" else m
 }, character(1))
 activos$proximo <- vapply(seq_len(nrow(activos)), function(i) {
-  m <- caches[[i]]$meta$proximo_paso
-  if (is.null(m) || !nzchar(m)) "(pendiente de sintesis)" else m
+  m <- if (usa_push[i]) estado_de(activos$slug[i])$proximo else caches[[i]]$meta$proximo_paso
+  if (is.null(m) || is.na(m) || !nzchar(m)) "(pendiente de sintesis)" else m
 }, character(1))
 
 # ---- Alertas -----------------------------------------------------------------
@@ -160,10 +166,11 @@ ap("")
 ap("## L2 - Fichas ejecutivas por proyecto activo", "")
 for (i in seq_len(nrow(activos))) {
   s <- activos$slug[i]
-  ap(sprintf("### %s - %s", s, nombre_mostrar(activos$nombre_real[i], s)))
-  cuerpo <- caches[[i]]$cuerpo
+  ap(sprintf("### %s - %s _(fuente: %s)_", s, nombre_mostrar(activos$nombre_real[i], s),
+             activos$fuente[i]))
+  cuerpo <- cuerpos[[i]]
   if (is.null(cuerpo) || !nzchar(cuerpo)) {
-    ap(sprintf("_Ficha pendiente de sintesis (cache %s ausente o desactualizado)._", s))
+    ap(sprintf("_Ficha pendiente de sintesis (%s sin ESTADO.md sincronizado ni cache vigente)._", s))
   } else {
     ap(cuerpo)
   }
@@ -202,5 +209,6 @@ escribir_seguro(RUTA_PANORAMA, function(ruta) {
   writeLines(L, ruta, useBytes = TRUE)
 })
 
-log_msg(sprintf("panorama.md ensamblado: %d activos, %d pendientes de sintesis.",
-                nrow(activos), length(sin_sint)), "35_panorama")
+log_msg(sprintf("panorama.md ensamblado: %d activos, %d pendientes de sintesis. Fuente: %d PUSH, %d PULL.",
+                nrow(activos), length(sin_sint),
+                sum(activos$fuente == "PUSH"), sum(activos$fuente == "PULL")), "35_panorama")

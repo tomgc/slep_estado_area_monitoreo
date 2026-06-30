@@ -42,6 +42,10 @@
         "backlog": false,
         "escaner": true
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "deuda_tecnica"
+      },
       "notas": "Nombre curado del sitio del Área (orden 9)."
     },
     {
@@ -83,6 +87,10 @@
         "traspaso": true,
         "backlog": true,
         "escaner": true
+      },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "nuevo"
       },
       "notas": "Nombre curado del sitio del Área (orden 6)."
     },
@@ -126,6 +134,10 @@
         "backlog": true,
         "escaner": true
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "nuevo"
+      },
       "notas": "Nombre curado del sitio del Área (orden 5)."
     },
     {
@@ -167,6 +179,10 @@
         "traspaso": true,
         "backlog": false,
         "escaner": true
+      },
+      "estado": {
+        "presente": false,
+        "tipo_pendiente": null
       },
       "notas": "Nombre curado del sitio del Área (orden 8)."
     },
@@ -210,6 +226,10 @@
         "backlog": false,
         "escaner": false
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "deuda_tecnica"
+      },
       "notas": "Herramienta interna; no figura en el sitio del Área. Nombre funcional."
     },
     {
@@ -251,6 +271,10 @@
         "traspaso": true,
         "backlog": false,
         "escaner": true
+      },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "bloqueante"
       },
       "notas": "No figura en el sitio del Área (insumo/afiche). Nombre funcional."
     },
@@ -294,6 +318,10 @@
         "backlog": true,
         "escaner": true
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "deuda_tecnica"
+      },
       "notas": "Nombre curado del sitio del Área (orden 4)."
     },
     {
@@ -336,6 +364,10 @@
         "backlog": false,
         "escaner": true
       },
+      "estado": {
+        "presente": false,
+        "tipo_pendiente": null
+      },
       "notas": "Nombre curado del sitio del Área (orden 1)."
     },
     {
@@ -346,8 +378,8 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 31,
-        "total_sesiones": 31,
+        "correlativo": 34,
+        "total_sesiones": 34,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
@@ -359,13 +391,13 @@
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "dae5a4fab220673d7d0f5f1d28ee6733",
+        "md5_traspaso": "d49b758c3e994f04c7b515b42909746d",
         "md5_resena": "92eb094a9fc4ca8c05a18ab7050576d7",
         "md5_backlog": null
       },
       "documentos": {
         "resena": "slep_minuta_desvinculacion/50_documentacion/activa/resena_slep_minuta_desvinculacion.md",
-        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v31.md",
+        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v34.md",
         "backlog": null,
         "escaner": "slep_minuta_desvinculacion/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_minuta_desvinculacion/README.md",
@@ -377,6 +409,10 @@
         "traspaso": true,
         "backlog": false,
         "escaner": true
+      },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "nuevo"
       },
       "notas": "Nombre curado del sitio del Área (orden 10; estado desarrollo)."
     },
@@ -420,6 +456,10 @@
         "backlog": true,
         "escaner": true
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "nuevo"
+      },
       "notas": "Sitio web del Área que aloja este data.js. No es pipeline analítico."
     },
     {
@@ -461,6 +501,10 @@
         "traspaso": true,
         "backlog": false,
         "escaner": true
+      },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "deuda_tecnica"
       },
       "notas": "Nombre curado del sitio del Área (orden 11; estado desarrollo)."
     },
@@ -504,6 +548,10 @@
         "backlog": true,
         "escaner": true
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "deuda_tecnica"
+      },
       "notas": "Nombre curado del sitio del Área (orden 2)."
     },
     {
@@ -545,6 +593,10 @@
         "traspaso": false,
         "backlog": false,
         "escaner": false
+      },
+      "estado": {
+        "presente": false,
+        "tipo_pendiente": null
       },
       "notas": "Insumo del portafolio; solo aloja resenas_portafolio_traspaso.md."
     },
@@ -588,6 +640,10 @@
         "backlog": true,
         "escaner": true
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "nuevo"
+      },
       "notas": "Nombre curado del sitio del Área (orden 7)."
     },
     {
@@ -630,6 +686,10 @@
         "backlog": true,
         "escaner": true
       },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "ninguno"
+      },
       "notas": "Nombre curado del sitio del Área (orden 3)."
     },
     {
@@ -671,6 +731,10 @@
         "traspaso": true,
         "backlog": false,
         "escaner": true
+      },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "ninguno"
       },
       "notas": "No figura en el sitio (antecesor de slep_simce_adecuado). Nombre funcional."
     }

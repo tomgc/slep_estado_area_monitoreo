@@ -85,6 +85,11 @@ inv <- do.call(rbind, lapply(slugs, function(s) {
     tiene_traspaso   = !is.na(d$ruta_traspaso),
     tiene_backlog    = !is.na(d$ruta_backlog),
     tiene_escaner    = !is.na(d$ruta_escaner),
+    # Fase 2 PUSH: presencia de ESTADO.md y su tipo_pendiente (hechos de
+    # contenido -> byte-estables; la decision PUSH/PULL por frescura NO se
+    # persiste aqui, vive en el log de 32 y en panorama.md).
+    estado_presente  = isTRUE(d$estado$presente),
+    tipo_pendiente   = d$estado$tipo_pendiente,
     stringsAsFactors = FALSE
   )
 }))
@@ -140,6 +145,13 @@ proyectos <- lapply(seq_len(nrow(inv)), function(i) {
       traspaso = r$tiene_traspaso,
       backlog  = r$tiene_backlog,
       escaner  = r$tiene_escaner
+    ),
+    # Fase 2 PUSH: ficha destilada del hermano. tipo_pendiente (enum SETTINGS
+    # §1.2.4) queda disponible y tipado aqui para la futura pieza C (agenda
+    # priorizada); null si el hermano aun no tiene ESTADO.md.
+    estado = list(
+      presente       = r$estado_presente,
+      tipo_pendiente = r$tipo_pendiente
     ),
     notas = r$notas
   )

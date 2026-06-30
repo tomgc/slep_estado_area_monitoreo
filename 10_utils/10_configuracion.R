@@ -60,6 +60,16 @@ DIAS_OBSOLETO <- 21L
 # (seccion 8). Solo lectura de metadatos; nunca operaciones que escriban.
 LEER_GIT <- FALSE
 
+# Zona horaria local de la maquina, capturada AL BOOTSTRAP (antes de que cualquier
+# library de los pasos corrompa el cache de tz de R bajo locale C). Se pasa
+# explicita a format() al fechar mtimes (paso 32, desync de ESTADO.md): sin esto,
+# format(POSIXct) puede caer a UTC y correr la fecha +1 dia para archivos
+# guardados de noche. Fallback a "" (tz local del sistema) si no se resuelve.
+TZ_ORQUESTADOR <- tryCatch({
+  z <- Sys.timezone()
+  if (is.na(z) || !nzchar(z)) "" else z
+}, error = function(e) "")
+
 # ---- Rutas del orquestador (todas bajo RAIZ_ORQUESTADOR) ----------------------
 
 RUTA_INSUMOS    <- file.path(RAIZ_ORQUESTADOR, "20_insumos")

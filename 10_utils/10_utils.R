@@ -113,6 +113,30 @@ escribir_atomico <- function(ruta, escritor) {
   })
 }
 
+# ---- Parseo de front matter (mecanismo unico, reutilizable) ------------------
+
+#' Separa el front matter YAML-simple (bloque entre dos lineas '---' al inicio)
+#' del cuerpo. Generico y sin dependencias: lo reutilizan 32 (ESTADO.md de los
+#' hermanos) y 35 (cache/<slug>.md) en vez de duplicar el parseo (B.2).
+#' @param L vector de lineas (p. ej. de readLines).
+#' @return list(meta = lista nombrada clave->valor, cuerpo = vector de lineas).
+parsear_front_matter <- function(L) {
+  idx <- which(trimws(L) == "---")
+  meta <- list(); cuerpo <- L
+  if (length(idx) >= 2 && idx[1] == 1) {
+    fm <- if (idx[2] > idx[1] + 1) L[(idx[1] + 1):(idx[2] - 1)] else character(0)
+    cuerpo <- if (idx[2] < length(L)) L[(idx[2] + 1):length(L)] else character(0)
+    for (ln in fm) {
+      if (grepl(":", ln)) {
+        k <- trimws(sub(":.*$", "", ln))
+        v <- trimws(sub("^[^:]*:\\s*", "", ln))
+        if (nzchar(k)) meta[[k]] <- v
+      }
+    }
+  }
+  list(meta = meta, cuerpo = cuerpo)
+}
+
 # ---- Hash de contenido -------------------------------------------------------
 
 #' md5 del contenido de un archivo (sello de frescura del cache). Devuelve NA
