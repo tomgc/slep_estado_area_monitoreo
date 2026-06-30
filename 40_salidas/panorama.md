@@ -8,7 +8,7 @@
 - **Nuevos detectados:** ninguno.
 - **Dados de baja:** ninguno.
 - **Documentacion obsoleta (>21 dias):** slep_dashboard_personal_monitoreo, slep_simce_estandares_aprendizaje.
-- **Pendientes de sintesis:** ninguno.
+- **Pendientes de sintesis:** slep_minuta_desvinculacion.
 
 ## L1 - Tabla semaforo
 
@@ -22,7 +22,7 @@
 | slep_georreferenciacion | Georreferenciación de establecimientos del territorio | pausa | 2026-06-29 (hace 0 dias) | esperar validacion del director sobre ambas variantes del afiche |
 | slep_idps | Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS) | activo | 2026-06-25 (hace 4 dias) | higiene de backlog y limpieza CSS pendientes en sesion 26 |
 | slep_minuta_asistencia | Minuta de asistencia mensual | activo | 2026-06-23 (hace 6 dias) | limpieza de estructura de documentacion, luego refactor del orquestador canonico |
-| slep_minuta_desvinculacion | Análisis de trayectorias educativas interrumpidas | activo | 2026-06-29 (hace 0 dias) | construir el .qmd del reporte como consumidor del dataset |
+| slep_minuta_desvinculacion | Análisis de trayectorias educativas interrumpidas | activo | 2026-06-30 (hace -1 dias) | construir el .qmd del reporte como consumidor del dataset |
 | slep_rendimiento_historico | Diagnóstico histórico del rendimiento escolar | activo | 2026-06-15 (hace 14 dias) | confirmar verificaciones visuales y tomar warning de duplicados en cohortes |
 | slep_reportes_modelo_resguardo_asistencia | Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio | activo | 2026-06-21 (hace 8 dias) | auditoria portabilidad cross-OS Windows que destraba variable canonica fase 2 |
 | slep_seguimiento_educacion_inicial | Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles | activo | 2026-06-24 (hace 5 dias) | validar visualmente panel de detalle fijo del diagrama y commitear |

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panorama de la cartera <e2><80><94> <c3><81>rea de Monitoreo</title>
+<style>
+:root{
+  --plum:#5b2a4e; --cream:#faf6ef; --ocean:#1f6f8b; --olive:#6b8e23;
+  --coral:#e8643c; --slate:#5a6b7b; --sand:#d6a64a; --ink:#241f25;
+  --line:#e3dccf; --muted:#6f6a63; --card:#ffffff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
+header.top{border-bottom:3px solid var(--plum);padding-bottom:14px;margin-bottom:22px}
+header.top h1{margin:0;font-size:1.5rem;color:var(--plum)}
+header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1300px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;flex-direction:column;gap:8px}
+.card h2{margin:0;font-size:1.1rem;color:var(--plum)}
+.card .slug{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;color:var(--muted)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0}
+.badge{font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:999px;color:#fff;white-space:nowrap}
+.b-con_productos{background:var(--olive)} .b-en_desarrollo{background:var(--sand);color:var(--ink)}
+.b-inicial{background:var(--ocean)} .b-en_pausa{background:var(--slate)}
+.b-concluido{background:var(--plum)} .b-sinclasif{background:#9a948c}
+.b-sensible{background:var(--coral)} .b-publico{background:#b9c2a6;color:var(--ink)}
+.fecha{font-size:.82rem;color:var(--muted)}
+.sint{font-size:.92rem}
+.blk{font-size:.85rem;background:var(--cream);border-left:3px solid var(--line);padding:8px 10px;border-radius:6px}
+.blk .lbl{display:block;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px}
+.blk ul{margin:4px 0 0;padding-left:18px} .blk li{margin:2px 0}
+footer.bot{margin-top:30px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:.85rem}
+footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<h1>Panorama de la cartera <e2><80><94> <c3><81>rea de Monitoreo</h1>
+<div class="meta">Generado: 2026-06-29 <c2><b7> 16 proyectos</div>
+</header>
+<main id="grid" class="grid"></main>
+<footer class="bot">Total de proyectos: 16<div class="conteos" id="conteos"></div></footer>
+</div>
+<script type="application/json" id="datos-cartera">
+[
+  {
+    "slug": "slep_minuta_desvinculacion",
+    "nombre_real": "Análisis de trayectorias educativas interrumpidas",
+    "alias_corto": "Trayectorias interrumpidas",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-29",
+    "proximos_pasos": [
+      "Inventario de pendientes",
+      "§1.5 diferencia_matricula (caracterización EE, 6 cols actuales no la tienen).",
+      "§4.6 tipos_ensenanza_ee (ídem)."
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_simce_adecuado",
+    "nombre_real": "Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce",
+    "alias_corto": "Simce estándares",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-29",
+    "proximos_pasos": [
+      "Regenerar suite si cambia contenido de documentar.R (requiere npm + red).",
+      "Actualización anual de insumos Simce (cuando la Agencia publique 2025 final o 2026).",
+      "Incorporar entradas 121–124 del backlog en la próxima sesión que registre cambios."
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_georreferenciacion",
+    "nombre_real": "Georreferenciación de establecimientos del territorio",
+    "alias_corto": "Georreferenciación",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-28",
+    "proximos_pasos": [
+      "Inventario de pendientes",
+      "Auditoría de cierre (política 5.6, preguntas \"Cierre\")",
+      "¿Pipeline corre de cero sin intervención manual? Parcial: 30_preparar_comunas.R y 33b"
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_aprendizajes_ep",
+    "nombre_real": "Monitoreo de aprendizajes en la educación parvularia",
+    "alias_corto": "Aprendizajes EP",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-26",
+    "proximos_pasos": null,
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_monitoreo",
+    "nombre_real": "Portafolio del Área (escaparate web)",
+    "alias_corto": "Portafolio",
+    "categoria": "auxiliar",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-26",
+    "proximos_pasos": [
+      "Inventario de pendientes",
+      "Tipo: contenido. Impacto: medio. El proyecto \"Minutas de resultados de las pruebas Simce\" se eliminó de data.js en v05; el usuario aportará…",
+      "Enfoque: pedir los 3 PDF, redactar objetivo + síntesis, asignar id (sugerido simce_cc), insertar con su orden; luego sus capturas siguiendo…"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "El sitio `tomgc.github.io/slep_monitoreo` es una página estática institucional de presentación del Área de Monitoreo de Procesos y Resultados Educativos, dentro de la Subdirección de Apoyo Técnico Pedagógico del SLEP Costa Central. Es single-page, sin dependencias externas, alojado en GitHub Pages. Su propósito es comunicar qué hace el Área, su trayectoria, ejemplos de trabajo, su equipo y un glosario técnico. El desarrollo se inició el 2026-04-09 (commit base v1.2) y la primera sesión documentada con cierre de traspaso es el 2026-05-25 (esta)."
+  },
+  {
+    "slug": "slep_idps",
+    "nombre_real": "Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)",
+    "alias_corto": "IDPS",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-25",
+    "proximos_pasos": [
+      "Qué: se verificó que el histórico 2014–2025 ya está integrado en el parquet (rama 3b del 34), idempotente (md5 intacto tras re-correr), y s…",
+      "Por qué (R10): el pendiente heredado describía premisas falsas. No se fabricó trabajo de integración inexistente (B.1); se reorientó a docu…",
+      "Cobertura real (verificada contra parquet): indicador 2014–2025; dimensión 2018 + 2022–2025; niveles 2023–2025 (2024 para 6b/8b). Por grado…"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "`slep_idps` es un motor de visualización interactivo de los Indicadores de Desarrollo Personal y Social (IDPS) de la Agencia de Calidad de la Educación. Produce un HTML autocontenido (React 18 + D3 v7 inline) publicado en GitHub Pages que muestra el dato por establecimiento educacional, sin agregación territorial, segmentado por grupo socioeconómico (GSE), con serie histórica 2014→2025. Para el equipo de Monitoreo y Seguimiento del SLEP Costa Central y, desde v05, para cualquier SLEP/comuna del país. Hermano de `slep_simce_adecuado` y `slep_categoria_desempeno`, de los que reutiliza catálogos…"
+  },
+  {
+    "slug": "slep_reportes_modelo_resguardo_asistencia",
+    "nombre_real": "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio",
+    "alias_corto": "Resguardo asistencia",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-20",
+    "proximos_pasos": [
+      "Inventario de pendientes",
+      "Auditoría de cierre (política 5.6)",
+      "¿Pipeline corre de cero sin intervención manual? → Sí (sin cambios de pipeline esta sesión;"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "`slep_reportes_modelo_resguardo_asistencia` genera, por lote y cada mes, un reporte por director/a para los 73 establecimientos del SLEP Costa Central, implementando el \"Modelo de Resguardo de la Asistencia Educativa del Territorio\": un PDF (Quarto + typst + tinytable) más una planilla xlsx por establecimiento. Cada reporte muestra la asistencia del propio EE y su posición frente al territorio de forma anonimizada (percentiles y medianas, sin nombrar a otros EE) y cierra con la identificación nominal de los estudiantes en alerta del propio EE. Es variante de la minuta ejecutiva (`slep_minuta_…"
+  },
+  {
+    "slug": "slep_categoria_desempeno",
+    "nombre_real": "Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país",
+    "alias_corto": "Categoría de Desempeño",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-19",
+    "proximos_pasos": [
+      "Inventario de pendientes",
+      "Evaluación de deuda técnica",
+      "Auditoría de cierre (política 5.6)"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "slep_categoria_desempeno es un motor interactivo (R + HTML autocontenido) que compara la distribución de establecimientos por Categoría de Desempeño (Alto / Medio / Medio-Bajo / Insuficiente) de la Agencia de Calidad, entre comunas, SLEPs, regiones y el nivel nacional, separando básica y media. Pipeline en R (xlsx → parquet → JSON embebido → HTML), publicado en GitHub Pages. Para el equipo de Monitoreo del SLEP Costa Central, desde 2026. Datos públicos. (Nota v03: la opción \"nacional\" del selector se eliminó en la sesión 3 por volumen de EE; se agregó selección de establecimiento individual. …"
+  },
+  {
+    "slug": "slep_minuta_asistencia",
+    "nombre_real": "Minuta de asistencia mensual",
+    "alias_corto": "Minuta asistencia",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-15",
+    "proximos_pasos": [
+      "Inventario de pendientes",
+      "Tipo: deuda técnica / refactor estructural. Complejidad: Media. Estado: aprobado, no iniciado.",
+      "Qué: partir 32_render_minuta.R (hoy hace prep+render+SVG en un archivo) en pasos atómicos, para que 00_run_all.R orqueste con from/to/only/…"
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_rendimiento_historico",
+    "nombre_real": "Diagnóstico histórico del rendimiento escolar",
+    "alias_corto": "Rendimiento histórico",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-15",
+    "proximos_pasos": [
+      "Ancla de sanidad CEM: promoción municipal-nacional ≈ 94% (2023) en el HTML.",
+      "Abrir el .docx y confirmar estilos de marca.",
+      "P24 (nuevo) — Warning de Módulo B: \"micro CC: 7406 registros"
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_seguimiento_educacion_inicial",
+    "nombre_real": "Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles",
+    "alias_corto": "Educación inicial",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-14",
+    "proximos_pasos": [
+      "Inventario de pendientes vigentes",
+      "Auditoría de cierre (POLITICA §5.6)",
+      "#2 ¿pipeline corre de cero sin intervención? → Sí."
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "Seguimiento Educación Inicial es un sistema de análisis longitudinal de cohortes de párvulos para el SLEP Costa Central (Viña del Mar, Concón, Quintero, Puchuncaví). Rastrea transiciones de educación parvularia a básica en tres periodos académicos (2023→2024, 2024→2025, 2025→2026). Dos módulos: el privado (RUT real, retención en el directorio de 97 establecimientos SLEP CC) y el público (MRUN enmascarado, flujos territoriales entre todos los sostenedores de las cuatro comunas, sobre datos abiertos Mineduc). Interfaz Shiny offline unificada con selector de módulo, Sankey echarts4r, tablas reac…"
+  },
+  {
+    "slug": "slep_alertas_ael",
+    "nombre_real": "Sistema de alertas de Anótate en la Lista",
+    "alias_corto": "AEL",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-09",
+    "proximos_pasos": [
+      "Archivo(s) afectado(s): 30_procesamiento/31_alertas_establecimientos.R (usa validar_columnas() de 10_utils.R).",
+      "Categoría temática: Validación y robustez.",
+      "Qué se hizo: Tras cada read_excel(), verificación de las 8 columnas esperadas de AEL y las 3 de correos; error descriptivo con columnas fal…"
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_costapresente",
+    "nombre_real": "CostaPresente",
+    "alias_corto": "CostaPresente",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-05-31",
+    "proximos_pasos": [
+      "Pendiente 1 (P1): Validación cross-OS en Windows",
+      "Descripción: Clonar el repo en una máquina Windows, configurar ~/.Renviron, verificar NBSP en ruta OneDrive, ejecutar pipeline ETL + App en…",
+      "Contexto: Todo el desarrollo y pruebas han sido en macOS arm64. Los colegas que usarán la app son usuarios Windows. La portabilidad real no…"
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_simce_estandares_aprendizaje",
+    "nombre_real": "Minuta de resultados Simce por estándares de aprendizaje",
+    "alias_corto": "Minuta Simce",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-05-27",
+    "proximos_pasos": [
+      "11.1 Pendientes activos",
+      "Incorporar datos SIMCE de un año nuevo al pipeline.",
+      "Actualizar o extender gráficos G1–G6."
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_dashboard_personal_monitoreo",
+    "nombre_real": "Dashboard personal de monitoreo",
+    "alias_corto": "Dashboard personal",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-05-25",
+    "proximos_pasos": [
+      "Archivo(s) afectado(s): docs/traspaso/traspaso_cierre_v17.md (nuevo), docs/referencia/principios_desarrollo_v3.md (eliminado).",
+      "Categoría temática: Mecánica de PR / Incorporación de traspaso.",
+      "Qué se hizo: Una segunda sesión de Claude Code se abrió desde la ruta nueva /Users/tomgc/Projects/slep_dashboard_personal_monitoreo/. Se di…"
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_resena_proyectos",
+    "nombre_real": "Reseñas del portafolio",
+    "alias_corto": "Reseñas",
+    "categoria": "auxiliar",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": null,
+    "proximos_pasos": null,
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  }
+]
+</script>
+<script>
+
+const RAW = document.getElementById("datos-cartera").textContent;
+const CARTERA = JSON.parse(RAW);
+const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
+  con_productos:"con productos",en_pausa:"en pausa",concluido:"concluido"};
+const MES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
+  "septiembre","octubre","noviembre","diciembre"];
+function fechaEs(s){
+  if(!s) return "sin traspaso";
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if(!m) return s;
+  return parseInt(m[3],10)+" de "+MES[parseInt(m[2],10)-1]+" de "+m[1];
+}
+function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;
+  if(txt!=null)e.textContent=txt;return e;}
+function badgeEstado(estado){
+  const cls = estado ? ("b-"+estado) : "b-sinclasif";
+  const txt = estado ? (ETIQUETA_ESTADO[estado]||estado) : "sin clasificar";
+  return el("span","badge "+cls,txt);
+}
+function render(){
+  const grid=document.getElementById("grid");
+  CARTERA.forEach(p=>{
+    const c=el("div","card");
+    c.appendChild(el("h2",null,p.nombre_real||p.slug));
+    c.appendChild(el("div","slug",p.slug));
+    const b=el("div","badges");
+    b.appendChild(badgeEstado(p.estado_proyecto));
+    if(p.datos_sensibles==="si")b.appendChild(el("span","badge b-sensible","datos sensibles"));
+    else if(p.datos_sensibles==="no")b.appendChild(el("span","badge b-publico","datos p<c3><ba>blicos"));
+    c.appendChild(b);
+    const sint = p.sintesis || (p.objetivo? String(p.objetivo).split(/(?<=\.)\s/)[0] : null);
+    if(sint) c.appendChild(el("p","sint",sint));
+    c.appendChild(el("div","fecha","<c3><9a>ltima actualizaci<c3><b3>n: "+fechaEs(p.fecha_actualizacion)));
+    if(p.tiene_backlog && p.resena_itinerario){
+      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Rese<c3><b1>a del itinerario"));
+      blk.appendChild(el("div",null,p.resena_itinerario)); c.appendChild(blk);
+    }
+    if(p.proximos_pasos && p.proximos_pasos.length){
+      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Pr<c3><b3>ximos pasos"));
+      const ul=el("ul"); p.proximos_pasos.forEach(x=>ul.appendChild(el("li",null,x)));
+      blk.appendChild(ul); c.appendChild(blk);
+    }
+    grid.appendChild(c);
+  });
+  // Conteos por estado en el footer.
+  const cont={};
+  CARTERA.forEach(p=>{const k=p.estado_proyecto||"sin clasificar";cont[k]=(cont[k]||0)+1;});
+  const cdiv=document.getElementById("conteos");
+  Object.keys(cont).forEach(k=>{cdiv.appendChild(el("span",null,(ETIQUETA_ESTADO[k]||k)+": "+cont[k]));});
+}
+render();
+
+</script>
+</body>
+</html>
+

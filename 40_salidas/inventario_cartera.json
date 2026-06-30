@@ -114,7 +114,7 @@
       "documentos": {
         "resena": "slep_categoria_desempeno/50_documentacion/activa/resena_slep_categoria_desempeno.md",
         "traspaso": "slep_categoria_desempeno/50_documentacion/traspasos/traspaso_cierre_v25.md",
-        "backlog": "slep_categoria_desempeno/50_documentacion/activa/backlog_consolidado.md",
+        "backlog": "slep_categoria_desempeno/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_categoria_desempeno/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_categoria_desempeno/README.md",
         "claude": "slep_categoria_desempeno/CLAUDE.md",
@@ -282,7 +282,7 @@
       "documentos": {
         "resena": "slep_idps/50_documentacion/activa/resena_slep_idps.md",
         "traspaso": "slep_idps/50_documentacion/traspasos/traspaso_cierre_v25.md",
-        "backlog": "slep_idps/50_documentacion/activa/backlog_historico.md",
+        "backlog": "slep_idps/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_idps/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_idps/README.md",
         "claude": "slep_idps/CLAUDE.md",
@@ -346,26 +346,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 29,
-        "total_sesiones": 29,
+        "correlativo": 31,
+        "total_sesiones": 31,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-06-29",
-        "escaner": "2026-06-29",
-        "actividad": "2026-06-29",
+        "traspaso": "2026-06-30",
+        "escaner": "2026-06-30",
+        "actividad": "2026-06-30",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "831d4d554eefc79ad2378327aa0dd511",
+        "md5_traspaso": "dae5a4fab220673d7d0f5f1d28ee6733",
         "md5_resena": "92eb094a9fc4ca8c05a18ab7050576d7",
         "md5_backlog": null
       },
       "documentos": {
         "resena": "slep_minuta_desvinculacion/50_documentacion/activa/resena_slep_minuta_desvinculacion.md",
-        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v29.md",
+        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v31.md",
         "backlog": null,
         "escaner": "slep_minuta_desvinculacion/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_minuta_desvinculacion/README.md",
@@ -408,7 +408,7 @@
       "documentos": {
         "resena": null,
         "traspaso": "slep_monitoreo/50_documentacion/traspasos/traspaso_cierre_v06.md",
-        "backlog": "slep_monitoreo/50_documentacion/traspasos/backlog_acumulado.md",
+        "backlog": "slep_monitoreo/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_monitoreo/50_documentacion/estructura/estructura_actual.md",
         "readme": null,
         "claude": "slep_monitoreo/CLAUDE.md",
@@ -576,7 +576,7 @@
       "documentos": {
         "resena": "slep_seguimiento_educacion_inicial/50_documentacion/activa/resena_slep_seguimiento_educacion_inicial.md",
         "traspaso": "slep_seguimiento_educacion_inicial/50_documentacion/traspasos/traspaso_cierre_v34.md",
-        "backlog": "slep_seguimiento_educacion_inicial/50_documentacion/activa/backlog_consolidado.md",
+        "backlog": "slep_seguimiento_educacion_inicial/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_seguimiento_educacion_inicial/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_seguimiento_educacion_inicial/README.md",
         "claude": "slep_seguimiento_educacion_inicial/CLAUDE.md",
