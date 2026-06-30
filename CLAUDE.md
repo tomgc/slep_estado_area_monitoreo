@@ -44,12 +44,26 @@ R: tidyverse, pipe nativo `|>`, `dplyr >= 1.1` con `.by=`, `here`/`rprojroot`,
 
 ## Ultimos cambios (max 5, recientes primero)
 
-1. 2026-06-29 (v02): operacion/regeneracion tras cierre parcial de H4; 3 caches
+1. 2026-06-30 (v05, cierre sesion 5): paso 36 endurecido. (a) Paleta sincronizada
+   con los valores hex reales de la marca SLEP Costa Central (commit 80b72d0).
+   (b) Fix bug B6 (mojibake): bajo locale C los literales no-ASCII se parseaban
+   como Encoding "unknown" y al concatenarse con strings UTF-8 (JSON/readLines) R
+   los escapaba como texto "<c3><81>"; helper u8() declara UTF-8 antes de mezclar
+   (commit 96e1433; misma familia que el em-dash de la sesion 1). (c) P-DATA-JS-RUTA:
+   parseo in situ de slep_monitoreo/data.js (R2, nunca copiado) via jsonlite tras
+   quotear claves + tryCatch por entrada; mapeo orden->slug aprobado y clavado por
+   orden; cards muestran tipo/objetivo/sintesis (primer parrafo + "+N parrafos mas",
+   N_PARRAFOS_SINTESIS_CARD=1); 11/16 pobladas, 5 null con gracia (commit 6ecbb43).
+2. 2026-06-30 (v05): backlog acumulativo extraido a archivo independiente
+   50_documentacion/activa/backlog_acumulativo.md (P-BACKLOG-PROPIO-EXTRAER, 47
+   entradas, 5 sesiones; commit 1c3912f); auditoria_backlogs.md archivada como
+   andamio congelado en 50_documentacion/andamios/.
+3. 2026-06-29 (v02): operacion/regeneracion tras cierre parcial de H4; 3 caches
    re-sintetizados (georreferenciacion v05, minuta_desvinculacion v29,
    simce_adecuado v24), 11 reutilizados literal; maneja_sensibles FALSE->TRUE en
    los 3 de H4; registro curado por el titular preservado; reporte de cobertura
    actualizado. Aprendizaje: el orquestador lee el WORKING TREE (un gobernanza
    en rama no mergeada se ve presente; seguimiento_ed_inicial en docs/suitedoc).
-2. 2026-06-28 (v01): andamiaje Rama A completo; pipeline 31->35 funcional;
+4. 2026-06-28 (v01): andamiaje Rama A completo; pipeline 31->35 funcional;
    registro sembrado; inventario + panorama generados; reporte de cobertura;
    esbozo Fase 2; tests en verde; primer commit.
