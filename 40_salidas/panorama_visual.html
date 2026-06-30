@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panorama de la cartera — Área de Monitoreo</title>
+<title>Cartera de proyectos Área de Monitoreo</title>
 <style>
 :root{
   --plum:#4A2746; --cream:#FFF6E0; --ocean:#0062A0; --olive:#75924E;
@@ -18,23 +18,28 @@ body{margin:0;background:var(--cream);color:var(--ink);
 header.top{border-bottom:3px solid var(--plum);padding-bottom:14px;margin-bottom:22px}
 header.top h1{margin:0;font-size:1.5rem;color:var(--plum)}
 header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr;gap:18px}
-@media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:1300px){.grid{grid-template-columns:repeat(3,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
-  padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;flex-direction:column;gap:8px}
-.card h2{margin:0;font-size:1.1rem;color:var(--plum)}
-.card .slug{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;color:var(--muted)}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0}
-.badge{font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:999px;color:#fff;white-space:nowrap}
-.b-con_productos{background:var(--olive)} .b-en_desarrollo{background:var(--sand);color:var(--ink)}
-.b-inicial{background:var(--ocean)} .b-en_pausa{background:var(--slate)}
-.b-concluido{background:var(--plum)} .b-sinclasif{background:#9a948c}
-.b-sensible{background:var(--coral)} .b-publico{background:#b9c2a6;color:var(--ink)}
-.fecha{font-size:.82rem;color:var(--muted)}
-.tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em}
-.sint{font-size:.92rem}
-.mas{font-size:.78rem;color:var(--muted);font-style:italic}
+/* Lista acordeon de ancho completo: un solo contenedor con borde y divisores
+   horizontales entre filas (no cada fila con su propia caja/sombra). */
+.lista{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.fila{border-top:1px solid var(--line)}
+.fila:first-child{border-top:none}
+.cab{display:flex;align-items:center;gap:12px;width:100%;padding:13px 16px;
+  background:none;border:0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.cab:hover{background:var(--cream)}
+.cab:focus-visible{outline:2px solid var(--ocean);outline-offset:-2px}
+.chev{flex:0 0 auto;width:12px;color:var(--muted);font-size:.7rem;line-height:1;transition:transform .15s ease}
+.fila.abierta .chev{transform:rotate(90deg)}
+.izq{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1px}
+.nombre{font-weight:600;color:var(--plum);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.der{flex:0 1 auto;max-width:42%;display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.der .slug{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.der .fecha{font-size:.76rem;color:var(--muted);white-space:nowrap}
+.cuerpo{display:none;padding:2px 16px 16px 40px}
+.fila.abierta .cuerpo{display:block}
+.cuerpo .tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.cuerpo .sint{font-size:.92rem;margin:.5em 0}
 .blk{font-size:.85rem;background:var(--cream);border-left:3px solid var(--line);padding:8px 10px;border-radius:6px}
 .blk .lbl{display:block;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px}
 .blk ul{margin:4px 0 0;padding-left:18px} .blk li{margin:2px 0}
@@ -45,10 +50,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 <body>
 <div class="wrap">
 <header class="top">
-<h1>Panorama de la cartera — Área de Monitoreo</h1>
-<div class="meta">Generado: 2026-06-29 · 16 proyectos</div>
+<h1>Cartera de proyectos Área de Monitoreo</h1>
+<div class="meta">Generado: 2026-06-30 · 16 proyectos</div>
 </header>
-<main id="grid" class="grid"></main>
+<main id="lista" class="lista"></main>
 <footer class="bot">Total de proyectos: 16<div class="conteos" id="conteos"></div></footer>
 </div>
 <script type="application/json" id="datos-cartera">
@@ -60,8 +65,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "La desvinculación escolar, entendida como la interrupción de la trayectoria educativa de un estudiante, es uno de los fenómenos más sensibles para un servicio educativo y, habitualmente, se aborda cuando ya ha ocurrido. Para revertir esta lógica, este reporte analiza las trayectorias interrumpidas e irregulares de los estudiantes del SLEP Costa Central con el fin de caracterizar este fenómeno en el territorio y, fundamentalmente, anticipar su ocurrencia.",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "La desvinculación escolar, entendida como la interrupción de la trayectoria educativa de un estudiante, es uno de los fenómenos más sensibles para un servicio educativo y, habitualmente, se aborda cuando ya ha ocurrido. Para revertir esta lógica, este reporte analiza las trayectorias interrumpidas e irregulares de los estudiantes del SLEP Costa Central con el fin de caracterizar este fenómeno en el territorio y, fundamentalmente, anticipar su ocurrencia.",
+      "Este documento, dirigido al Director Ejecutivo, se alimenta de los “Reportes para el seguimiento de estudiantes con trayectorias interrumpidas o irregulares” que el Centro de Estudios del Mineduc (CEM) presenta con regularidad trimestral. A partir de su procesamiento y cruce con los datos de asistencia diaria, además de otras variables sociodemográficas, se generan alertas tempranas orientadas a la acción, permitiendo la identificación de cohortes vulnerables, la priorización de establecimientos educacionales según su nivel de riesgo y la presentación de evidencia clave para el diseño de estrategias de intervención."
+    ],
     "objetivo": "Reporte dirigido al Director Ejecutivo cuyo propósito es informar respecto al comportamiento de la desvinculación (o abandono) escolar en el territorio, mediante el uso de modelos de alerta temprana y la priorización de los establecimientos según el nivel de riesgo de desvinculación de sus estudiantes.",
     "tipo": "Minuta · Dirección Ejecutiva",
     "fecha_actualizacion": "2026-06-29",
@@ -80,8 +87,11 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente.",
-    "sintesis_parrafos_extra": 2,
+    "sintesis": [
+      "Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente.",
+      "La herramienta organiza esta información a escala nacional, ponderando los resultados de cada prueba según el número de estudiantes que la rindió, permitiendo recorrer los resultados por establecimiento, comuna, SLEP, región y nivel nacional, a lo largo de todos los años para los cuales existen resultados.",
+      "Su pantalla única de visualización pone especial atención en el nivel Adecuado (el más exigente) como indicador de logro, con la mirada puesta en cómo evoluciona en cada territorio y cómo se compara entre grupos socioeconómicos equivalentes."
+    ],
     "objetivo": "Herramienta interactiva que organiza los resultados actuales e históricos de los estándares de aprendizaje medidos a través de las pruebas Simce, a escala nacional, permitiendo navegarlos por establecimiento, comuna, SLEP, región y nivel nacional, a lo largo de todos los años para los cuales existen resultados.",
     "tipo": "Motor de comparación",
     "fecha_actualizacion": "2026-06-29",
@@ -101,7 +111,6 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "datos_sensibles": null,
     "estado_proyecto": null,
     "sintesis": null,
-    "sintesis_parrafos_extra": 0,
     "objetivo": null,
     "tipo": null,
     "fecha_actualizacion": "2026-06-28",
@@ -120,8 +129,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "En conjunto con la coordinación de Educación Parvularia del Área de Mejora Continua y siguiendo los principios de las Bases Curriculares de la Educación Parvularia vigentes, construimos un sistema de monitoreo de aprendizajes para la educación inicial del SLEP Costa Central. Este sistema organiza las evaluaciones realizadas por las educadoras por ámbito, núcleo y objetivo de aprendizaje y los presenta en informes interactivos que permiten segmentar los resultados por momento evaluativo (diagnóstico, primer semestre y segundo semestre) y diversos niveles de agrupación (territorio, jardín infantil, educadora y párvulo).",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "En conjunto con la coordinación de Educación Parvularia del Área de Mejora Continua y siguiendo los principios de las Bases Curriculares de la Educación Parvularia vigentes, construimos un sistema de monitoreo de aprendizajes para la educación inicial del SLEP Costa Central. Este sistema organiza las evaluaciones realizadas por las educadoras por ámbito, núcleo y objetivo de aprendizaje y los presenta en informes interactivos que permiten segmentar los resultados por momento evaluativo (diagnóstico, primer semestre y segundo semestre) y diversos niveles de agrupación (territorio, jardín infantil, educadora y párvulo).",
+      "Su aporte es hacer visible, en un mismo lugar, la cobertura curricular y el logro de los objetivos de aprendizaje a lo largo de los tres momentos de evaluación del año, lo que permite realizar un seguimiento longitudinal y una priorización pedagógica pertinente y oportuna para cada nivel de la educación inicial."
+    ],
     "objetivo": "Sistema que organiza las evaluaciones realizadas por las educadoras de los jardines infantiles del territorio y los presenta en informes interactivos, segmentados por momento evaluativo y niveles de agrupación que van desde todo el territorio hasta cada párvulo.",
     "tipo": "Monitoreo",
     "fecha_actualizacion": "2026-06-26",
@@ -137,7 +148,6 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "datos_sensibles": null,
     "estado_proyecto": null,
     "sintesis": null,
-    "sintesis_parrafos_extra": 0,
     "objetivo": null,
     "tipo": null,
     "fecha_actualizacion": "2026-06-26",
@@ -156,8 +166,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "Los Indicadores de Desarrollo Personal y Social (IDPS) que la Agencia mide junto al Simce capturan aspectos que, si bien están planteados como no estrictamente académicos, resultan fundamentales para comprender de manera integral la experiencia educativa de los estudiantes. Estos indicadores (autoestima académica y motivación, clima de convivencia, participación y formación ciudadana, y hábitos de vida saludable) sirven de barómetro para leer en contexto los resultados de las pruebas académicas del Simce.",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "Los Indicadores de Desarrollo Personal y Social (IDPS) que la Agencia mide junto al Simce capturan aspectos que, si bien están planteados como no estrictamente académicos, resultan fundamentales para comprender de manera integral la experiencia educativa de los estudiantes. Estos indicadores (autoestima académica y motivación, clima de convivencia, participación y formación ciudadana, y hábitos de vida saludable) sirven de barómetro para leer en contexto los resultados de las pruebas académicas del Simce.",
+      "Para analizar estos resultados, desarrollamos un motor de comparación interactivo que organiza y visualiza los resultados de todo el país y desde el inicio de su medición, a través del cual es posible navegar por los resultados actuales e históricos de un establecimiento, además de explorar uno o múltiples territorios de manera simultánea y comparativa."
+    ],
     "objetivo": "Desarrollamos un motor de comparación interactivo que organiza y visualiza los resultados de los Indicadores de Desarrollo Personal y Social (IDPS) de todo el país y desde el inicio de su medición. De esta forma, es posible navegar por los resultados actuales e históricos de un establecimiento, además de explorar uno o múltiples territorios de manera simultánea y comparativa.",
     "tipo": "Motor de comparación",
     "fecha_actualizacion": "2026-06-25",
@@ -176,8 +188,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "El Plan para el Fortalecimiento de la Asistencia Educativa del SLEP Costa Central fija como uno de sus objetivos establecer un marco institucional de trabajo en materia de asistencia para todos los establecimientos del territorio. Lo anterior se materializa a través del Modelo de Resguardo de la Asistencia Educativa del Territorio, el cual, además de orientaciones, planes de acción y actividades de socialización, evaluación y mejora, tiene como uno de sus componentes un reporte sobre esta temática dirigido a todos los directores y directoras del SLEP.",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "El Plan para el Fortalecimiento de la Asistencia Educativa del SLEP Costa Central fija como uno de sus objetivos establecer un marco institucional de trabajo en materia de asistencia para todos los establecimientos del territorio. Lo anterior se materializa a través del Modelo de Resguardo de la Asistencia Educativa del Territorio, el cual, además de orientaciones, planes de acción y actividades de socialización, evaluación y mejora, tiene como uno de sus componentes un reporte sobre esta temática dirigido a todos los directores y directoras del SLEP.",
+      "Este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de cada establecimiento. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa."
+    ],
     "objetivo": "Dirigido a cada director y directora de los establecimientos del SLEP Costa Central, este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de su unidad educativa. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa.",
     "tipo": "Reporte · Directores/as",
     "fecha_actualizacion": "2026-06-20",
@@ -196,8 +210,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "Las Categorías de Desempeño son uno de los componentes clave del Sistema de Aseguramiento de la Calidad de la Educación. Esta ordenación evalúa a cada establecimiento bajo un modelo de rendimiento ajustado al contexto, el cual cruza sus resultados educativos y formativos con el perfil de vulnerabilidad de sus estudiantes para determinar qué tan cerca o lejos están de lo esperado.",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "Las Categorías de Desempeño son uno de los componentes clave del Sistema de Aseguramiento de la Calidad de la Educación. Esta ordenación evalúa a cada establecimiento bajo un modelo de rendimiento ajustado al contexto, el cual cruza sus resultados educativos y formativos con el perfil de vulnerabilidad de sus estudiantes para determinar qué tan cerca o lejos están de lo esperado.",
+      "Para facilitar el análisis de estos datos, desarrollamos una herramienta interactiva que organiza la información a escala nacional y permite explorarla de manera dinámica por comuna, Servicio Local de Educación Pública (SLEP), región y nivel país, distinguiendo con precisión la educación básica de la media. Su aporte es ofrecer, en una sola herramienta, dos lecturas complementarias: la distribución de los establecimientos por categoría en cada territorio y la evolución de cada establecimiento en el tiempo. Como la Categoría de Desempeño ya incorpora el contexto socioeconómico en su construcción, el motor presenta las clasificaciones tal como las publica la Agencia de Calidad de la Educación, sin segmentaciones adicionales."
+    ],
     "objetivo": "Desarrollamos un motor de comparación interactivo para las Categorías de Desempeño, uno de los componentes clave del Sistema de Aseguramiento de la Calidad de la Educación. Esta herramienta organiza la información en torno a este ordenamiento a escala nacional y permite explorarla de manera desagregada por comuna, SLEP y región.",
     "tipo": "Motor de comparación",
     "fecha_actualizacion": "2026-06-19",
@@ -216,8 +232,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio.",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio.",
+      "En este reporte, dirigido al Director Ejecutivo y construido a partir del análisis de los registros de asistencia diaria de cada estudiante del territorio, se le informa respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo, entre otros. Contiene una selección de alertas de inasistencia priorizadas para la toma de decisiones, así como una proyección de la asistencia anual basada en años anteriores."
+    ],
     "objetivo": "Reporte dirigido al Director Ejecutivo cuyo propósito es informar respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo.",
     "tipo": "Minuta · Dirección Ejecutiva",
     "fecha_actualizacion": "2026-06-15",
@@ -236,8 +254,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "Diagnóstico longitudinal y multidimensional de las bases de rendimiento escolar del Mineduc (2002-2025) con el propósito de caracterizar las trayectorias educativas de los estudiantes de los establecimientos educacionales del SLEP Costa Central y cuantificar las variaciones en las tasas de promoción y reprobación.",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "Diagnóstico longitudinal y multidimensional de las bases de rendimiento escolar del Mineduc (2002-2025) con el propósito de caracterizar las trayectorias educativas de los estudiantes de los establecimientos educacionales del SLEP Costa Central y cuantificar las variaciones en las tasas de promoción y reprobación.",
+      "Al vincular estas variables de resultado con la caracterización socioeducativa del estudiante (sexo registral, edad, país de origen, pertenencia a pueblos originarios y condición de alumno integrado, entre otras) y con las particularidades de los establecimientos (emplazamiento rural o urbano, tipos de enseñanza y régimen de jornada, entre otros), buscamos identificar brechas de equidad intra-territoriales, contrastar el desempeño del SLEP frente a otros territorios de la Región de Valparaíso y el nivel nacional y modelar sistemas de alerta temprana basados en la asistencia crónica y el rendimiento académico, para focalizar de forma oportuna y precisa los recursos pedagógicos y de apoyo psicosocial."
+    ],
     "objetivo": "Diagnóstico longitudinal y multidimensional de las bases de rendimiento escolar del Mineduc (2002-2025) con el propósito de caracterizar las trayectorias educativas de los estudiantes de los establecimientos educacionales del SLEP Costa Central y cuantificar las variaciones en las tasas de promoción y reprobación.",
     "tipo": "Diagnóstico",
     "fecha_actualizacion": "2026-06-15",
@@ -256,8 +276,10 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "Para los párvulos y sus familias, las transiciones entre los niveles iniciales son momentos clave de su trayectoria educativa. Para un sostenedor, esta información es un insumo estratégico para la toma de decisiones en torno a las proyecciones del servicio educativo que ofrece.",
-    "sintesis_parrafos_extra": 1,
+    "sintesis": [
+      "Para los párvulos y sus familias, las transiciones entre los niveles iniciales son momentos clave de su trayectoria educativa. Para un sostenedor, esta información es un insumo estratégico para la toma de decisiones en torno a las proyecciones del servicio educativo que ofrece.",
+      "A partir de la sistematización y análisis de las preferencias de matrícula de los egresados de jardines infantiles del SLEP Costa Central, identificamos y visualizamos los itinerarios de los párvulos desde los niveles medios hacia los niveles de transición en las escuelas. El resultado es una aplicación interactiva con diagramas de flujo y tablas comparativas que permiten cuantificar el número de niños y niñas que permanecen en nuestras comunidades, cuántos migran a establecimientos de otros sostenedores y cuántos no se logran localizar. Su aporte es ofrecer al territorio una mirada de la continuidad de las trayectorias en un tramo crítico, con información útil para decisiones de oferta y de captación."
+    ],
     "objetivo": "¿Hacia dónde continúan su escolaridad los niños y niñas que egresan de nuestros jardines infantiles? Desarrollamos un sistema de análisis longitudinal que sigue, cohorte a cohorte, dónde eligen matricularse quienes egresan de los jardines infantiles del territorio.",
     "tipo": "Análisis longitudinal",
     "fecha_actualizacion": "2026-06-14",
@@ -276,8 +298,9 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "El sistema de alertas de Anótate en la Lista (AEL) automatiza una tarea recurrente del trabajo de monitoreo de listas de espera: avisar a los establecimientos del territorio cuando registran vacantes sin asignar en AEL, que canaliza la búsqueda de cupos y matrícula. A partir del reporte quincenal que emite la Dirección de Educación Pública (DEP) a partir de los datos del Mineduc, el sistema identifica los establecimientos con vacantes y lista de espera y prepara, para cada uno, una comunicación personalizada lista para enviar a cada director o directora. Este mensaje incluye, para cada nivel del establecimiento, los cupos declarados, la matrícula actual y las vacantes sin asignar.",
-    "sintesis_parrafos_extra": 0,
+    "sintesis": [
+      "El sistema de alertas de Anótate en la Lista (AEL) automatiza una tarea recurrente del trabajo de monitoreo de listas de espera: avisar a los establecimientos del territorio cuando registran vacantes sin asignar en AEL, que canaliza la búsqueda de cupos y matrícula. A partir del reporte quincenal que emite la Dirección de Educación Pública (DEP) a partir de los datos del Mineduc, el sistema identifica los establecimientos con vacantes y lista de espera y prepara, para cada uno, una comunicación personalizada lista para enviar a cada director o directora. Este mensaje incluye, para cada nivel del establecimiento, los cupos declarados, la matrícula actual y las vacantes sin asignar."
+    ],
     "objetivo": "El sistema de alertas de Anótate en la Lista (AEL) identifica los establecimientos con vacantes sin asignar y prepara una comunicación personalizada para cada director o directora. Este mensaje incluye, para cada nivel del establecimiento, los cupos declarados, la matrícula actual y las vacantes sin asignar.",
     "tipo": "Sistema de alertas",
     "fecha_actualizacion": "2026-06-09",
@@ -296,8 +319,9 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
-    "sintesis": "CostaPresente nace para apoyar el seguimiento de las trayectorias escolares de los estudiantes que, en algún momento de los últimos años, han pasado por algún establecimiento del SLEP Costa Central. A partir de registros mensuales de asistencia reconstruye, para cada estudiante, dónde ha estado matriculado y cómo ha evolucionado su escolaridad en términos de asistencia, promoción y retiros.",
-    "sintesis_parrafos_extra": 0,
+    "sintesis": [
+      "CostaPresente nace para apoyar el seguimiento de las trayectorias escolares de los estudiantes que, en algún momento de los últimos años, han pasado por algún establecimiento del SLEP Costa Central. A partir de registros mensuales de asistencia reconstruye, para cada estudiante, dónde ha estado matriculado y cómo ha evolucionado su escolaridad en términos de asistencia, promoción y retiros."
+    ],
     "objetivo": "Sistema que, de forma similar a la plataforma ministerial ChilePresente, permite realizar un seguimiento preciso de las trayectorias de los estudiantes que alguna vez han estado matriculados en alguno de los establecimientos del SLEP Costa Central.",
     "tipo": "Plataforma · CostaPresente",
     "fecha_actualizacion": "2026-05-31",
@@ -317,7 +341,6 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "datos_sensibles": null,
     "estado_proyecto": null,
     "sintesis": null,
-    "sintesis_parrafos_extra": 0,
     "objetivo": null,
     "tipo": null,
     "fecha_actualizacion": "2026-05-27",
@@ -337,7 +360,6 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "datos_sensibles": null,
     "estado_proyecto": null,
     "sintesis": null,
-    "sintesis_parrafos_extra": 0,
     "objetivo": null,
     "tipo": null,
     "fecha_actualizacion": "2026-05-25",
@@ -357,7 +379,6 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "datos_sensibles": null,
     "estado_proyecto": null,
     "sintesis": null,
-    "sintesis_parrafos_extra": 0,
     "objetivo": null,
     "tipo": null,
     "fecha_actualizacion": null,
@@ -383,41 +404,43 @@ function fechaEs(s){
 }
 function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;
   if(txt!=null)e.textContent=txt;return e;}
-function badgeEstado(estado){
-  const cls = estado ? ("b-"+estado) : "b-sinclasif";
-  const txt = estado ? (ETIQUETA_ESTADO[estado]||estado) : "sin clasificar";
-  return el("span","badge "+cls,txt);
+// Construye una fila del acordeon: cabecera colapsada (clic -> toggle) + cuerpo.
+function fila(p){
+  const f=el("div","fila");
+  const cab=el("button","cab"); cab.type="button";
+  cab.appendChild(el("span","chev","▸"));
+  const izq=el("div","izq");
+  izq.appendChild(el("div","nombre",p.nombre_real||p.slug));
+  if(p.categoria) izq.appendChild(el("div","cat",p.categoria));  // categoria como texto sutil; sin placeholder si falta
+  cab.appendChild(izq);
+  const der=el("div","der");
+  der.appendChild(el("div","slug",p.slug));
+  der.appendChild(el("div","fecha",fechaEs(p.fecha_actualizacion)));
+  cab.appendChild(der);
+  cab.addEventListener("click",()=>f.classList.toggle("abierta"));
+  cab.setAttribute("aria-expanded","false");
+  cab.addEventListener("click",()=>cab.setAttribute("aria-expanded",f.classList.contains("abierta")));
+  f.appendChild(cab);
+  const cuerpo=el("div","cuerpo");
+  if(p.tipo) cuerpo.appendChild(el("div","tipo",p.tipo));
+  // Sintesis completa: TODOS los parrafos (el acordeon tiene ancho para mostrarlos).
+  const parrafos = Array.isArray(p.sintesis)? p.sintesis : (p.objetivo? [String(p.objetivo)] : []);
+  parrafos.forEach(t=>cuerpo.appendChild(el("p","sint",t)));
+  if(p.proximos_pasos && p.proximos_pasos.length){
+    const blk=el("div","blk"); blk.appendChild(el("span","lbl","Próximos pasos"));
+    const ul=el("ul"); p.proximos_pasos.forEach(x=>ul.appendChild(el("li",null,x)));
+    blk.appendChild(ul); cuerpo.appendChild(blk);
+  }
+  if(p.tiene_backlog && p.resena_itinerario){
+    const blk=el("div","blk"); blk.appendChild(el("span","lbl","Reseña del itinerario"));
+    blk.appendChild(el("div",null,p.resena_itinerario)); cuerpo.appendChild(blk);
+  }
+  f.appendChild(cuerpo);
+  return f;
 }
 function render(){
-  const grid=document.getElementById("grid");
-  CARTERA.forEach(p=>{
-    const c=el("div","card");
-    c.appendChild(el("h2",null,p.nombre_real||p.slug));
-    c.appendChild(el("div","slug",p.slug));
-    if(p.tipo) c.appendChild(el("div","tipo",p.tipo));
-    const b=el("div","badges");
-    b.appendChild(badgeEstado(p.estado_proyecto));
-    if(p.datos_sensibles==="si")b.appendChild(el("span","badge b-sensible","datos sensibles"));
-    else if(p.datos_sensibles==="no")b.appendChild(el("span","badge b-publico","datos públicos"));
-    c.appendChild(b);
-    const sint = p.sintesis || (p.objetivo? String(p.objetivo).split(/(?<=\.)\s/)[0] : null);
-    if(sint){
-      c.appendChild(el("p","sint",sint));
-      if(p.sintesis_parrafos_extra>0)
-        c.appendChild(el("div","mas","+"+p.sintesis_parrafos_extra+" párrafos más"));
-    }
-    c.appendChild(el("div","fecha","Última actualización: "+fechaEs(p.fecha_actualizacion)));
-    if(p.tiene_backlog && p.resena_itinerario){
-      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Reseña del itinerario"));
-      blk.appendChild(el("div",null,p.resena_itinerario)); c.appendChild(blk);
-    }
-    if(p.proximos_pasos && p.proximos_pasos.length){
-      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Próximos pasos"));
-      const ul=el("ul"); p.proximos_pasos.forEach(x=>ul.appendChild(el("li",null,x)));
-      blk.appendChild(ul); c.appendChild(blk);
-    }
-    grid.appendChild(c);
-  });
+  const lista=document.getElementById("lista");
+  CARTERA.forEach(p=>lista.appendChild(fila(p)));
   // Conteos por estado en el footer.
   const cont={};
   CARTERA.forEach(p=>{const k=p.estado_proyecto||"sin clasificar";cont[k]=(cont[k]||0)+1;});

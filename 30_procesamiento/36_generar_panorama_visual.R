@@ -36,7 +36,6 @@ RANGO_ESTADO <- c(inicial = 0L, en_desarrollo = 1L, con_productos = 2L,
                   en_pausa = 3L, concluido = 4L)
 MAX_RESENA <- 600L      # tope de caracteres de resena_itinerario.
 MAX_PROXIMOS <- 3L      # tope de entradas de proximos_pasos.
-N_PARRAFOS_SINTESIS_CARD <- 1L   # parrafos de sintesis[] que muestra la card (resto: "+N parrafos mas").
 
 # Nombre canonico EXACTO del backlog (no se aceptan variantes).
 SUBRUTA_BACKLOG_CANONICO <- file.path("50_documentacion", "activa", "backlog_acumulativo.md")
@@ -254,12 +253,9 @@ construir_objeto <- function(p) {
 
   # Editoriales de data.js (NULL si este slug no tiene entrada mapeada).
   dj <- datos_por_slug[[slug]]
+  # Acordeon: la fila expandida muestra TODOS los parrafos de sintesis[] (sin
+  # truncar; MAX_RESENA es exclusivo de resena_itinerario del backlog).
   parrafos <- if (!is.null(dj)) unlist(dj$sintesis) else character(0)
-  # Card: primer(os) N_PARRAFOS_SINTESIS_CARD parrafo(s) completos, SIN truncar
-  # (MAX_RESENA es exclusivo de resena_itinerario del backlog).
-  sintesis_card <- if (length(parrafos) >= 1)
-    paste(head(parrafos, N_PARRAFOS_SINTESIS_CARD), collapse = "\n\n") else NA_character_
-  parrafos_extra <- max(0L, length(parrafos) - N_PARRAFOS_SINTESIS_CARD)
 
   list(
     slug             = slug,
@@ -268,8 +264,7 @@ construir_objeto <- function(p) {
     categoria        = if (tiene_rg) o_null(rg$categoria) else o_null(p$categoria),
     datos_sensibles  = if (tiene_rg) o_null(rg$datos_sensibles) else NA_character_,
     estado_proyecto  = if (tiene_rg) o_null(rg$estado_proyecto) else NA_character_,
-    sintesis         = sintesis_card,                          # primer parrafo de data.js (o null)
-    sintesis_parrafos_extra = parrafos_extra,                  # parrafos restantes no mostrados en la card
+    sintesis         = if (length(parrafos) >= 1) as.list(parrafos) else NA,  # todos los parrafos (o null)
     objetivo         = if (!is.null(dj)) o_null(dj$objetivo) else NA_character_,
     tipo             = if (!is.null(dj)) o_null(dj$tipo) else NA_character_,
     fecha_actualizacion = if (is.null(fecha) || is.na(fecha)) NA_character_ else fecha,
@@ -337,23 +332,28 @@ body{margin:0;background:var(--cream);color:var(--ink);
 header.top{border-bottom:3px solid var(--plum);padding-bottom:14px;margin-bottom:22px}
 header.top h1{margin:0;font-size:1.5rem;color:var(--plum)}
 header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
-.grid{display:grid;grid-template-columns:1fr;gap:18px}
-@media(min-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:1300px){.grid{grid-template-columns:repeat(3,1fr)}}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
-  padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;flex-direction:column;gap:8px}
-.card h2{margin:0;font-size:1.1rem;color:var(--plum)}
-.card .slug{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.74rem;color:var(--muted)}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0}
-.badge{font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:999px;color:#fff;white-space:nowrap}
-.b-con_productos{background:var(--olive)} .b-en_desarrollo{background:var(--sand);color:var(--ink)}
-.b-inicial{background:var(--ocean)} .b-en_pausa{background:var(--slate)}
-.b-concluido{background:var(--plum)} .b-sinclasif{background:#9a948c}
-.b-sensible{background:var(--coral)} .b-publico{background:#b9c2a6;color:var(--ink)}
-.fecha{font-size:.82rem;color:var(--muted)}
-.tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em}
-.sint{font-size:.92rem}
-.mas{font-size:.78rem;color:var(--muted);font-style:italic}
+/* Lista acordeon de ancho completo: un solo contenedor con borde y divisores
+   horizontales entre filas (no cada fila con su propia caja/sombra). */
+.lista{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.fila{border-top:1px solid var(--line)}
+.fila:first-child{border-top:none}
+.cab{display:flex;align-items:center;gap:12px;width:100%;padding:13px 16px;
+  background:none;border:0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.cab:hover{background:var(--cream)}
+.cab:focus-visible{outline:2px solid var(--ocean);outline-offset:-2px}
+.chev{flex:0 0 auto;width:12px;color:var(--muted);font-size:.7rem;line-height:1;transition:transform .15s ease}
+.fila.abierta .chev{transform:rotate(90deg)}
+.izq{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1px}
+.nombre{font-weight:600;color:var(--plum);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.der{flex:0 1 auto;max-width:42%;display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.der .slug{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.der .fecha{font-size:.76rem;color:var(--muted);white-space:nowrap}
+.cuerpo{display:none;padding:2px 16px 16px 40px}
+.fila.abierta .cuerpo{display:block}
+.cuerpo .tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.cuerpo .sint{font-size:.92rem;margin:.5em 0}
 .blk{font-size:.85rem;background:var(--cream);border-left:3px solid var(--line);padding:8px 10px;border-radius:6px}
 .blk .lbl{display:block;font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px}
 .blk ul{margin:4px 0 0;padding-left:18px} .blk li{margin:2px 0}
@@ -376,41 +376,43 @@ function fechaEs(s){
 }
 function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;
   if(txt!=null)e.textContent=txt;return e;}
-function badgeEstado(estado){
-  const cls = estado ? ("b-"+estado) : "b-sinclasif";
-  const txt = estado ? (ETIQUETA_ESTADO[estado]||estado) : "sin clasificar";
-  return el("span","badge "+cls,txt);
+// Construye una fila del acordeon: cabecera colapsada (clic -> toggle) + cuerpo.
+function fila(p){
+  const f=el("div","fila");
+  const cab=el("button","cab"); cab.type="button";
+  cab.appendChild(el("span","chev","▸"));
+  const izq=el("div","izq");
+  izq.appendChild(el("div","nombre",p.nombre_real||p.slug));
+  if(p.categoria) izq.appendChild(el("div","cat",p.categoria));  // categoria como texto sutil; sin placeholder si falta
+  cab.appendChild(izq);
+  const der=el("div","der");
+  der.appendChild(el("div","slug",p.slug));
+  der.appendChild(el("div","fecha",fechaEs(p.fecha_actualizacion)));
+  cab.appendChild(der);
+  cab.addEventListener("click",()=>f.classList.toggle("abierta"));
+  cab.setAttribute("aria-expanded","false");
+  cab.addEventListener("click",()=>cab.setAttribute("aria-expanded",f.classList.contains("abierta")));
+  f.appendChild(cab);
+  const cuerpo=el("div","cuerpo");
+  if(p.tipo) cuerpo.appendChild(el("div","tipo",p.tipo));
+  // Sintesis completa: TODOS los parrafos (el acordeon tiene ancho para mostrarlos).
+  const parrafos = Array.isArray(p.sintesis)? p.sintesis : (p.objetivo? [String(p.objetivo)] : []);
+  parrafos.forEach(t=>cuerpo.appendChild(el("p","sint",t)));
+  if(p.proximos_pasos && p.proximos_pasos.length){
+    const blk=el("div","blk"); blk.appendChild(el("span","lbl","Próximos pasos"));
+    const ul=el("ul"); p.proximos_pasos.forEach(x=>ul.appendChild(el("li",null,x)));
+    blk.appendChild(ul); cuerpo.appendChild(blk);
+  }
+  if(p.tiene_backlog && p.resena_itinerario){
+    const blk=el("div","blk"); blk.appendChild(el("span","lbl","Reseña del itinerario"));
+    blk.appendChild(el("div",null,p.resena_itinerario)); cuerpo.appendChild(blk);
+  }
+  f.appendChild(cuerpo);
+  return f;
 }
 function render(){
-  const grid=document.getElementById("grid");
-  CARTERA.forEach(p=>{
-    const c=el("div","card");
-    c.appendChild(el("h2",null,p.nombre_real||p.slug));
-    c.appendChild(el("div","slug",p.slug));
-    if(p.tipo) c.appendChild(el("div","tipo",p.tipo));
-    const b=el("div","badges");
-    b.appendChild(badgeEstado(p.estado_proyecto));
-    if(p.datos_sensibles==="si")b.appendChild(el("span","badge b-sensible","datos sensibles"));
-    else if(p.datos_sensibles==="no")b.appendChild(el("span","badge b-publico","datos públicos"));
-    c.appendChild(b);
-    const sint = p.sintesis || (p.objetivo? String(p.objetivo).split(/(?<=\\.)\\s/)[0] : null);
-    if(sint){
-      c.appendChild(el("p","sint",sint));
-      if(p.sintesis_parrafos_extra>0)
-        c.appendChild(el("div","mas","+"+p.sintesis_parrafos_extra+" párrafos más"));
-    }
-    c.appendChild(el("div","fecha","Última actualización: "+fechaEs(p.fecha_actualizacion)));
-    if(p.tiene_backlog && p.resena_itinerario){
-      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Reseña del itinerario"));
-      blk.appendChild(el("div",null,p.resena_itinerario)); c.appendChild(blk);
-    }
-    if(p.proximos_pasos && p.proximos_pasos.length){
-      const blk=el("div","blk"); blk.appendChild(el("span","lbl","Próximos pasos"));
-      const ul=el("ul"); p.proximos_pasos.forEach(x=>ul.appendChild(el("li",null,x)));
-      blk.appendChild(ul); c.appendChild(blk);
-    }
-    grid.appendChild(c);
-  });
+  const lista=document.getElementById("lista");
+  CARTERA.forEach(p=>lista.appendChild(fila(p)));
   // Conteos por estado en el footer.
   const cont={};
   CARTERA.forEach(p=>{const k=p.estado_proyecto||"sin clasificar";cont[k]=(cont[k]||0)+1;});
@@ -423,11 +425,11 @@ render();
 html <- paste0(
   "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n<meta charset=\"utf-8\">\n",
   "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n",
-  u8("<title>Panorama de la cartera — Área de Monitoreo</title>\n"),
+  u8("<title>Cartera de proyectos Área de Monitoreo</title>\n"),
   "<style>", css, "</style>\n</head>\n<body>\n<div class=\"wrap\">\n",
-  u8("<header class=\"top\">\n<h1>Panorama de la cartera — Área de Monitoreo</h1>\n"),
+  u8("<header class=\"top\">\n<h1>Cartera de proyectos Área de Monitoreo</h1>\n"),
   "<div class=\"meta\">Generado: ", fecha_generacion, u8(" · "), n_total, " proyectos</div>\n</header>\n",
-  "<main id=\"grid\" class=\"grid\"></main>\n",
+  "<main id=\"lista\" class=\"lista\"></main>\n",
   "<footer class=\"bot\">Total de proyectos: ", n_total,
   "<div class=\"conteos\" id=\"conteos\"></div></footer>\n",
   "</div>\n",
@@ -446,9 +448,9 @@ et_estado <- function(e) {
 }
 m_lin <- character(0)
 ap <- function(...) m_lin <<- c(m_lin, ...)
-ap(sprintf(u8("# Panorama visual de la cartera — Área de Monitoreo")), "",
+ap(sprintf(u8("# Cartera de proyectos Área de Monitoreo")), "",
    sprintf(u8("Generado: %s · %d proyectos"), fecha_generacion, n_total), "",
-   u8("> Versión texto del panorama visual (mismo orden y campos que las cards)."), "")
+   u8("> Versión texto del panorama visual (mismo orden y campos que las filas)."), "")
 for (o in objetos) {
   ap(sprintf("## %s", if (is.na(o$nombre_real)) o$slug else o$nombre_real))
   ap(sprintf("- **slug:** `%s`", o$slug))
@@ -458,12 +460,12 @@ for (o in objetos) {
   ap(sprintf("- **datos sensibles:** %s", ds))
   ap(sprintf(u8("- **última actualización:** %s"),
              if (is.na(o$fecha_actualizacion)) "sin traspaso" else o$fecha_actualizacion))
-  sint <- if (!is.na(o$sintesis)) o$sintesis else if (!is.na(o$objetivo)) o$objetivo else NA
-  if (!is.na(sint)) {
-    mas <- if (o$sintesis_parrafos_extra > 0)
-      sprintf(u8(" (+%d párrafos más)"), o$sintesis_parrafos_extra) else ""
-    ap(sprintf(u8("- **síntesis:** %s%s"), sint, mas))
-  }
+  # .md no interactivo: muestra TODOS los parrafos de sintesis[] como texto corrido
+  # (sin toggle ni indicador "+N"; el acordeon del .html cubre la interaccion).
+  parrafos_md <- if (is.list(o$sintesis)) unlist(o$sintesis)
+                 else if (!is.na(o$objetivo)) o$objetivo else character(0)
+  if (length(parrafos_md) > 0)
+    ap(sprintf(u8("- **síntesis:** %s"), paste(parrafos_md, collapse = " ")))
   if (isTRUE(o$tiene_backlog) && !is.na(o$resena_itinerario))
     ap(sprintf(u8("- **reseña del itinerario:** %s"), o$resena_itinerario))
   if (!identical(o$proximos_pasos, NA) && length(o$proximos_pasos) > 0) {
