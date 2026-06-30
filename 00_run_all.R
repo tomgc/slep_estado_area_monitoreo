@@ -37,7 +37,8 @@ PASOS <- list(
   list(id = 2L, etiqueta = "Localizar documentos",  ruta = "30_procesamiento/32_localizar_documentos.R"),
   list(id = 3L, etiqueta = "Extraer metadatos",     ruta = "30_procesamiento/33_extraer_metadatos.R"),
   list(id = 4L, etiqueta = "Compilar inventario",   ruta = "30_procesamiento/34_compilar_inventario.R"),
-  list(id = 5L, etiqueta = "Compilar panorama",     ruta = "30_procesamiento/35_compilar_panorama.R")
+  list(id = 5L, etiqueta = "Compilar panorama",     ruta = "30_procesamiento/35_compilar_panorama.R"),
+  list(id = 6L, etiqueta = "Generar panorama visual", ruta = "30_procesamiento/36_generar_panorama_visual.R")
 )
 
 # ---- Orquestador -------------------------------------------------------------
