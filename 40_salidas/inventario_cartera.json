@@ -464,8 +464,8 @@
     },
     {
       "slug": "slep_paes",
-      "nombre_real": null,
-      "alias_corto": null,
+      "nombre_real": "Motor de comparación interactivo de los resultados de la PAES",
+      "alias_corto": "PAES",
       "categoria": "activo",
       "estructura": "canonica",
       "maneja_sensibles": true,
@@ -506,7 +506,7 @@
         "presente": false,
         "tipo_pendiente": null
       },
-      "notas": null
+      "notas": "Nombre curado del sitio del Área."
     },
     {
       "slug": "slep_rendimiento_historico",
@@ -700,8 +700,8 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 25,
-        "total_sesiones": 25,
+        "correlativo": 26,
+        "total_sesiones": 26,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
@@ -713,14 +713,14 @@
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "f1010407a5ea9206419e3ba81a816428",
+        "md5_traspaso": "8faa8e6883d549faeee98e5b110976be",
         "md5_resena": "826fb8a4dc9b21f986cab1309dc369c0",
-        "md5_backlog": "0cbaba793afd6f4c14a51edfa769408b"
+        "md5_backlog": "468aa9899d96082cd4c95d3f751454f4"
       },
       "documentos": {
         "resena": "slep_simce_adecuado/50_documentacion/activa/resena_slep_simce_adecuado.md",
-        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v25.md",
-        "backlog": "slep_simce_adecuado/50_documentacion/activa/backlog_historico.md",
+        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v26.md",
+        "backlog": "slep_simce_adecuado/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_simce_adecuado/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_simce_adecuado/README.md",
         "claude": "slep_simce_adecuado/CLAUDE.md",

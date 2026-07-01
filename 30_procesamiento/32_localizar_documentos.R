@@ -144,11 +144,15 @@ seccion_md <- function(cuerpo_lineas, titulo) {
 #' lectura del estado en esta corrida: PUSH (leer ESTADO.md directo) vs PULL
 #' (recomputar desde traspaso/backlog, comportamiento Fase 1).
 #'
-#' Regla de desincronizacion (encargo Fase 2): si `ultima_actividad` del ESTADO
-#' es ANTERIOR (por fecha) al mtime del traspaso vigente, el ESTADO se considera
-#' stale -> se trata como si no existiera (PULL). Tambien cae a PULL si falta
-#' ESTADO.md o su `ultima_actividad` es ilegible. La comparacion es por FECHA
-#' (mismo dia = sincronizado); el mtime se lee en runtime y NO se persiste.
+#' Regla de desincronizacion (encargo Fase 2, con margen desde P-DESYNC-MARGEN):
+#' si `ultima_actividad` del ESTADO es ANTERIOR (por fecha) al mtime del
+#' traspaso vigente EN MAS DE `MARGEN_DESYNC_DIAS` dias, el ESTADO se considera
+#' stale -> se trata como si no existiera (PULL). El margen (1 dia por defecto)
+#' tolera el patron de traspasos guardados pasada la medianoche de su fecha de
+#' cierre declarada sin ocultar desyncs de contenido reales (mas de 1 dia de
+#' diferencia). Tambien cae a PULL si falta ESTADO.md o su `ultima_actividad`
+#' es ilegible. La comparacion es por FECHA (mismo dia = sincronizado); el
+#' mtime se lee en runtime y NO se persiste.
 resolver_estado <- function(ruta_proyecto, ruta_traspaso) {
   ruta <- file.path(ruta_proyecto, SUBRUTA_ESTADO)
   vacio <- list(presente = FALSE, sincronizado = FALSE, fuente = "PULL",
@@ -172,9 +176,15 @@ resolver_estado <- function(ruta_proyecto, ruta_traspaso) {
   sincronizado <- TRUE; motivo <- "sincronizado"
   if (is.na(ua)) {
     sincronizado <- FALSE; motivo <- "ultima_actividad ausente o ilegible"
-  } else if (!is.na(mt) && ua < mt) {
-    sincronizado <- FALSE
-    motivo <- sprintf("desync: ultima_actividad %s < mtime traspaso %s", ua, mt)
+  } else if (!is.na(mt)) {
+    margen <- if (exists("MARGEN_DESYNC_DIAS")) MARGEN_DESYNC_DIAS else 0L
+    if (ua < (mt - margen)) {
+      sincronizado <- FALSE
+      motivo <- sprintf(
+        "desync: ultima_actividad %s < mtime traspaso %s - margen %dd",
+        ua, mt, margen
+      )
+    }
   }
   tp <- if (is.null(meta$tipo_pendiente) || !nzchar(meta$tipo_pendiente))
            NA_character_ else meta$tipo_pendiente

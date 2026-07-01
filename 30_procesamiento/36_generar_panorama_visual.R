@@ -34,6 +34,14 @@ RUTA_PANORAMA_VISUAL_MD   <- file.path(RUTA_SALIDAS, "panorama_visual.md")
 # Orden de estados (null/inicial primero -> concluido al final).
 RANGO_ESTADO <- c(inicial = 0L, en_desarrollo = 1L, con_productos = 2L,
                   en_pausa = 3L, concluido = 4L)
+# Orden de prioridad de tipo_pendiente (Fase 2 PUSH, enum SETTINGS SS1.2.4):
+# bug/bloqueante primero, cosmetica/ninguno al final. Criterio de priorizacion
+# de la apertura de sesion (SETTINGS SS1.2.4), aplicado aqui al ordenamiento del
+# acordeon (P-FASE2-PIEZA-C, traspaso v05 SS11). Sin dato (NA, hermano sin
+# ESTADO.md o sin tipo_pendiente declarado) va al final, junto a "ninguno".
+RANGO_TIPO_PENDIENTE <- c(bug = 0L, bloqueante = 1L, deuda_heredada = 2L,
+                          deuda_tecnica = 3L, nuevo = 4L, cosmetica = 5L,
+                          ninguno = 6L)
 MAX_RESENA <- 600L      # tope de caracteres de resena_itinerario.
 MAX_PROXIMOS <- 3L      # tope de entradas de proximos_pasos.
 
@@ -264,6 +272,11 @@ construir_objeto <- function(p) {
     categoria        = if (tiene_rg) o_null(rg$categoria) else o_null(p$categoria),
     datos_sensibles  = if (tiene_rg) o_null(rg$datos_sensibles) else NA_character_,
     estado_proyecto  = if (tiene_rg) o_null(rg$estado_proyecto) else NA_character_,
+    # Fase 2 PUSH: tipo_pendiente ya viene tipado desde 34 (inv$proyectos[[i]]$estado$tipo_pendiente).
+    # Enum SETTINGS SS1.2.4 (bug|bloqueante|deuda_heredada|deuda_tecnica|nuevo|cosmetica|ninguno);
+    # NA si el hermano no tiene ESTADO.md o no declaro el campo. Usado para el
+    # ordenamiento de la Fase 2 (P-FASE2-PIEZA-C), no se traduce ni se amplia aqui.
+    tipo_pendiente   = o_null(unlist(p$estado$tipo_pendiente)),
     sintesis         = if (length(parrafos) >= 1) as.list(parrafos) else NA,  # todos los parrafos (o null)
     objetivo         = if (!is.null(dj)) o_null(dj$objetivo) else NA_character_,
     tipo             = if (!is.null(dj)) o_null(dj$tipo) else NA_character_,
@@ -278,6 +291,15 @@ objetos <- lapply(inv$proyectos, construir_objeto)
 
 # ---- FASE 2: ordenar las cards -----------------------------------------------
 
+# P-FASE2-PIEZA-C (agenda priorizada): orden por tipo_pendiente (prioridad de
+# sesion, SETTINGS SS1.2.4) primero, estado_proyecto segundo, fecha (desc)
+# tercero. Decision del titular (sesion 6): tipo_pendiente -> estado_proyecto
+# -> fecha_actualizacion.
+rango_tp_de <- function(tp) {
+  if (is.na(tp)) return(length(RANGO_TIPO_PENDIENTE))  # sin dato -> ultimo, junto a "ninguno"
+  r <- RANGO_TIPO_PENDIENTE[[tp]]
+  if (is.null(r)) length(RANGO_TIPO_PENDIENTE) else r
+}
 rango_de <- function(estado) {
   if (is.na(estado)) return(0L)                 # null -> primero (como inicial)
   r <- RANGO_ESTADO[[estado]]
@@ -286,9 +308,10 @@ rango_de <- function(estado) {
 clave_fecha <- function(f) if (is.na(f)) "0000-00-00" else f  # NA al final del grupo
 
 ord <- order(
+  vapply(objetos, function(o) rango_tp_de(o$tipo_pendiente), integer(1)),
   vapply(objetos, function(o) rango_de(o$estado_proyecto), integer(1)),
   vapply(objetos, function(o) clave_fecha(o$fecha_actualizacion), character(1)),
-  decreasing = c(FALSE, TRUE),
+  decreasing = c(FALSE, FALSE, TRUE),
   method = "radix"
 )
 objetos <- objetos[ord]
@@ -349,6 +372,7 @@ header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
 .der{flex:0 1 auto;max-width:42%;display:flex;flex-direction:column;align-items:flex-end;gap:1px}
 .der .slug{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;color:var(--muted);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.der .tp{font-size:.68rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
 .der .fecha{font-size:.76rem;color:var(--muted);white-space:nowrap}
 .cuerpo{display:none;padding:2px 16px 16px 40px}
 .fila.abierta .cuerpo{display:block}
@@ -366,6 +390,8 @@ const RAW = document.getElementById("datos-cartera").textContent;
 const CARTERA = JSON.parse(RAW);
 const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
   con_productos:"con productos",en_pausa:"en pausa",concluido:"concluido"};
+const ETIQUETA_TP = {bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
+  deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno"};
 const MES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
   "septiembre","octubre","noviembre","diciembre"];
 function fechaEs(s){
@@ -387,6 +413,7 @@ function fila(p){
   cab.appendChild(izq);
   const der=el("div","der");
   der.appendChild(el("div","slug",p.slug));
+  if(p.tipo_pendiente) der.appendChild(el("div","tp",ETIQUETA_TP[p.tipo_pendiente]||p.tipo_pendiente));
   der.appendChild(el("div","fecha",fechaEs(p.fecha_actualizacion)));
   cab.appendChild(der);
   cab.addEventListener("click",()=>f.classList.toggle("abierta"));
@@ -418,6 +445,11 @@ function render(){
   CARTERA.forEach(p=>{const k=p.estado_proyecto||"sin clasificar";cont[k]=(cont[k]||0)+1;});
   const cdiv=document.getElementById("conteos");
   Object.keys(cont).forEach(k=>{cdiv.appendChild(el("span",null,(ETIQUETA_ESTADO[k]||k)+": "+cont[k]));});
+  // Conteos por tipo_pendiente (agenda priorizada, P-FASE2-PIEZA-C).
+  const contTp={};
+  CARTERA.forEach(p=>{const k=p.tipo_pendiente||"sin dato";contTp[k]=(contTp[k]||0)+1;});
+  const tpdiv=document.getElementById("conteos-tp");
+  Object.keys(contTp).forEach(k=>{tpdiv.appendChild(el("span",null,(ETIQUETA_TP[k]||k)+": "+contTp[k]));});
 }
 render();
 ')
@@ -431,7 +463,8 @@ html <- paste0(
   "<div class=\"meta\">Generado: ", fecha_generacion, u8(" · "), n_total, " proyectos</div>\n</header>\n",
   "<main id=\"lista\" class=\"lista\"></main>\n",
   "<footer class=\"bot\">Total de proyectos: ", n_total,
-  "<div class=\"conteos\" id=\"conteos\"></div></footer>\n",
+  "<div class=\"conteos\" id=\"conteos\"></div>",
+  u8("<div class=\"conteos\" id=\"conteos-tp\"></div></footer>\n"),
   "</div>\n",
   "<script type=\"application/json\" id=\"datos-cartera\">\n", json_embebido, "\n</script>\n",
   "<script>\n", js, "\n</script>\n</body>\n</html>\n"
@@ -446,15 +479,22 @@ et_estado <- function(e) {
   c(inicial="inicial", en_desarrollo="en desarrollo", con_productos="con productos",
     en_pausa="en pausa", concluido="concluido")[e] |> (\(x) if (is.na(x)) e else x)()
 }
+et_tp <- function(tp) {
+  if (is.na(tp)) return("sin dato")
+  c(bug="bug", bloqueante="bloqueante", deuda_heredada="deuda heredada",
+    deuda_tecnica="deuda tecnica", nuevo="nuevo", cosmetica="cosmetica",
+    ninguno="ninguno")[tp] |> (\(x) if (is.na(x)) tp else x)()
+}
 m_lin <- character(0)
 ap <- function(...) m_lin <<- c(m_lin, ...)
 ap(sprintf(u8("# Cartera de proyectos Área de Monitoreo")), "",
    sprintf(u8("Generado: %s · %d proyectos"), fecha_generacion, n_total), "",
-   u8("> Versión texto del panorama visual (mismo orden y campos que las filas)."), "")
+   u8("> Versión texto del panorama visual (mismo orden y campos que las filas; orden por tipo_pendiente, estado y fecha)."), "")
 for (o in objetos) {
   ap(sprintf("## %s", if (is.na(o$nombre_real)) o$slug else o$nombre_real))
   ap(sprintf("- **slug:** `%s`", o$slug))
   if (!is.na(o$tipo)) ap(sprintf("- **tipo:** %s", o$tipo))
+  ap(sprintf("- **tipo de pendiente:** %s", et_tp(o$tipo_pendiente)))
   ap(sprintf("- **estado:** %s", et_estado(o$estado_proyecto)))
   ds <- if (is.na(o$datos_sensibles)) "sin clasificar" else o$datos_sensibles
   ap(sprintf("- **datos sensibles:** %s", ds))
@@ -480,6 +520,10 @@ escribir_seguro(RUTA_PANORAMA_VISUAL_MD, function(r) writeLines(m_lin, r, useByt
 
 n_backlog <- sum(vapply(objetos, function(o) isTRUE(o$tiene_backlog), logical(1)))
 n_sin_estado <- sum(vapply(objetos, function(o) is.na(o$estado_proyecto), logical(1)))
+n_sin_tp <- sum(vapply(objetos, function(o) is.na(o$tipo_pendiente), logical(1)))
+n_prioritarios <- sum(vapply(objetos, function(o) {
+  !is.na(o$tipo_pendiente) && o$tipo_pendiente %in% c("bug", "bloqueante")
+}, logical(1)))
 for (a in advertencias) log_msg(a, "36_visual", "WARN")
-log_msg(sprintf("panorama_visual.html/.md generados: %d proyectos, %d con backlog, %d sin estado_proyecto.",
-                n_total, n_backlog, n_sin_estado), "36_visual")
+log_msg(sprintf("panorama_visual.html/.md generados: %d proyectos, %d con backlog, %d sin estado_proyecto, %d sin tipo_pendiente, %d bug/bloqueante en cabeza.",
+                n_total, n_backlog, n_sin_estado, n_sin_tp, n_prioritarios), "36_visual")

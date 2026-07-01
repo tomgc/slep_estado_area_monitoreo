@@ -1,28 +1,29 @@
 # Estructura del proyecto (escaner)
 
 - Raiz       : slep_estado_proyectos_monitoreo
-- Fecha      : 2026-06-29 16:38:54
-- Directorios: 12
-- Archivos   : 44
-- Tamano     : 284K
+- Fecha      : 2026-07-01 15:24:12
+- Directorios: 13
+- Archivos   : 55
+- Tamano     : 534K
 
 ## Arbol
 
 ```
 slep_estado_proyectos_monitoreo/
 00_escanear_proyecto.R  (4.84K)
-00_run_all.R  (4.55K)
+00_run_all.R  (4.66K)
 10_utils/
-  10_configuracion.R  (5.19K)
-  10_utils.R  (5.19K)
+  10_configuracion.R  (6.23K)
+  10_utils.R  (6.15K)
 20_insumos/
-  registro_proyectos.csv  (2.59K)
+  registro_proyectos.csv  (2.84K)
 30_procesamiento/
-  31_descubrir_proyectos.R  (7.06K)
-  32_localizar_documentos.R  (7.19K)
+  31_descubrir_proyectos.R  (7.76K)
+  32_localizar_documentos.R  (11.4K)
   33_extraer_metadatos.R  (3.16K)
-  34_compilar_inventario.R  (5.95K)
-  35_compilar_panorama.R  (8.17K)
+  34_compilar_inventario.R  (6.57K)
+  35_compilar_panorama.R  (8.98K)
+  36_generar_panorama_visual.R  (27K)
 40_salidas/
   cache/
     slep_alertas_ael.md  (1.75K)
@@ -39,29 +40,40 @@ slep_estado_proyectos_monitoreo/
     slep_seguimiento_educacion_inicial.md  (2.01K)
     slep_simce_adecuado.md  (1.78K)
     slep_simce_estandares_aprendizaje.md  (1.92K)
-  inventario_cartera.json  (23.5K)
-  inventario_cartera.parquet  (18.5K)
-  panorama.md  (27.2K)
+  inventario_cartera.json  (26.4K)
+  inventario_cartera.parquet  (19.5K)
+  panorama_visual.html  (35.6K)
+  panorama_visual.md  (22.1K)
+  panorama.md  (19.3K)
 50_documentacion/
   activa/
+    backlog_acumulativo.md  (18.4K)
     decisiones/
       20260628_decision_arquitectura_orquestador.md  (4.21K)
     esbozo_fase2_estado_estandarizado.md  (4.36K)
-    POLITICA_PROYECTO.md  (29.7K)
+    ESTADO.md  (848)
+    POLITICA_PROYECTO.md  (33K)
     reporte_cobertura_documental.md  (6.46K)
-    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (37.3K)
+    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (46.7K)
   andamios/
+    auditoria_backlogs_20260629.md  (11.9K)
+    logs/
+      20260629_panorama_visual_log.md  (6.49K)
   estructura/
-    20260629_155533_estructura.md  (2.15K)
-    20260629_155533_estructura.txt  (2.15K)
-    20260629_155905_estructura.md  (2.18K)
-    20260629_155905_estructura.txt  (2.18K)
-    estructura_actual.md  (2.18K)
-    estructura_actual.txt  (2.18K)
+    20260701_142834_estructura.md  (2.55K)
+    20260701_142834_estructura.txt  (2.55K)
+    20260701_145942_estructura.md  (2.56K)
+    20260701_145942_estructura.txt  (2.56K)
+    estructura_actual.md  (2.56K)
+    estructura_actual.txt  (2.56K)
   traspasos/
     traspaso_cierre_v01.md  (13.1K)
     traspaso_cierre_v02.md  (15.2K)
-CLAUDE.md  (2.88K)
+    traspaso_cierre_v03.md  (16.6K)
+    traspaso_cierre_v04.md  (39K)
+    traspaso_cierre_v05.md  (28.4K)
+    traspaso_cierre_v06.md  (22.4K)
+CLAUDE.md  (3.96K)
 README.md  (4.24K)
 slep_estado_proyectos_monitoreo.Rproj  (248)
 tests/
@@ -71,10 +83,11 @@ tests/
 ## Conteo por extension
 
 ```
-  md                 27
-  R                  10
+  md                 36
+  R                  11
   txt                3
   csv                1
+  html               1
   json               1
   parquet            1
   Rproj              1

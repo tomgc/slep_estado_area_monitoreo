@@ -2,46 +2,23 @@
 
 Generado: 2026-07-01 · 17 proyectos
 
-> Versión texto del panorama visual (mismo orden y campos que las filas).
+> Versión texto del panorama visual (mismo orden y campos que las filas; orden por tipo_pendiente, estado y fecha).
 
-## Minuta de asistencia mensual
-- **slug:** `slep_minuta_asistencia`
-- **tipo:** Minuta · Dirección Ejecutiva
+## Georreferenciación de establecimientos del territorio
+- **slug:** `slep_georreferenciacion`
+- **tipo de pendiente:** bloqueante
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
-- **última actualización:** 2026-07-01
-- **síntesis:** La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio. En este reporte, dirigido al Director Ejecutivo y construido a partir del análisis de los registros de asistencia diaria de cada estudiante del territorio, se le informa respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo, entre otros. Contiene una selección de alertas de inasistencia priorizadas para la toma de decisiones, así como una proyección de la asistencia anual basada en años anteriores.
+- **última actualización:** 2026-06-28
 - **próximos pasos:**
-  - P-orq (deuda técnica, aprobado, diferido). Refactor: partir 32_render_minuta.R en pasos atómicos y crear 00_run_all.R canónico. Complejidad…
-  - Deuda menor nueva: _archivo/20260630/ quedó versionado en Git. Los renames vía git mv entraron al commit 7d33adb antes de que .gitignore lo…
-  - Deuda: backlog no extraído a backlog_acumulativo.md (POLITICA §10). Sigue embebido en traspasos. Requiere reconstruir el histórico desde tr…
-
-## slep_paes
-- **slug:** `slep_paes`
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-07-01
-- **reseña del itinerario:** slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado.
-- **próximos pasos:**
-  - Pendiente 1 — Diseño de 31_leer_normalizar.R contra el esquema real
-  - Descripción: el schema real de ArchivoC tiene columnas
-  - Contexto: hallazgo de la Fase 0, documentado en
-
-## Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce
-- **slug:** `slep_simce_adecuado`
-- **tipo:** Motor de comparación
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-07-01
-- **síntesis:** Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente. La herramienta organiza esta información a escala nacional, ponderando los resultados de cada prueba según el número de estudiantes que la rindió, permitiendo recorrer los resultados por establecimiento, comuna, SLEP, región y nivel nacional, a lo largo de todos los años para los cuales existen resultados. Su pantalla única de visualización pone especial atención en el nivel Adecuado (el más exigente) como indicador de logro, con la mirada puesta en cómo evoluciona en cada territorio y cómo se compara entre grupos socioeconómicos equivalentes.
-- **próximos pasos:**
-  - Auditar ESTADO.md y el POLITICA_PROYECTO.md duplicado (A-s25-4): confirmar cuál es la fuente canónica y si la duplicación es intencional (F…
-  - Regenerar suite standalone (contenido de documentar.R no cambió esta sesión, pero el motor sí — evaluar si la suite referencia terminología…
-  - Actualización anual de insumos Simce (2025 final o 2026).
+  - Inventario de pendientes
+  - Auditoría de cierre (política 5.6, preguntas "Cierre")
+  - ¿Pipeline corre de cero sin intervención manual? Parcial: 30_preparar_comunas.R y 33b
 
 ## Análisis de trayectorias educativas interrumpidas
 - **slug:** `slep_minuta_desvinculacion`
 - **tipo:** Minuta · Dirección Ejecutiva
+- **tipo de pendiente:** deuda tecnica
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-30
@@ -51,38 +28,10 @@ Generado: 2026-07-01 · 17 proyectos
   - P-AUDITORIA: despachar el encargo de auditoría externa (2 acciones del titular: editar 37_validacion_predictiva.txt con fila agregada "otro…
   - Tarea 2 paso 3 (modelo B3): bloqueado por diseño hasta primera respuesta de auditoría.
 
-## Georreferenciación de establecimientos del territorio
-- **slug:** `slep_georreferenciacion`
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-06-28
-- **próximos pasos:**
-  - Inventario de pendientes
-  - Auditoría de cierre (política 5.6, preguntas "Cierre")
-  - ¿Pipeline corre de cero sin intervención manual? Parcial: 30_preparar_comunas.R y 33b
-
-## Monitoreo de aprendizajes en la educación parvularia
-- **slug:** `slep_aprendizajes_ep`
-- **tipo:** Monitoreo
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-06-26
-- **síntesis:** En conjunto con la coordinación de Educación Parvularia del Área de Mejora Continua y siguiendo los principios de las Bases Curriculares de la Educación Parvularia vigentes, construimos un sistema de monitoreo de aprendizajes para la educación inicial del SLEP Costa Central. Este sistema organiza las evaluaciones realizadas por las educadoras por ámbito, núcleo y objetivo de aprendizaje y los presenta en informes interactivos que permiten segmentar los resultados por momento evaluativo (diagnóstico, primer semestre y segundo semestre) y diversos niveles de agrupación (territorio, jardín infantil, educadora y párvulo). Su aporte es hacer visible, en un mismo lugar, la cobertura curricular y el logro de los objetivos de aprendizaje a lo largo de los tres momentos de evaluación del año, lo que permite realizar un seguimiento longitudinal y una priorización pedagógica pertinente y oportuna para cada nivel de la educación inicial.
-
-## Portafolio del Área (escaparate web)
-- **slug:** `slep_monitoreo`
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-06-26
-- **reseña del itinerario:** El sitio `tomgc.github.io/slep_monitoreo` es una página estática institucional de presentación del Área de Monitoreo de Procesos y Resultados Educativos, dentro de la Subdirección de Apoyo Técnico Pedagógico del SLEP Costa Central. Es single-page, sin dependencias externas, alojado en GitHub Pages. Su propósito es comunicar qué hace el Área, su trayectoria, ejemplos de trabajo, su equipo y un glosario técnico. El desarrollo se inició el 2026-04-09 (commit base v1.2) y la primera sesión documentada con cierre de traspaso es el 2026-05-25 (esta).
-- **próximos pasos:**
-  - Inventario de pendientes
-  - Tipo: contenido. Impacto: medio. El proyecto "Minutas de resultados de las pruebas Simce" se eliminó de data.js en v05; el usuario aportará…
-  - Enfoque: pedir los 3 PDF, redactar objetivo + síntesis, asignar id (sugerido simce_cc), insertar con su orden; luego sus capturas siguiendo…
-
 ## Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)
 - **slug:** `slep_idps`
 - **tipo:** Motor de comparación
+- **tipo de pendiente:** deuda tecnica
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-25
@@ -96,6 +45,7 @@ Generado: 2026-07-01 · 17 proyectos
 ## Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio
 - **slug:** `slep_reportes_modelo_resguardo_asistencia`
 - **tipo:** Reporte · Directores/as
+- **tipo de pendiente:** deuda tecnica
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-20
@@ -106,9 +56,55 @@ Generado: 2026-07-01 · 17 proyectos
   - Auditoría de cierre (política 5.6)
   - ¿Pipeline corre de cero sin intervención manual? → Sí (sin cambios de pipeline esta sesión;
 
+## Diagnóstico histórico del rendimiento escolar
+- **slug:** `slep_rendimiento_historico`
+- **tipo:** Diagnóstico
+- **tipo de pendiente:** deuda tecnica
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-06-15
+- **síntesis:** Diagnóstico longitudinal y multidimensional de las bases de rendimiento escolar del Mineduc (2002-2025) con el propósito de caracterizar las trayectorias educativas de los estudiantes de los establecimientos educacionales del SLEP Costa Central y cuantificar las variaciones en las tasas de promoción y reprobación. Al vincular estas variables de resultado con la caracterización socioeducativa del estudiante (sexo registral, edad, país de origen, pertenencia a pueblos originarios y condición de alumno integrado, entre otras) y con las particularidades de los establecimientos (emplazamiento rural o urbano, tipos de enseñanza y régimen de jornada, entre otros), buscamos identificar brechas de equidad intra-territoriales, contrastar el desempeño del SLEP frente a otros territorios de la Región de Valparaíso y el nivel nacional y modelar sistemas de alerta temprana basados en la asistencia crónica y el rendimiento académico, para focalizar de forma oportuna y precisa los recursos pedagógicos y de apoyo psicosocial.
+- **próximos pasos:**
+  - Ancla de sanidad CEM: promoción municipal-nacional ≈ 94% (2023) en el HTML.
+  - Abrir el .docx y confirmar estilos de marca.
+  - P24 (nuevo) — Warning de Módulo B: "micro CC: 7406 registros
+
+## Dashboard personal de monitoreo
+- **slug:** `slep_dashboard_personal_monitoreo`
+- **tipo de pendiente:** deuda tecnica
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-05-25
+- **próximos pasos:**
+  - Archivo(s) afectado(s): docs/traspaso/traspaso_cierre_v17.md (nuevo), docs/referencia/principios_desarrollo_v3.md (eliminado).
+  - Categoría temática: Mecánica de PR / Incorporación de traspaso.
+  - Qué se hizo: Una segunda sesión de Claude Code se abrió desde la ruta nueva /Users/tomgc/Projects/slep_dashboard_personal_monitoreo/. Se di…
+
+## Monitoreo de aprendizajes en la educación parvularia
+- **slug:** `slep_aprendizajes_ep`
+- **tipo:** Monitoreo
+- **tipo de pendiente:** nuevo
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-06-26
+- **síntesis:** En conjunto con la coordinación de Educación Parvularia del Área de Mejora Continua y siguiendo los principios de las Bases Curriculares de la Educación Parvularia vigentes, construimos un sistema de monitoreo de aprendizajes para la educación inicial del SLEP Costa Central. Este sistema organiza las evaluaciones realizadas por las educadoras por ámbito, núcleo y objetivo de aprendizaje y los presenta en informes interactivos que permiten segmentar los resultados por momento evaluativo (diagnóstico, primer semestre y segundo semestre) y diversos niveles de agrupación (territorio, jardín infantil, educadora y párvulo). Su aporte es hacer visible, en un mismo lugar, la cobertura curricular y el logro de los objetivos de aprendizaje a lo largo de los tres momentos de evaluación del año, lo que permite realizar un seguimiento longitudinal y una priorización pedagógica pertinente y oportuna para cada nivel de la educación inicial.
+
+## Portafolio del Área (escaparate web)
+- **slug:** `slep_monitoreo`
+- **tipo de pendiente:** nuevo
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-06-26
+- **reseña del itinerario:** El sitio `tomgc.github.io/slep_monitoreo` es una página estática institucional de presentación del Área de Monitoreo de Procesos y Resultados Educativos, dentro de la Subdirección de Apoyo Técnico Pedagógico del SLEP Costa Central. Es single-page, sin dependencias externas, alojado en GitHub Pages. Su propósito es comunicar qué hace el Área, su trayectoria, ejemplos de trabajo, su equipo y un glosario técnico. El desarrollo se inició el 2026-04-09 (commit base v1.2) y la primera sesión documentada con cierre de traspaso es el 2026-05-25 (esta).
+- **próximos pasos:**
+  - Inventario de pendientes
+  - Tipo: contenido. Impacto: medio. El proyecto "Minutas de resultados de las pruebas Simce" se eliminó de data.js en v05; el usuario aportará…
+  - Enfoque: pedir los 3 PDF, redactar objetivo + síntesis, asignar id (sugerido simce_cc), insertar con su orden; luego sus capturas siguiendo…
+
 ## Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país
 - **slug:** `slep_categoria_desempeno`
 - **tipo:** Motor de comparación
+- **tipo de pendiente:** nuevo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-19
@@ -119,21 +115,10 @@ Generado: 2026-07-01 · 17 proyectos
   - Evaluación de deuda técnica
   - Auditoría de cierre (política 5.6)
 
-## Diagnóstico histórico del rendimiento escolar
-- **slug:** `slep_rendimiento_historico`
-- **tipo:** Diagnóstico
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-06-15
-- **síntesis:** Diagnóstico longitudinal y multidimensional de las bases de rendimiento escolar del Mineduc (2002-2025) con el propósito de caracterizar las trayectorias educativas de los estudiantes de los establecimientos educacionales del SLEP Costa Central y cuantificar las variaciones en las tasas de promoción y reprobación. Al vincular estas variables de resultado con la caracterización socioeducativa del estudiante (sexo registral, edad, país de origen, pertenencia a pueblos originarios y condición de alumno integrado, entre otras) y con las particularidades de los establecimientos (emplazamiento rural o urbano, tipos de enseñanza y régimen de jornada, entre otros), buscamos identificar brechas de equidad intra-territoriales, contrastar el desempeño del SLEP frente a otros territorios de la Región de Valparaíso y el nivel nacional y modelar sistemas de alerta temprana basados en la asistencia crónica y el rendimiento académico, para focalizar de forma oportuna y precisa los recursos pedagógicos y de apoyo psicosocial.
-- **próximos pasos:**
-  - Ancla de sanidad CEM: promoción municipal-nacional ≈ 94% (2023) en el HTML.
-  - Abrir el .docx y confirmar estilos de marca.
-  - P24 (nuevo) — Warning de Módulo B: "micro CC: 7406 registros
-
 ## Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles
 - **slug:** `slep_seguimiento_educacion_inicial`
 - **tipo:** Análisis longitudinal
+- **tipo de pendiente:** nuevo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-14
@@ -147,6 +132,7 @@ Generado: 2026-07-01 · 17 proyectos
 ## Sistema de alertas de Anótate en la Lista
 - **slug:** `slep_alertas_ael`
 - **tipo:** Sistema de alertas
+- **tipo de pendiente:** cosmetica
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-09
@@ -156,9 +142,59 @@ Generado: 2026-07-01 · 17 proyectos
   - Categoría temática: Validación y robustez.
   - Qué se hizo: Tras cada read_excel(), verificación de las 8 columnas esperadas de AEL y las 3 de correos; error descriptivo con columnas fal…
 
+## Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce
+- **slug:** `slep_simce_adecuado`
+- **tipo:** Motor de comparación
+- **tipo de pendiente:** ninguno
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-07-01
+- **síntesis:** Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente. La herramienta organiza esta información a escala nacional, ponderando los resultados de cada prueba según el número de estudiantes que la rindió, permitiendo recorrer los resultados por establecimiento, comuna, SLEP, región y nivel nacional, a lo largo de todos los años para los cuales existen resultados. Su pantalla única de visualización pone especial atención en el nivel Adecuado (el más exigente) como indicador de logro, con la mirada puesta en cómo evoluciona en cada territorio y cómo se compara entre grupos socioeconómicos equivalentes.
+- **próximos pasos:**
+  - ¿Pipeline corre de cero sin intervención manual? → Sí, no tocado esta sesión.
+  - ¿Outputs reproducibles e idempotentes? → Sí, 34_historico_pct_adecuado_costa_central.R usa overwrite=TRUE.
+  - ¿Decisiones metodológicas como constantes nombradas? → Sí (COMUNAS_COSTA_CENTRAL_COD, DEPE2_SLEP).
+
+## Minuta de resultados Simce por estándares de aprendizaje
+- **slug:** `slep_simce_estandares_aprendizaje`
+- **tipo de pendiente:** ninguno
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-05-27
+- **próximos pasos:**
+  - 11.1 Pendientes activos
+  - Incorporar datos SIMCE de un año nuevo al pipeline.
+  - Actualizar o extender gráficos G1–G6.
+
+## Minuta de asistencia mensual
+- **slug:** `slep_minuta_asistencia`
+- **tipo:** Minuta · Dirección Ejecutiva
+- **tipo de pendiente:** sin dato
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-07-01
+- **síntesis:** La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio. En este reporte, dirigido al Director Ejecutivo y construido a partir del análisis de los registros de asistencia diaria de cada estudiante del territorio, se le informa respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo, entre otros. Contiene una selección de alertas de inasistencia priorizadas para la toma de decisiones, así como una proyección de la asistencia anual basada en años anteriores.
+- **próximos pasos:**
+  - P-orq (deuda técnica, aprobado, diferido). Refactor: partir 32_render_minuta.R en pasos atómicos y crear 00_run_all.R canónico. Complejidad…
+  - Deuda menor nueva: _archivo/20260630/ quedó versionado en Git. Los renames vía git mv entraron al commit 7d33adb antes de que .gitignore lo…
+  - Deuda: backlog no extraído a backlog_acumulativo.md (POLITICA §10). Sigue embebido en traspasos. Requiere reconstruir el histórico desde tr…
+
+## Motor de comparación interactivo de los resultados de la PAES
+- **slug:** `slep_paes`
+- **tipo de pendiente:** sin dato
+- **estado:** sin clasificar
+- **datos sensibles:** FALSE
+- **última actualización:** 2026-07-01
+- **reseña del itinerario:** slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado.
+- **próximos pasos:**
+  - Pendiente 1 — Diseño de 31_leer_normalizar.R contra el esquema real
+  - Descripción: el schema real de ArchivoC tiene columnas
+  - Contexto: hallazgo de la Fase 0, documentado en
+
 ## CostaPresente
 - **slug:** `slep_costapresente`
 - **tipo:** Plataforma · CostaPresente
+- **tipo de pendiente:** sin dato
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-05-31
@@ -168,28 +204,9 @@ Generado: 2026-07-01 · 17 proyectos
   - Descripción: Clonar el repo en una máquina Windows, configurar ~/.Renviron, verificar NBSP en ruta OneDrive, ejecutar pipeline ETL + App en…
   - Contexto: Todo el desarrollo y pruebas han sido en macOS arm64. Los colegas que usarán la app son usuarios Windows. La portabilidad real no…
 
-## Minuta de resultados Simce por estándares de aprendizaje
-- **slug:** `slep_simce_estandares_aprendizaje`
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-05-27
-- **próximos pasos:**
-  - 11.1 Pendientes activos
-  - Incorporar datos SIMCE de un año nuevo al pipeline.
-  - Actualizar o extender gráficos G1–G6.
-
-## Dashboard personal de monitoreo
-- **slug:** `slep_dashboard_personal_monitoreo`
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-05-25
-- **próximos pasos:**
-  - Archivo(s) afectado(s): docs/traspaso/traspaso_cierre_v17.md (nuevo), docs/referencia/principios_desarrollo_v3.md (eliminado).
-  - Categoría temática: Mecánica de PR / Incorporación de traspaso.
-  - Qué se hizo: Una segunda sesión de Claude Code se abrió desde la ruta nueva /Users/tomgc/Projects/slep_dashboard_personal_monitoreo/. Se di…
-
 ## Reseñas del portafolio
 - **slug:** `slep_resena_proyectos`
+- **tipo de pendiente:** sin dato
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** sin traspaso

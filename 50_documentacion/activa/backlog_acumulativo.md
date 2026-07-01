@@ -8,6 +8,10 @@
 > **Extraido desde:** `traspaso_cierre_v04.md` §5, en el cierre de la sesion 5
 > (P-BACKLOG-PROPIO-EXTRAER). A partir de ahora los traspasos solo referencian
 > esta ruta.
+>
+> **Actualizado en sesion 6:** se incorporan las entradas 48-53
+> (`traspaso_cierre_v05.md` §4), pendientes de incorporacion al cierre de la
+> sesion 5 (nota explicita en `traspaso_cierre_v05.md` §5).
 
 ---
 
@@ -52,11 +56,13 @@ los commits.
 | Sintesis cualitativa | 5 | 14 fichas L2 iniciales + 3 re-sintetizadas (s2) + 0 nuevas (s3). |
 | Operacion/regeneracion | 4 | Corridas run_all de regeneracion (s2, s3, s4 x2). |
 | Documentacion | 8 | README, CLAUDE, cobertura (x2), esbozo Fase 2, decision, traspasos (x2: v03 commiteado + v04), parche POLITICA/SETTINGS. |
-| Robustez/bugfix | 6 | id integer en PASOS, UTF-8 con readr, em-dash mojibake, exclusion .git, fix paso 31 (columnas extra), mojibake B6 (paso 36). |
+| Robustez/bugfix | 7 | id integer en PASOS, UTF-8 con readr, em-dash mojibake, exclusion .git, fix paso 31 (columnas extra), mojibake B6 (paso 36), bug lateral tz UTC en deteccion de desync. |
 | Gobernanza hermanos | 8 | gobernanza_datos.md en 3+2 proyectos, merge docs/suitedoc, push, conexion GitHub orquestador. |
 | Estandarizacion de cartera | 5 | Auditoria de backlogs + 4 renames/reubicaciones + 1 volcado crudo eliminado. |
-| Informe visual (P4) | 4 | Script 36 (HTML+MD autocontenidos), integracion a run_all, registro ampliado (2 columnas), integracion data.js (P-DATA-JS-RUTA). |
+| Informe visual (P4) | 5 | Script 36 (HTML+MD autocontenidos), integracion a run_all, registro ampliado (2 columnas), integracion data.js (P-DATA-JS-RUTA), rediseno acordeon + cambio de titulo. |
 | Cierre de deuda menor | 2 | Paleta real sincronizada, auditoria archivada como andamio. |
+| Arquitectura Fase 2 (ESTADO.md) | 3 | Diseno PUSH/PULL completo, propagacion batch a 13 hermanos (+2 regeneraciones), lector con fallback en el orquestador. |
+| Gobernanza de proceso (asistente) | 1 | Parche POLITICA 0.5 / SETTINGS 2.2.15 (registro de errores del asistente). |
 
 ## Resumen estadistico por sesion
 
@@ -66,8 +72,9 @@ los commits.
 | 2 | v02 | 6 | Opus 4.8 | Operacion: regeneracion tras cierre parcial de H4 |
 | 3 | v03 | 8 | Opus 4.8 | Gobernanza: cierre total de H4 + GitHub |
 | 4 | v04 | 13 | Sonnet 4.6 | Estandarizacion de backlogs + parche de protocolo + P4 (panorama visual) + cierre de deuda |
-| 5 | v05 | 2 (en curso) | Sonnet 4.6 | Bug B6 (mojibake paso 36) + P-DATA-JS-RUTA + extraccion de backlog propio |
-| **Total** | | **47** | | |
+| 5 | v05 | 8 | Sonnet 4.6 | Bug B6 + P-DATA-JS-RUTA + extraccion de backlog propio + rediseno acordeon + Fase 2 (diseno+propagacion+lector) + parche registro de errores |
+| 6 | (en curso) | 1 (en curso) | Sonnet 5 | Curacion slep_paes + incorporacion de backlog s5 |
+| **Total** | | **54** (53 cerradas + 1 en curso) | | |
 
 ## Detalle cronologico
 
@@ -133,9 +140,92 @@ los commits.
 46. Bug B6 corregido: `36_generar_panorama_visual.R` producia mojibake en 7 cadenas hardcodeadas (titulo, header, badges, "Ultima actualizacion", "Reseña del itinerario", "Proximos pasos") en `panorama_visual.html` y `.md`. Causa raiz: literales no-ASCII parseados bajo locale C (`run_all()` hace `source()` sin `encoding=`) quedan con `Encoding()` marcado `"unknown"` (bytes UTF-8 correctos); al concatenarse via `paste0()`/`sprintf()` con strings ya marcados `"UTF-8"`, R recodifica el literal desde el nativo C hacia UTF-8 y, como C no representa bytes altos, lo escapa como texto literal (`<c3><81>` en vez del caracter real). Fix: helper local `u8()` (`Encoding(x) <- "UTF-8"`, solo reetiqueta) aplicado antes de mezclar. Misma familia que el mojibake de em-dash de la sesion 1 (entrada 17), ahora en el paso 36. Commit `96e1433` (sin push).
 47. Implementacion de P-DATA-JS-RUTA: `RUTA_DATA_JS_PORTAFOLIO` fijada a lectura in situ de `~/Projects/slep_monitoreo/data.js` (R2: nunca copiado/versionado). Parser: `jsonlite::toJSON` tras quotear las 7 claves conocidas + split por objeto con `tryCatch` por entrada. Mapeo titulo->slug resuelto por `orden` (entero estable) via constante `MAPEO_ORDEN_SLUG` con titulo literal en comentario inline por entrada (gate de aprobacion del titular cumplido antes de implementar). Ajuste de card: `sintesis` muestra el primer parrafo completo (`N_PARRAFOS_SINTESIS_CARD <- 1L`) mas indicador "+N parrafos mas" cuando aplica, reemplazando el truncamiento a `MAX_RESENA` (que queda exclusivo de `resena_itinerario`). Resultado: 11/16 cards pobladas con `tipo`/`objetivo`/`sintesis`; 5 sin entrada en `data.js` quedan `null` con gracia. Verificado con spot-check 1:1 verbatim contra `data.js` real (2 cards), idempotencia en 2 corridas, 0 mojibake, 0 referencias de red. Commit `6ecbb43` (sin push).
 
+48. Rediseno acordeon del panorama visual + cambio de titulo. Grid de 3
+columnas tipo card reemplazado por lista acordeon de ancho completo (toggle
+JS, sin libreria externa), verificado funcionalmente con shim de DOM en Node
+(16 filas, toggle real, `aria-expanded` correcto) porque el screenshot no era
+viable en el entorno de Claude Code. Titulo cambiado a "Cartera de proyectos
+Area de Monitoreo" en `<title>`, `<h1>` y el `#` del `.md`. El `.md` muestra
+ahora todos los parrafos de `sintesis[]` directamente, sin indicador "+N mas"
+(decision declarada antes de implementar); constante `N_PARRAFOS_SINTESIS_CARD`
+eliminada por no tener mas uso. Commit `6dc127d`.
+
+49. Diseno completo de arquitectura Fase 2 (PUSH de `ESTADO.md`). Tres
+artefactos BIBLIOTECA: `fase2_push_estado_v1.md`, `fase2_push_estado_v2.md`
+(version final, agrega `tipo_pendiente` al front matter tras decidir fusionar
+el requerimiento de agenda diaria con Fase 2), `parche_a_settings_v6.md`
+(superado por el archivo completo). Decision D1: modelo hibrido PUSH+PULL,
+recomendacion del esbozo original del titular, sin alternativa real
+compitiendo. Decision D2: fusionar "agenda diaria" con Fase 2 en vez de crear
+un segundo estandar.
+
+50. Propagacion batch de `ESTADO.md` a 13 hermanos + 2 regeneraciones por
+desync real. Autorizacion explicita batch del titular (D4, excepcion puntual
+a la regla de autorizacion por repo). Claude Code inventario 16 hermanos (3
+sin traspaso, omitidos sin inventar contenido), destilo 13 con subagentes
+paralelos de solo-lectura (spot-check anti-alucinacion antes de escribir).
+Hallazgo sistemico: el vocabulario tematico real de los pendientes de los
+traspasos no coincide con el enum de `tipo_pendiente` (D3: taxonomias
+distintas a proposito, no se amplia el enum). Dos semaforos revisados
+manualmente por el titular con el texto real delante (`aprendizajes_ep`
+confirmado activo; `georreferenciacion` corregido a pausa, D6). Regeneraciones
+por desync real: `slep_alertas_ael` (glob original no cubria grafia con guion
+del traspaso mas reciente, commit `aa9568f`); `slep_minuta_desvinculacion`
+(repo avanzo v34->v37 durante la sesion, decision del titular D5 de regenerar
+desde v37). Commits: 13 iniciales + `5bff039` (correccion semaforo) +
+`aa9568f` + `87936df`.
+
+51. Lector de `ESTADO.md` en el orquestador (Fase 2, pieza de codigo).
+`parsear_front_matter()` factorizado a `10_utils.R` (reutilizado por
+`32_localizar_documentos.R` y `35_compilar_panorama.R`). `resolver_estado()`
+en 32 implementa la regla de desincronizacion via `resolver_traspaso()`
+existente. `tipo_pendiente` y `estado.presente` persistidos en el inventario
+JSON/parquet (34), disponibles para la futura pieza C sin tocar el paso 36.
+Bug lateral encontrado y corregido: `as.Date(file.mtime())` asumia UTC en vez
+de zona local, produciendo falsos-desync para traspasos guardados de noche el
+mismo dia; corregido con `TZ_ORQUESTADOR` capturado al bootstrap
+(`10_configuracion.R`). Verificado con test controlado de desync forzado,
+spot-check 1:1 de 2 proyectos PUSH, idempotencia en 2+ corridas, 0 mojibake.
+Commit `c6df30d` (codigo) + `2577d9d` (outputs regenerados).
+
+52. Descubrimiento de `slep_paes` como hermano nuevo en la cartera (17mo
+proyecto), detectado en la corrida de `run_all()` de la sesion. Sin fila
+curada en `registro_proyectos.csv`, sin `ESTADO.md`, sin traspaso conocido al
+cierre de la sesion 5.
+
+53. Parche de registro obligatorio de errores del asistente (POLITICA
+0.5 / SETTINGS 2.2.15). A peticion explicita del titular tras dos errores del
+asistente detectados en la sesion (mismo patron: confundir "quien produce el
+contenido" con "quien ejecuta la operacion mecanica de moverlo"). `POLITICA_PROYECTO.md`
+v5.1->v5.2: nueva regla 0.5, disparador exhaustivo (cualquier desviacion de
+regla canonica, nombrada como error o no). `SETTINGS_Y_PROMPTS_OPERACIONALES.md`
+v6->v7: nueva subseccion 2.2.15, tabla de campos fijos (momento, disparador,
+que_paso, regla_violada, causa_raiz, salvaguarda_presente, patron), declarada
+como artefacto de analisis CRUZADO entre los 16 proyectos de la cartera.
+Archivos completos entregados y pegados por el titular en la knowledge base de
+los 16 proyectos.
+
+**Sesion 6 (entrada 54, en curso):**
+
+54. Curacion manual de `slep_paes` en `registro_proyectos.csv` (nombre_real:
+"Motor de comparacion interactivo de los resultados de la PAES"; alias_corto:
+"PAES"; categoria: activo; datos_sensibles: FALSE; estado_proyecto: activo),
+resolviendo el pendiente P-PAES-REGISTRAR (entrada 52). Incorporacion al
+presente archivo de las 6 entradas de sesion 5 (48-53) que habian quedado
+pendientes de consolidar al cierre de esa sesion (nota explicita en
+`traspaso_cierre_v05.md` §5).
+
 ## Delta del backlog
 
-2 entradas nuevas (46-47) respecto a v04. Sin reclasificaciones de entradas
-previas. Categoria "Robustez/bugfix" pasa de 4 a 6 descripciones (se agrega
-mojibake B6); categoria "Informe visual (P4)" pasa de 3 a 4 descripciones (se
-agrega integracion data.js). Sin categorias nuevas.
+7 entradas nuevas (48-54) respecto al estado reflejado en `traspaso_cierre_v05.md`
+(que solo incorporaba 46-47). Sin reclasificaciones de entradas previas.
+Categoria "Robustez/bugfix" pasa de 6 a 7 descripciones (se agrega bug lateral
+tz UTC); "Informe visual (P4)" pasa de 4 a 5 (se agrega rediseno acordeon).
+Dos categorias nuevas: "Arquitectura Fase 2 (ESTADO.md)" (3 entradas: 49, 50,
+51) y "Gobernanza de proceso (asistente)" (1 entrada: 53). Entrada 52
+(descubrimiento de `slep_paes`) y 54 (su curacion + esta incorporacion) no se
+clasifican tematicamente por ahora: son eventos de mantenimiento de cartera,
+no encajan limpio en ninguna categoria existente; revisar si conviene una
+categoria "Mantenimiento de registro/cartera" cuando haya mas casos similares
+(hoy serian solo 2, bajo el umbral de 2% declarado en SETTINGS §2.2.5 para
+crear categoria nueva salvo que se anticipe recurrencia).
