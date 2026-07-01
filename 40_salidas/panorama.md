@@ -1,33 +1,34 @@
 # Panorama de la cartera - Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
 
-> Generado: 2026-06-30 · Proyectos activos: 14 · Auxiliares: 2
+> Generado: 2026-07-01 · Proyectos activos: 15 · Auxiliares: 2
 
 ## Alertas
 
 - **Bloqueados:** ninguno.
-- **Nuevos detectados:** ninguno.
+- **Nuevos detectados:** slep_paes.
 - **Dados de baja:** ninguno.
 - **Documentacion obsoleta (>21 dias):** slep_dashboard_personal_monitoreo, slep_simce_estandares_aprendizaje.
-- **Pendientes de sintesis:** slep_minuta_desvinculacion.
+- **Pendientes de sintesis:** slep_minuta_asistencia, slep_paes, slep_simce_adecuado.
 
 ## L1 - Tabla semaforo
 
 | Codigo | Nombre | Semaforo | Ultima actividad | Proximo paso |
 |---|---|---|---|---|
-| slep_alertas_ael | Sistema de alertas de Anótate en la Lista | pausa | 2026-06-10 (hace 20 dias) | verificar tipografia del documento, mover residuos, agregar tests unitarios |
-| slep_aprendizajes_ep | Monitoreo de aprendizajes en la educación parvularia | activo | 2026-06-29 (hace 1 dias) | Versionar primero los 3 archivos de v83 y luego implementar la capa 2 de D013 (ETL `32_etl.R`) para que el ETL deje de caer a fallback. |
-| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | activo | 2026-06-21 (hace 9 dias) | Consolidación administrativa de apertura (s26): versionar este traspaso v25 y el snapshot del escáner generado tras el último push de s25. |
-| slep_costapresente | CostaPresente | pausa | 2026-06-24 (hace 6 dias) | validar pipeline cross-OS en maquina Windows |
-| slep_dashboard_personal_monitoreo | Dashboard personal de monitoreo | pausa | 2026-05-26 (hace 35 dias) | ejecutar migracion estructural y materializar plantilla y contratos de consolidado |
-| slep_georreferenciacion | Georreferenciación de establecimientos del territorio | pausa | 2026-06-29 (hace 1 dias) | esperar validacion del director sobre ambas variantes del afiche |
-| slep_idps | Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS) | activo | 2026-06-25 (hace 5 dias) | Abordar la higiene de bajo riesgo no alcanzada en s25: resolver `# REVISAR (voz)` en `documentar.R` y subdividir la categoría "Rediseño UI" del backlog. |
-| slep_minuta_asistencia | Minuta de asistencia mensual | activo | 2026-06-23 (hace 7 dias) | limpieza de estructura de documentacion, luego refactor del orquestador canonico |
-| slep_minuta_desvinculacion | Análisis de trayectorias educativas interrumpidas | activo | 2026-06-30 (hace 0 dias) | construir el .qmd del reporte como consumidor del dataset |
-| slep_rendimiento_historico | Diagnóstico histórico del rendimiento escolar | activo | 2026-06-15 (hace 15 dias) | Tomar P24: investigar el warning del Módulo B sobre 7.406 registros estudiante-año duplicados colapsados, para determinar si el colapso es benigno o enmascara un problema de la fuente. |
-| slep_reportes_modelo_resguardo_asistencia | Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio | activo | 2026-06-21 (hace 9 dias) | Abordar un pendiente de fondo: la auditoría de portabilidad cross-OS Windows (que además destraba P-VAR-CANONICA fase 2, tipo deuda técnica) o la auditoría línea a línea del pipeline. |
-| slep_seguimiento_educacion_inicial | Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles | activo | 2026-06-24 (hace 6 dias) | validar visualmente panel de detalle fijo del diagrama y commitear |
-| slep_simce_adecuado | Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce | activo | 2026-06-29 (hace 1 dias) | No hay pendientes activos; candidatos de sesión futura (solo si surge necesidad): regenerar la suite si cambia `documentar.R`, la actualización anual de insumos Simce, o incorporar las entradas 121–124 del backlog. |
-| slep_simce_estandares_aprendizaje | Minuta de resultados Simce por estándares de aprendizaje | activo | 2026-05-28 (hace 33 dias) | No hay pendientes bloqueantes; la próxima sesión se orientará por necesidades sustantivas según surjan (incorporar datos Simce de un año nuevo, extender los gráficos G1–G6 o actualizar la minuta Word). |
+| slep_alertas_ael | Sistema de alertas de Anótate en la Lista | pausa | 2026-06-10 (hace 21 dias) | verificar tipografia del documento, mover residuos, agregar tests unitarios |
+| slep_aprendizajes_ep | Monitoreo de aprendizajes en la educación parvularia | activo | 2026-06-29 (hace 2 dias) | Versionar primero los 3 archivos de v83 y luego implementar la capa 2 de D013 (ETL `32_etl.R`) para que el ETL deje de caer a fallback. |
+| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | activo | 2026-07-01 (hace 0 dias) | Consolidación administrativa de apertura (s26): versionar este traspaso v25 y el snapshot del escáner generado tras el último push de s25. |
+| slep_costapresente | CostaPresente | pausa | 2026-06-24 (hace 7 dias) | validar pipeline cross-OS en maquina Windows |
+| slep_dashboard_personal_monitoreo | Dashboard personal de monitoreo | pausa | 2026-05-26 (hace 36 dias) | ejecutar migracion estructural y materializar plantilla y contratos de consolidado |
+| slep_georreferenciacion | Georreferenciación de establecimientos del territorio | pausa | 2026-06-29 (hace 2 dias) | esperar validacion del director sobre ambas variantes del afiche |
+| slep_idps | Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS) | activo | 2026-06-25 (hace 6 dias) | Abordar la higiene de bajo riesgo no alcanzada en s25: resolver `# REVISAR (voz)` en `documentar.R` y subdividir la categoría "Rediseño UI" del backlog. |
+| slep_minuta_asistencia | Minuta de asistencia mensual | activo | 2026-07-01 (hace 0 dias) | limpieza de estructura de documentacion, luego refactor del orquestador canonico |
+| slep_minuta_desvinculacion | Análisis de trayectorias educativas interrumpidas | activo | 2026-06-30 (hace 1 dias) | Abordar el residuo de `flextable` en `00_run_all.R`: leer primero `41_minuta_desvinculacion_T2_2025.qmd` completo para confirmar si `flextable` aún se usa o es residuo, y si lo es, entregar `00_run_all.R` corregido. |
+| slep_paes | slep_paes | (pendiente) | 2026-07-01 (hace 0 dias) | (pendiente de sintesis) |
+| slep_rendimiento_historico | Diagnóstico histórico del rendimiento escolar | activo | 2026-06-15 (hace 16 dias) | Tomar P24: investigar el warning del Módulo B sobre 7.406 registros estudiante-año duplicados colapsados, para determinar si el colapso es benigno o enmascara un problema de la fuente. |
+| slep_reportes_modelo_resguardo_asistencia | Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio | activo | 2026-06-21 (hace 10 dias) | Abordar un pendiente de fondo: la auditoría de portabilidad cross-OS Windows (que además destraba P-VAR-CANONICA fase 2, tipo deuda técnica) o la auditoría línea a línea del pipeline. |
+| slep_seguimiento_educacion_inicial | Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles | activo | 2026-06-24 (hace 7 dias) | validar visualmente panel de detalle fijo del diagrama y commitear |
+| slep_simce_adecuado | Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce | cerrado | 2026-07-01 (hace 0 dias) | mantenimiento documental concluido; estable y desplegado sin pendientes activos |
+| slep_simce_estandares_aprendizaje | Minuta de resultados Simce por estándares de aprendizaje | activo | 2026-05-28 (hace 34 dias) | No hay pendientes bloqueantes; la próxima sesión se orientará por necesidades sustantivas según surjan (incorporar datos Simce de un año nuevo, extender los gráficos G1–G6 o actualizar la minuta Word). |
 
 ## L2 - Fichas ejecutivas por proyecto activo
 
@@ -106,14 +107,18 @@ Productos entregados: minutas mensuales operativas y auditadas hasta mayo 2026. 
 
 Procedencia: traspaso-cierre-v64 (2026-06-23); resena.
 
-### slep_minuta_desvinculacion - Análisis de trayectorias educativas interrumpidas _(fuente: PULL)_
-**Tipo de producto:** reporte.
+### slep_minuta_desvinculacion - Análisis de trayectorias educativas interrumpidas _(fuente: PUSH)_
+## En que vamos
+La sesión S37 cerró la Prioridad 1 de higiene de repo destapada en S36: des-trackeó 10 archivos ya cubiertos por el `.gitignore` y renombró `.env.example` a `.Renviron.example`, corrigiendo de paso una exclusión funcional rota en el CI y actualizando tres deudas del README ya resueltas. Se hicieron dos commits atómicos limpios, ninguno pusheado (rama ahead 18 de origin). El pipeline no se tocó; sin regresiones esperadas y sin bugs de código en la sesión.
 
-El proyecto produce un analisis periodico de trayectorias escolares interrumpidas para un servicio educativo territorial de cuatro comunas: identifica y caracteriza a estudiantes desvinculados (dos cohortes: retiro formal y no re-matricula) e incorpora alerta temprana mediante un modelo de riesgo entrenado con asistencia previa. La sesion v29 cerro la capa de datos del reporte: se creo el productor unico del conjunto de datos del documento (paso 8 del orquestador), que materializa un universo acotado de estudiantes por establecimiento con cobertura demografica casi completa y sin avisos de integridad; ejecucion validada. Productos a la fecha: pipeline completo de procesamiento, conjunto de entrenamiento, modelo predictivo validado y dataset del documento en disco.
+## Proximo paso
+Abordar el residuo de `flextable` en `00_run_all.R`: leer primero `41_minuta_desvinculacion_T2_2025.qmd` completo para confirmar si `flextable` aún se usa o es residuo, y si lo es, entregar `00_run_all.R` corregido.
 
-Pendientes priorizados: empujar el commit de cierre al remoto; fijar la funcion de tramos de riesgo; y construir el reporte (Fase 4), entregable final aun no iniciado pero ya desbloqueado. Sin bloqueantes; dependencias internas entre tramos y secciones del reporte. Deuda tecnica: refactor de cruce de cohortes a funciones compartidas y ampliacion del catalogo de establecimientos para dos indicadores diferidos. Publicacion: circulacion institucional cerrada, sin exposicion publica. Gobernanza: SI maneja datos sensibles de NNA (identificadores, asistencia, matricula), con datos confinados a entorno restringido y separados del codigo; desde la sesion anterior se agrego gobernanza_datos.md (cierre de H4).
+## Bloqueantes
+ninguno
 
-Procedencia: traspaso_cierre_v29 (2026-06-29); resena.
+### slep_paes - slep_paes _(fuente: PULL)_
+_Ficha pendiente de sintesis (slep_paes sin ESTADO.md sincronizado ni cache vigente)._
 
 ### slep_rendimiento_historico - Diagnóstico histórico del rendimiento escolar _(fuente: PUSH)_
 ## En que vamos
@@ -144,15 +149,14 @@ El foco inmediato es validar visualmente ese panel de detalle y comprometerlo; e
 
 Procedencia: traspaso_cierre_v34 (2026-06-24); resena; backlog_consolidado.
 
-### slep_simce_adecuado - Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce _(fuente: PUSH)_
-## En que vamos
-La sesión 24 fue íntegramente de mantenimiento documental: sin cambios al motor ni al pipeline. Se cerró el delta de backlog de la s23 (entradas 117–120), se versionó la reseña final espejo del data.js del portafolio, se retiraron las 7 marcas REVISAR (voz) de `documentar.R` y se normalizaron todos los tags del backlog a la taxonomía canónica de 7 códigos. El proyecto queda estable y desplegado en GitHub Pages, con working tree limpio salvo un archivo untracked por diseño.
+### slep_simce_adecuado - Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce _(fuente: PULL)_
+**Tipo de producto:** tablero/app.
 
-## Proximo paso
-No hay pendientes activos; candidatos de sesión futura (solo si surge necesidad): regenerar la suite si cambia `documentar.R`, la actualización anual de insumos Simce, o incorporar las entradas 121–124 del backlog.
+Herramienta interactiva de comparacion de resultados de las pruebas Simce expresados segun los estandares de aprendizaje (Adecuado, Elemental, Insuficiente), con foco en el nivel Adecuado como indicador de logro, ponderada por numero de evaluados y segmentada por grupo socioeconomico. Permite navegar resultados por establecimiento educacional, comuna, Servicio Local, region y nivel nacional, para dos niveles escolares y dos pruebas, a lo largo de la serie disponible (mediados de la decada de 2010 hasta el ano en curso). Construida como aplicacion HTML standalone (React + D3, pipeline reproducible en R) y publicada como sitio estatico.
 
-## Bloqueantes
-ninguno
+La sesion v24 fue integramente de mantenimiento documental: sin cambios al motor ni al pipeline. Se cerro el delta de backlog, se versiono la resena final, se retiraron marcas de revision en un script de documentacion y se normalizaron los tags del backlog a una taxonomia canonica de siete codigos. Productos a la fecha: motor desplegado, suite de documentacion standalone offline, backlog historico consolidado y resena final. Pendientes priorizados: sin pendientes activos; candidatos futuros son la actualizacion anual de insumos y la regeneracion de la suite si cambia su contenido. Sin bloqueantes. Deuda tecnica saldada. Gobernanza: maneja datos sensibles (cumplimiento Ley 21.719; identificador de persona natural retirado del insumo versionado going-forward).
+
+Procedencia: traspaso_cierre_v24 (2026-06-29); resena; backlog_historico.
 
 ### slep_simce_estandares_aprendizaje - Minuta de resultados Simce por estándares de aprendizaje _(fuente: PUSH)_
 ## En que vamos
@@ -171,7 +175,7 @@ ninguno
 - **slep_resena_proyectos** - Reseñas del portafolio.
 
 ### Proyectos nuevos detectados
-- ninguno.
+- slep_paes
 
 ### Proyectos dados de baja
 - ninguno.
@@ -186,6 +190,7 @@ ninguno
 - slep_georreferenciacion (sin resena, backlog)
 - slep_minuta_asistencia (sin backlog)
 - slep_minuta_desvinculacion (sin backlog)
+- slep_paes (sin resena)
 - slep_rendimiento_historico (sin backlog)
 - slep_simce_estandares_aprendizaje (sin resena, backlog)
 

@@ -1,6 +1,6 @@
 {
   "esquema": "1",
-  "n_proyectos": 16,
+  "n_proyectos": 17,
   "proyectos": [
     {
       "slug": "slep_alertas_ael",
@@ -44,7 +44,7 @@
       },
       "estado": {
         "presente": true,
-        "tipo_pendiente": "deuda_tecnica"
+        "tipo_pendiente": "cosmetica"
       },
       "notas": "Nombre curado del sitio del Área (orden 9)."
     },
@@ -110,8 +110,8 @@
       },
       "fechas": {
         "traspaso": "2026-06-20",
-        "escaner": "2026-06-21",
-        "actividad": "2026-06-21",
+        "escaner": "2026-07-01",
+        "actividad": "2026-07-01",
         "commit": null
       },
       "sellos": {
@@ -332,26 +332,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 64,
-        "total_sesiones": 52,
+        "correlativo": 65,
+        "total_sesiones": 30,
         "grafia": "traspaso-cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-06-15",
-        "escaner": "2026-06-23",
-        "actividad": "2026-06-23",
+        "traspaso": "2026-07-01",
+        "escaner": "2026-07-01",
+        "actividad": "2026-07-01",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "f4f231fa8d82dfa47581e67a8279ad24",
+        "md5_traspaso": "1608f90f43d8ef0d2370bfdaa72cdfbc",
         "md5_resena": "71404d13d4d2b6b7bb438da7eb562627",
         "md5_backlog": null
       },
       "documentos": {
         "resena": "slep_minuta_asistencia/50_documentacion/activa/resena_slep_minuta_asistencia.md",
-        "traspaso": "slep_minuta_asistencia/50_documentacion/traspasos/traspaso-cierre-v64.md",
+        "traspaso": "slep_minuta_asistencia/50_documentacion/traspasos/traspaso-cierre-v65.md",
         "backlog": null,
         "escaner": "slep_minuta_asistencia/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_minuta_asistencia/README.md",
@@ -378,8 +378,8 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 34,
-        "total_sesiones": 34,
+        "correlativo": 37,
+        "total_sesiones": 37,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
@@ -391,13 +391,13 @@
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "d49b758c3e994f04c7b515b42909746d",
+        "md5_traspaso": "f64145635009986d40f42bb685cf4912",
         "md5_resena": "92eb094a9fc4ca8c05a18ab7050576d7",
         "md5_backlog": null
       },
       "documentos": {
         "resena": "slep_minuta_desvinculacion/50_documentacion/activa/resena_slep_minuta_desvinculacion.md",
-        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v34.md",
+        "traspaso": "slep_minuta_desvinculacion/50_documentacion/traspasos/traspaso_cierre_v37.md",
         "backlog": null,
         "escaner": "slep_minuta_desvinculacion/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_minuta_desvinculacion/README.md",
@@ -412,7 +412,7 @@
       },
       "estado": {
         "presente": true,
-        "tipo_pendiente": "nuevo"
+        "tipo_pendiente": "deuda_tecnica"
       },
       "notas": "Nombre curado del sitio del Área (orden 10; estado desarrollo)."
     },
@@ -461,6 +461,52 @@
         "tipo_pendiente": "nuevo"
       },
       "notas": "Sitio web del Área que aloja este data.js. No es pipeline analítico."
+    },
+    {
+      "slug": "slep_paes",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": true,
+      "traspaso": {
+        "correlativo": 1,
+        "total_sesiones": 1,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-07-01",
+        "escaner": "2026-07-01",
+        "actividad": "2026-07-01",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "9f173f4f9f738cae7f80be8cfe21911d",
+        "md5_resena": null,
+        "md5_backlog": "f885419802629f5deb8acf22f807dd0a"
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": "slep_paes/50_documentacion/traspasos/traspaso_cierre_v01.md",
+        "backlog": "slep_paes/50_documentacion/activa/backlog_acumulativo.md",
+        "escaner": "slep_paes/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_paes/README.md",
+        "claude": "slep_paes/CLAUDE.md",
+        "gobernanza": "slep_paes/50_documentacion/activa/gobernanza_datos.md"
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "estado": {
+        "presente": false,
+        "tipo_pendiente": null
+      },
+      "notas": null
     },
     {
       "slug": "slep_rendimiento_historico",
@@ -654,26 +700,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 24,
-        "total_sesiones": 24,
+        "correlativo": 25,
+        "total_sesiones": 25,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-06-29",
-        "escaner": "2026-06-29",
-        "actividad": "2026-06-29",
+        "traspaso": "2026-07-01",
+        "escaner": "2026-07-01",
+        "actividad": "2026-07-01",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "150aafced4c1f626806dcbf2ee04342e",
+        "md5_traspaso": "f1010407a5ea9206419e3ba81a816428",
         "md5_resena": "826fb8a4dc9b21f986cab1309dc369c0",
-        "md5_backlog": "e91b1799a5f6103839e593f0d976523f"
+        "md5_backlog": "0cbaba793afd6f4c14a51edfa769408b"
       },
       "documentos": {
         "resena": "slep_simce_adecuado/50_documentacion/activa/resena_slep_simce_adecuado.md",
-        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v24.md",
+        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v25.md",
         "backlog": "slep_simce_adecuado/50_documentacion/activa/backlog_historico.md",
         "escaner": "slep_simce_adecuado/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_simce_adecuado/README.md",

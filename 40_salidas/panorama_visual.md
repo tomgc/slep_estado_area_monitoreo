@@ -1,32 +1,55 @@
 # Cartera de proyectos Área de Monitoreo
 
-Generado: 2026-06-30 · 16 proyectos
+Generado: 2026-07-01 · 17 proyectos
 
 > Versión texto del panorama visual (mismo orden y campos que las filas).
 
-## Análisis de trayectorias educativas interrumpidas
-- **slug:** `slep_minuta_desvinculacion`
+## Minuta de asistencia mensual
+- **slug:** `slep_minuta_asistencia`
 - **tipo:** Minuta · Dirección Ejecutiva
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
-- **última actualización:** 2026-06-29
-- **síntesis:** La desvinculación escolar, entendida como la interrupción de la trayectoria educativa de un estudiante, es uno de los fenómenos más sensibles para un servicio educativo y, habitualmente, se aborda cuando ya ha ocurrido. Para revertir esta lógica, este reporte analiza las trayectorias interrumpidas e irregulares de los estudiantes del SLEP Costa Central con el fin de caracterizar este fenómeno en el territorio y, fundamentalmente, anticipar su ocurrencia. Este documento, dirigido al Director Ejecutivo, se alimenta de los “Reportes para el seguimiento de estudiantes con trayectorias interrumpidas o irregulares” que el Centro de Estudios del Mineduc (CEM) presenta con regularidad trimestral. A partir de su procesamiento y cruce con los datos de asistencia diaria, además de otras variables sociodemográficas, se generan alertas tempranas orientadas a la acción, permitiendo la identificación de cohortes vulnerables, la priorización de establecimientos educacionales según su nivel de riesgo y la presentación de evidencia clave para el diseño de estrategias de intervención.
+- **última actualización:** 2026-07-01
+- **síntesis:** La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio. En este reporte, dirigido al Director Ejecutivo y construido a partir del análisis de los registros de asistencia diaria de cada estudiante del territorio, se le informa respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo, entre otros. Contiene una selección de alertas de inasistencia priorizadas para la toma de decisiones, así como una proyección de la asistencia anual basada en años anteriores.
 - **próximos pasos:**
-  - Inventario de pendientes
-  - §1.5 diferencia_matricula (caracterización EE, 6 cols actuales no la tienen).
-  - §4.6 tipos_ensenanza_ee (ídem).
+  - P-orq (deuda técnica, aprobado, diferido). Refactor: partir 32_render_minuta.R en pasos atómicos y crear 00_run_all.R canónico. Complejidad…
+  - Deuda menor nueva: _archivo/20260630/ quedó versionado en Git. Los renames vía git mv entraron al commit 7d33adb antes de que .gitignore lo…
+  - Deuda: backlog no extraído a backlog_acumulativo.md (POLITICA §10). Sigue embebido en traspasos. Requiere reconstruir el histórico desde tr…
+
+## slep_paes
+- **slug:** `slep_paes`
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-07-01
+- **reseña del itinerario:** slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado.
+- **próximos pasos:**
+  - Pendiente 1 — Diseño de 31_leer_normalizar.R contra el esquema real
+  - Descripción: el schema real de ArchivoC tiene columnas
+  - Contexto: hallazgo de la Fase 0, documentado en
 
 ## Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce
 - **slug:** `slep_simce_adecuado`
 - **tipo:** Motor de comparación
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
-- **última actualización:** 2026-06-29
+- **última actualización:** 2026-07-01
 - **síntesis:** Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente. La herramienta organiza esta información a escala nacional, ponderando los resultados de cada prueba según el número de estudiantes que la rindió, permitiendo recorrer los resultados por establecimiento, comuna, SLEP, región y nivel nacional, a lo largo de todos los años para los cuales existen resultados. Su pantalla única de visualización pone especial atención en el nivel Adecuado (el más exigente) como indicador de logro, con la mirada puesta en cómo evoluciona en cada territorio y cómo se compara entre grupos socioeconómicos equivalentes.
 - **próximos pasos:**
-  - Regenerar suite si cambia contenido de documentar.R (requiere npm + red).
-  - Actualización anual de insumos Simce (cuando la Agencia publique 2025 final o 2026).
-  - Incorporar entradas 121–124 del backlog en la próxima sesión que registre cambios.
+  - Auditar ESTADO.md y el POLITICA_PROYECTO.md duplicado (A-s25-4): confirmar cuál es la fuente canónica y si la duplicación es intencional (F…
+  - Regenerar suite standalone (contenido de documentar.R no cambió esta sesión, pero el motor sí — evaluar si la suite referencia terminología…
+  - Actualización anual de insumos Simce (2025 final o 2026).
+
+## Análisis de trayectorias educativas interrumpidas
+- **slug:** `slep_minuta_desvinculacion`
+- **tipo:** Minuta · Dirección Ejecutiva
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-06-30
+- **síntesis:** La desvinculación escolar, entendida como la interrupción de la trayectoria educativa de un estudiante, es uno de los fenómenos más sensibles para un servicio educativo y, habitualmente, se aborda cuando ya ha ocurrido. Para revertir esta lógica, este reporte analiza las trayectorias interrumpidas e irregulares de los estudiantes del SLEP Costa Central con el fin de caracterizar este fenómeno en el territorio y, fundamentalmente, anticipar su ocurrencia. Este documento, dirigido al Director Ejecutivo, se alimenta de los “Reportes para el seguimiento de estudiantes con trayectorias interrumpidas o irregulares” que el Centro de Estudios del Mineduc (CEM) presenta con regularidad trimestral. A partir de su procesamiento y cruce con los datos de asistencia diaria, además de otras variables sociodemográficas, se generan alertas tempranas orientadas a la acción, permitiendo la identificación de cohortes vulnerables, la priorización de establecimientos educacionales según su nivel de riesgo y la presentación de evidencia clave para el diseño de estrategias de intervención.
+- **próximos pasos:**
+  - Inventario de pendientes
+  - P-AUDITORIA: despachar el encargo de auditoría externa (2 acciones del titular: editar 37_validacion_predictiva.txt con fila agregada "otro…
+  - Tarea 2 paso 3 (modelo B3): bloqueado por diseño hasta primera respuesta de auditoría.
 
 ## Georreferenciación de establecimientos del territorio
 - **slug:** `slep_georreferenciacion`
@@ -95,18 +118,6 @@ Generado: 2026-06-30 · 16 proyectos
   - Inventario de pendientes
   - Evaluación de deuda técnica
   - Auditoría de cierre (política 5.6)
-
-## Minuta de asistencia mensual
-- **slug:** `slep_minuta_asistencia`
-- **tipo:** Minuta · Dirección Ejecutiva
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-06-15
-- **síntesis:** La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio. En este reporte, dirigido al Director Ejecutivo y construido a partir del análisis de los registros de asistencia diaria de cada estudiante del territorio, se le informa respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo, entre otros. Contiene una selección de alertas de inasistencia priorizadas para la toma de decisiones, así como una proyección de la asistencia anual basada en años anteriores.
-- **próximos pasos:**
-  - Inventario de pendientes
-  - Tipo: deuda técnica / refactor estructural. Complejidad: Media. Estado: aprobado, no iniciado.
-  - Qué: partir 32_render_minuta.R (hoy hace prep+render+SVG en un archivo) en pasos atómicos, para que 00_run_all.R orqueste con from/to/only/…
 
 ## Diagnóstico histórico del rendimiento escolar
 - **slug:** `slep_rendimiento_historico`
