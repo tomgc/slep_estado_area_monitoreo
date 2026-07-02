@@ -41,7 +41,7 @@ es_excluida <- function(rel) {
 
 #' Construye el cuerpo del snapshot (header, arbol con tamanos, conteo por ext).
 construir_snapshot <- function(raiz) {
-  info <- fs::dir_info(raiz, recurse = TRUE, all = FALSE, type = "any")
+  info <- fs::dir_info(raiz, recurse = TRUE, all = TRUE, type = "any")
   rel  <- fs::path_rel(info$path, raiz)
   keep <- !vapply(rel, es_excluida, logical(1))
   info <- info[keep, ]; rel <- rel[keep]

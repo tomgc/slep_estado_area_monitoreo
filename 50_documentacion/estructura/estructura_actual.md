@@ -1,19 +1,24 @@
 # Estructura del proyecto (escaner)
 
 - Raiz       : slep_estado_proyectos_monitoreo
-- Fecha      : 2026-07-01 15:24:12
-- Directorios: 13
-- Archivos   : 55
-- Tamano     : 534K
+- Fecha      : 2026-07-02 07:28:09
+- Directorios: 18
+- Archivos   : 82
+- Tamano     : 1.48M
 
 ## Arbol
 
 ```
 slep_estado_proyectos_monitoreo/
+.DS_Store  (10K)
+.github/
+  workflows/
+    pages.yml  (704)
+.gitignore  (694)
 00_escanear_proyecto.R  (4.84K)
 00_run_all.R  (4.66K)
 10_utils/
-  10_configuracion.R  (6.23K)
+  10_configuracion.R  (6.58K)
   10_utils.R  (6.15K)
 20_insumos/
   registro_proyectos.csv  (2.84K)
@@ -23,8 +28,10 @@ slep_estado_proyectos_monitoreo/
   33_extraer_metadatos.R  (3.16K)
   34_compilar_inventario.R  (6.57K)
   35_compilar_panorama.R  (8.98K)
-  36_generar_panorama_visual.R  (27K)
+  36_generar_panorama_visual.R  (44.2K)
 40_salidas/
+  .DS_Store  (6K)
+  .Rhistory  (0)
   cache/
     slep_alertas_ael.md  (1.75K)
     slep_aprendizajes_ep.md  (1.87K)
@@ -40,32 +47,54 @@ slep_estado_proyectos_monitoreo/
     slep_seguimiento_educacion_inicial.md  (2.01K)
     slep_simce_adecuado.md  (1.78K)
     slep_simce_estandares_aprendizaje.md  (1.92K)
-  inventario_cartera.json  (26.4K)
+  inventario_cartera.json  (26.5K)
   inventario_cartera.parquet  (19.5K)
-  panorama_visual.html  (35.6K)
-  panorama_visual.md  (22.1K)
-  panorama.md  (19.3K)
+  panorama.md  (19.7K)
+  panorama_visual.html  (46.4K)
+  panorama_visual.md  (23.8K)
 50_documentacion/
+  .DS_Store  (14K)
   activa/
+    .DS_Store  (6K)
+    ESTADO.md  (848)
+    POLITICA_PROYECTO.md  (34.6K)
+    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (57.3K)
     backlog_acumulativo.md  (18.4K)
     decisiones/
       20260628_decision_arquitectura_orquestador.md  (4.21K)
     esbozo_fase2_estado_estandarizado.md  (4.36K)
-    ESTADO.md  (848)
-    POLITICA_PROYECTO.md  (33K)
     reporte_cobertura_documental.md  (6.46K)
-    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (46.7K)
   andamios/
+    .DS_Store  (10K)
     auditoria_backlogs_20260629.md  (11.9K)
+    design_handoff_monitoreo_cartera/
+      Panorama de cartera.dc.html  (34.4K)
+      README.md  (7.72K)
+      assets/
+        colors_and_type.css  (8.31K)
+        fonts/
+          MuseoSans-300.otf  (61.5K)
+          MuseoSans_500.otf  (61K)
+          MuseoSans_700.otf  (62.1K)
+          gobCL_Heavy.otf  (43.7K)
+          gobCL_Light.otf  (37.1K)
+          gobCL_Regular.otf  (35.7K)
+        logo-color-stacked.png  (126K)
+        logo-mark-cc.png  (118K)
+        logo-white-stacked.png  (143K)
+      registro_proyectos.csv  (2.84K)
+      support.js  (58.7K)
     logs/
       20260629_panorama_visual_log.md  (6.49K)
+      20260701_panorama_semaforo_log.md  (17.1K)
+      20260702_panorama_rediseno_log.md  (12.4K)
   estructura/
-    20260701_142834_estructura.md  (2.55K)
-    20260701_142834_estructura.txt  (2.55K)
-    20260701_145942_estructura.md  (2.56K)
-    20260701_145942_estructura.txt  (2.56K)
-    estructura_actual.md  (2.56K)
-    estructura_actual.txt  (2.56K)
+    20260702_002234_estructura.md  (3.41K)
+    20260702_002234_estructura.txt  (3.41K)
+    20260702_071455_estructura.md  (3.44K)
+    20260702_071455_estructura.txt  (3.44K)
+    estructura_actual.md  (3.44K)
+    estructura_actual.txt  (3.44K)
   traspasos/
     traspaso_cierre_v01.md  (13.1K)
     traspaso_cierre_v02.md  (15.2K)
@@ -73,6 +102,9 @@ slep_estado_proyectos_monitoreo/
     traspaso_cierre_v04.md  (39K)
     traspaso_cierre_v05.md  (28.4K)
     traspaso_cierre_v06.md  (22.4K)
+    traspaso_cierre_v07.md  (15.2K)
+    traspaso_cierre_v08.md  (17.2K)
+    traspaso_cierre_v09.md  (22.3K)
 CLAUDE.md  (3.96K)
 README.md  (4.24K)
 slep_estado_proyectos_monitoreo.Rproj  (248)
@@ -83,12 +115,20 @@ tests/
 ## Conteo por extension
 
 ```
-  md                 36
+  md                 42
   R                  11
+  otf                6
+  (sin extension)    5
+  png                3
   txt                3
-  csv                1
-  html               1
+  csv                2
+  html               2
+  Rhistory           1
+  Rproj              1
+  css                1
+  gitignore          1
+  js                 1
   json               1
   parquet            1
-  Rproj              1
+  yml                1
 ```
