@@ -157,6 +157,13 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .fila.oculta{display:none}
 .cuerpo{display:none;padding:2px 16px 16px 40px}
 .fila.abierta .cuerpo{display:block}
+/* Resto del patron, s10, Fase 4: tag de categoria (categoriaLabel del
+   handoff), 1:1 su misma clasificacion binaria (activo -> pipeline
+   analitico; auxiliar -> insumo del portafolio). --ocean-20 tomado del
+   handoff (ver :root). */
+.tag-categoria{display:inline-block;font-size:.66rem;font-weight:600;
+  color:var(--ocean);background:var(--ocean-20);padding:2px 8px;
+  border-radius:4px;margin-bottom:8px}
 .cuerpo .tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
 .cuerpo .sint{font-size:.92rem;margin:.5em 0}
 .blk{font-size:.85rem;background:var(--cream);border-left:3px solid var(--line);padding:8px 10px;border-radius:6px}
@@ -172,7 +179,7 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 <header class="card-header">
 <h1>Cartera de proyectos Área de Monitoreo</h1>
 <div class="meta">Área de Monitoreo · 2026-07-02</div>
-<div class="meta-hora">Generado: 07:49</div>
+<div class="meta-hora">Generado: 07:50</div>
 </header>
 <div class="card-body">
 <section id="kpis" class="kpis" aria-label="Resumen por semaforo"></section>
@@ -579,6 +586,9 @@ const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
 const ETIQUETA_TP = {bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
   deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno"};
 const ETIQUETA_SEMAFORO = {activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado"};
+// Resto del patron, s10, Fase 4: categoriaLabel del handoff (mapeo binario
+// activo/auxiliar, 1:1; nuestro campo "categoria" solo toma esos 2 valores).
+const CATEGORIA_LABEL = {activo:"Pipeline analítico", auxiliar:"Auxiliar · insumo del portafolio"};
 const SEMAFOROS = ["activo","pausa","bloqueado","cerrado"];
 const TIPOS_PENDIENTE = ["bug","bloqueante","deuda_heredada","deuda_tecnica","nuevo","cosmetica","ninguno"];
 // slug -> elemento .fila (llenado en render()); evita re-consultar el DOM al
@@ -626,6 +636,7 @@ function fila(p){
   cab.addEventListener("click",()=>cab.setAttribute("aria-expanded",f.classList.contains("abierta")));
   f.appendChild(cab);
   const cuerpo=el("div","cuerpo");
+  if(p.categoria) cuerpo.appendChild(el("span","tag-categoria",CATEGORIA_LABEL[p.categoria]||p.categoria));
   if(p.tipo) cuerpo.appendChild(el("div","tipo",p.tipo));
   // Sintesis completa: TODOS los parrafos (el acordeon tiene ancho para mostrarlos).
   const parrafos = Array.isArray(p.sintesis)? p.sintesis : (p.objetivo? [String(p.objetivo)] : []);
