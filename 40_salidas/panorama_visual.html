@@ -76,7 +76,17 @@ body{margin:0;background:var(--cream);color:var(--ink);
 @media(max-width:420px){.kpis{grid-template-columns:repeat(1,1fr)}}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;
   padding:12px 10px;text-align:center}
-.kpi-num{font-size:1.6rem;font-weight:700;color:var(--plum);line-height:1}
+/* Tipografia (resto del patron, s10, Fase 2): --font-display/--font-body del
+   handoff son binarios custom (gobCL/Museo Sans, .otf en assets/fonts/) NO
+   versionados en este pipeline de datos; importarlos violaria autocontencion
+   (invariante 4). Se mantiene la pila de sistema para texto/cuerpo (ya
+   equivalente al propio fallback no-custom de --font-body). Unica excepcion:
+   el numero KPI, unico elemento del widget real que usa --font-display
+   (font:900 34px var(--font-display) en el handoff) -> se aproxima con el
+   PRIMER fallback no-custom declarado ahi mismo ("Arial Black"), sin
+   descargar ni versionar ningun binario. */
+.kpi-num{font-family:"Arial Black",system-ui,-apple-system,sans-serif;
+  font-size:1.6rem;font-weight:900;color:var(--plum);line-height:1}
 .kpi-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;
   letter-spacing:.03em;margin-top:4px}
 .kpi-activo .kpi-num{color:var(--olive)}
@@ -134,7 +144,7 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 <header class="card-header">
 <h1>Cartera de proyectos Área de Monitoreo</h1>
 <div class="meta">Área de Monitoreo · 2026-07-02</div>
-<div class="meta-hora">Generado: 07:44</div>
+<div class="meta-hora">Generado: 07:46</div>
 </header>
 <div class="card-body">
 <section id="kpis" class="kpis" aria-label="Resumen por semaforo"></section>
