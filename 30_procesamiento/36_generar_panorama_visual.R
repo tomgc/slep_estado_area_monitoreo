@@ -623,6 +623,34 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .chip:hover{background:var(--cream)}
 .chip:focus-visible{outline:2px solid var(--ocean);outline-offset:-2px}
 .chip.chip-activo{background:var(--ocean);color:#fff;border-color:var(--ocean)}
+/* Resto del patron, s10, Fase 3: menu desplegable en movil. Reusa el MISMO
+   .filtro-chips ya creado por JS (sin duplicar la logica de construccion de
+   chips): en <=640px (breakpoint YA existente, usado por .kpis) el titulo en
+   linea se oculta, aparece un boton de 2 lineas por grupo, y .filtro-chips se
+   convierte en un panel desplegable que solo se muestra si el grupo tiene la
+   clase .menu-abierto (toggle por JS al pulsar el boton). En >640px, sin
+   cambios de comportamiento (los chips siguen siempre visibles en linea). */
+.filtro-boton-movil{display:none}
+@media(max-width:640px){
+  .filtro-grupo{position:relative}
+  .filtro-titulo{display:none}
+  .filtro-boton-movil{display:flex;flex-direction:column;align-items:center;
+    justify-content:center;text-align:center;width:100%;min-height:52px;
+    border-radius:8px;border:1px solid var(--line);background:var(--card);
+    color:var(--ink-2);cursor:pointer;padding:6px 8px;font:inherit}
+  .filtro-boton-movil .linea1{font-size:.68rem;font-weight:600;text-transform:uppercase;
+    letter-spacing:.03em;line-height:1.3}
+  .filtro-boton-movil .linea2{font-size:.82rem;font-weight:700;line-height:1.3}
+  .filtro-boton-movil.boton-activo{background:var(--ocean);border-color:var(--ocean);color:#fff}
+  .filtro-chips{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;
+    z-index:30;flex-direction:column;gap:0;background:var(--card);
+    border:1px solid var(--line-strong);border-radius:8px;box-shadow:var(--shadow-3);
+    padding:4px;max-height:60vh;overflow-y:auto}
+  .filtro-grupo.menu-abierto .filtro-chips{display:flex}
+  .filtro-chips .chip{width:100%;text-align:center;border-radius:6px;border:0;
+    border-bottom:1px solid var(--line);min-height:44px}
+  .filtro-chips .chip:last-child{border-bottom:0}
+}
 .fila.oculta{display:none}
 .cuerpo{display:none;padding:2px 16px 16px 40px}
 .fila.abierta .cuerpo{display:block}
@@ -757,9 +785,29 @@ function renderFiltros(cartera){
   const ETQ_TP={bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
     deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno",na:"sin dato"};
 
+  // Resto del patron, s10, Fase 3: boton movil por grupo (<=640px) que
+  // despliega el MISMO .filtro-chips como panel (ver CSS .menu-abierto). A
+  // diferencia del handoff (single-select, el menu se auto-cierra al elegir),
+  // nuestros filtros son multi-select (Sets, AND entre grupos, ya establecido
+  // en s9) -> el menu NO se auto-cierra al tocar una opcion (permite marcar
+  // varias); solo el boton abre/cierra. Decision de diseno no cubierta
+  // explicitamente en el encargo, documentada aqui y en el log (Fase 3).
   function grupo(titulo,valores,etiquetas,filtroSet){
     const g=el("div","filtro-grupo");
     g.appendChild(el("div","filtro-titulo",titulo));
+
+    const boton=el("button","filtro-boton-movil"); boton.type="button";
+    const linea1=el("span","linea1",titulo);
+    const linea2=el("span","linea2","Todos");
+    boton.appendChild(linea1); boton.appendChild(linea2);
+    function actualizarBoton(){
+      const n=filtroSet.size;
+      linea2.textContent = n===0 ? "Todos" : n===1 ? (etiquetas[[...filtroSet][0]]||[...filtroSet][0]) : (n+" seleccionados");
+      boton.classList.toggle("boton-activo", n>0);
+    }
+    boton.addEventListener("click",()=>g.classList.toggle("menu-abierto"));
+    g.appendChild(boton);
+
     const chips=el("div","filtro-chips");
     valores.forEach(v=>{
       const chip=el("button","chip"); chip.type="button";
@@ -767,11 +815,13 @@ function renderFiltros(cartera){
       chip.addEventListener("click",()=>{
         if(filtroSet.has(v)) filtroSet.delete(v); else filtroSet.add(v);
         chip.classList.toggle("chip-activo",filtroSet.has(v));
+        actualizarBoton();
         aplicarFiltros(cartera);
       });
       chips.appendChild(chip);
     });
     g.appendChild(chips);
+    actualizarBoton();
     return g;
   }
 
