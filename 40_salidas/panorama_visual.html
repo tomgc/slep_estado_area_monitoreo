@@ -15,14 +15,28 @@
      del handoff: --mark-red #EE2D49; pausa #C0871B "ambar derivado", sin token
      propio en el handoff). Referencia visual, no fuente de datos. */
   --amber:#C0871B; --danger:#EE2D49;
+  /* P-DESIGN-PANORAMA-ADOPCION (resto del patron, s10): 3 tokens nuevos,
+     tomados 1:1 de assets/colors_and_type.css del handoff (valores reales, no
+     inventados): --line-strong (borde de la card contenedora), --shadow-3
+     (sombra de la card), --ocean-20 (fondo del tag de categoria en la fila
+     expandida). Referencia visual, no fuente de datos. */
+  --line-strong:#C8BDA0; --shadow-3:0 8px 24px rgba(74,39,70,.12); --ocean-20:#D4E4F1;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
 .wrap{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
-header.top{border-bottom:3px solid var(--plum);padding-bottom:14px;margin-bottom:22px}
-header.top h1{margin:0;font-size:1.5rem;color:var(--plum)}
-header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
+/* Card contenedora (resto del patron del handoff, s10): todo el contenido
+   (header + kpis + atencion + filtros + lista + footer) vive dentro de una
+   sola card con borde/sombra/radio, y el header pasa a banda de color ocean
+   (jerarquia: titulo, "Area de Monitoreo - fecha", hora de generacion). */
+.card{background:var(--card);border:1px solid var(--line-strong);border-radius:12px;
+  overflow:hidden;box-shadow:var(--shadow-3)}
+.card-header{background:var(--ocean);color:var(--cream);padding:16px 24px}
+.card-header h1{margin:0;font-size:1.06rem;font-weight:700;color:var(--cream)}
+.card-header .meta{font-size:.78rem;color:rgba(255,246,224,.75);margin-top:3px}
+.card-header .meta-hora{font-size:.7rem;color:rgba(255,246,224,.55);margin-top:2px}
+.card-body{padding:22px 24px 28px}
 /* Lista acordeon de ancho completo: un solo contenedor con borde y divisores
    horizontales entre filas (no cada fila con su propia caja/sombra). */
 .lista{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
@@ -116,15 +130,20 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 </head>
 <body>
 <div class="wrap">
-<header class="top">
+<div class="card">
+<header class="card-header">
 <h1>Cartera de proyectos Área de Monitoreo</h1>
-<div class="meta">Generado: 2026-07-02 · 17 proyectos</div>
+<div class="meta">Área de Monitoreo · 2026-07-02</div>
+<div class="meta-hora">Generado: 07:44</div>
 </header>
+<div class="card-body">
 <section id="kpis" class="kpis" aria-label="Resumen por semaforo"></section>
 <section id="atencion" class="atencion" aria-label="Requieren atencion hoy"></section>
 <section id="filtros" class="filtros" aria-label="Filtros"></section>
 <main id="lista" class="lista"></main>
 <footer class="bot">Total de proyectos: 17<div class="conteos" id="conteos"></div><div class="conteos" id="conteos-tp"></div></footer>
+</div>
+</div>
 </div>
 <script type="application/json" id="datos-cartera">
 [
@@ -427,6 +446,27 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "resena_itinerario": null
   },
   {
+    "slug": "slep_paes",
+    "nombre_real": "Motor de comparación interactivo de los resultados de la PAES",
+    "alias_corto": "PAES",
+    "categoria": "activo",
+    "datos_sensibles": "FALSE",
+    "estado_proyecto": null,
+    "tipo_pendiente": null,
+    "semaforo": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-07-02",
+    "proximos_pasos": [
+      "¿Datos crudos aislados e inmutables? → Sí, sin cambios en 31/32 (Rama B intacta, código en Git, no aplica en slep_paes porque es Rama A con…",
+      "¿Pipeline corre de cero sin intervención manual? → Sí, run_all() completo verificado end-to-end.",
+      "¿Outputs reproducibles e idempotentes? → Sí, confirmado por regeneración repetida durante la sesión sin cambios de contenido salvo los fixe…"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado."
+  },
+  {
     "slug": "slep_minuta_asistencia",
     "nombre_real": "Minuta de asistencia mensual",
     "alias_corto": "Minuta asistencia",
@@ -449,27 +489,6 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     ],
     "tiene_backlog": false,
     "resena_itinerario": null
-  },
-  {
-    "slug": "slep_paes",
-    "nombre_real": "Motor de comparación interactivo de los resultados de la PAES",
-    "alias_corto": "PAES",
-    "categoria": "activo",
-    "datos_sensibles": "FALSE",
-    "estado_proyecto": null,
-    "tipo_pendiente": null,
-    "semaforo": null,
-    "sintesis": null,
-    "objetivo": null,
-    "tipo": null,
-    "fecha_actualizacion": "2026-07-01",
-    "proximos_pasos": [
-      "Archivos: ninguno modificado; solo lectura + log",
-      "Categoría: dominio / diagnóstico.",
-      "Qué: inspección empírica (rango de valores) + documental (Libro de"
-    ],
-    "tiene_backlog": true,
-    "resena_itinerario": "slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado."
   },
   {
     "slug": "slep_costapresente",

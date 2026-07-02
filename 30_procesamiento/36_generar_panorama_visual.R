@@ -479,6 +479,12 @@ json_cartera <- jsonlite::toJSON(
 json_embebido <- str_replace_all(as.character(json_cartera), "</", "<\\\\/")
 
 fecha_generacion <- format(Sys.Date(), "%Y-%m-%d")
+# Hora de generacion (resto del patron del handoff, s10: "Sintesis generada a
+# las {hora}"). Reusa TZ_ORQUESTADOR (10_configuracion.R, ya establecido para
+# evitar el bug de zona horaria de sesiones previas) en vez de una formula
+# de hora nueva sin tz explicita.
+hora_generacion <- format(Sys.time(), "%H:%M",
+                          tz = if (exists("TZ_ORQUESTADOR")) TZ_ORQUESTADOR else "")
 n_total <- length(objetos)
 
 # ---- FASE 3: panorama_visual.html (autocontenido) ----------------------------
@@ -506,14 +512,28 @@ css <- '
      del handoff: --mark-red #EE2D49; pausa #C0871B "ambar derivado", sin token
      propio en el handoff). Referencia visual, no fuente de datos. */
   --amber:#C0871B; --danger:#EE2D49;
+  /* P-DESIGN-PANORAMA-ADOPCION (resto del patron, s10): 3 tokens nuevos,
+     tomados 1:1 de assets/colors_and_type.css del handoff (valores reales, no
+     inventados): --line-strong (borde de la card contenedora), --shadow-3
+     (sombra de la card), --ocean-20 (fondo del tag de categoria en la fila
+     expandida). Referencia visual, no fuente de datos. */
+  --line-strong:#C8BDA0; --shadow-3:0 8px 24px rgba(74,39,70,.12); --ocean-20:#D4E4F1;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
 .wrap{max-width:1200px;margin:0 auto;padding:24px 20px 60px}
-header.top{border-bottom:3px solid var(--plum);padding-bottom:14px;margin-bottom:22px}
-header.top h1{margin:0;font-size:1.5rem;color:var(--plum)}
-header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
+/* Card contenedora (resto del patron del handoff, s10): todo el contenido
+   (header + kpis + atencion + filtros + lista + footer) vive dentro de una
+   sola card con borde/sombra/radio, y el header pasa a banda de color ocean
+   (jerarquia: titulo, "Area de Monitoreo - fecha", hora de generacion). */
+.card{background:var(--card);border:1px solid var(--line-strong);border-radius:12px;
+  overflow:hidden;box-shadow:var(--shadow-3)}
+.card-header{background:var(--ocean);color:var(--cream);padding:16px 24px}
+.card-header h1{margin:0;font-size:1.06rem;font-weight:700;color:var(--cream)}
+.card-header .meta{font-size:.78rem;color:rgba(255,246,224,.75);margin-top:3px}
+.card-header .meta-hora{font-size:.7rem;color:rgba(255,246,224,.55);margin-top:2px}
+.card-body{padding:22px 24px 28px}
 /* Lista acordeon de ancho completo: un solo contenedor con borde y divisores
    horizontales entre filas (no cada fila con su propia caja/sombra). */
 .lista{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
@@ -786,9 +806,11 @@ html <- paste0(
   "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n<meta charset=\"utf-8\">\n",
   "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n",
   u8("<title>Cartera de proyectos Área de Monitoreo</title>\n"),
-  "<style>", css, "</style>\n</head>\n<body>\n<div class=\"wrap\">\n",
-  u8("<header class=\"top\">\n<h1>Cartera de proyectos Área de Monitoreo</h1>\n"),
-  "<div class=\"meta\">Generado: ", fecha_generacion, u8(" · "), n_total, " proyectos</div>\n</header>\n",
+  "<style>", css, "</style>\n</head>\n<body>\n<div class=\"wrap\">\n<div class=\"card\">\n",
+  u8("<header class=\"card-header\">\n<h1>Cartera de proyectos Área de Monitoreo</h1>\n"),
+  u8("<div class=\"meta\">Área de Monitoreo · "), fecha_generacion, u8("</div>\n"),
+  "<div class=\"meta-hora\">Generado: ", hora_generacion, "</div>\n</header>\n",
+  "<div class=\"card-body\">\n",
   "<section id=\"kpis\" class=\"kpis\" aria-label=\"Resumen por semaforo\"></section>\n",
   "<section id=\"atencion\" class=\"atencion\" aria-label=\"Requieren atencion hoy\"></section>\n",
   "<section id=\"filtros\" class=\"filtros\" aria-label=\"Filtros\"></section>\n",
@@ -796,7 +818,7 @@ html <- paste0(
   "<footer class=\"bot\">Total de proyectos: ", n_total,
   "<div class=\"conteos\" id=\"conteos\"></div>",
   u8("<div class=\"conteos\" id=\"conteos-tp\"></div></footer>\n"),
-  "</div>\n",
+  "</div>\n</div>\n</div>\n",
   "<script type=\"application/json\" id=\"datos-cartera\">\n", json_embebido, "\n</script>\n",
   "<script>\n", js, "\n</script>\n</body>\n</html>\n"
 )

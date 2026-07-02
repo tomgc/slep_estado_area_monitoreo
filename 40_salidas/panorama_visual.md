@@ -181,6 +181,19 @@ Generado: 2026-07-02 · 17 proyectos
   - 11.1 Pendientes activos
   - Incorporar datos SIMCE de un año nuevo al pipeline.
 
+## Motor de comparación interactivo de los resultados de la PAES
+- **slug:** `slep_paes`
+- **tipo de pendiente:** sin dato
+- **semaforo:** sin dato
+- **estado:** sin clasificar
+- **datos sensibles:** FALSE
+- **última actualización:** 2026-07-02
+- **reseña del itinerario:** slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado.
+- **próximos pasos:**
+  - ¿Datos crudos aislados e inmutables? → Sí, sin cambios en 31/32 (Rama B intacta, código en Git, no aplica en slep_paes porque es Rama A con…
+  - ¿Pipeline corre de cero sin intervención manual? → Sí, run_all() completo verificado end-to-end.
+  - ¿Outputs reproducibles e idempotentes? → Sí, confirmado por regeneración repetida durante la sesión sin cambios de contenido salvo los fixe…
+
 ## Minuta de asistencia mensual
 - **slug:** `slep_minuta_asistencia`
 - **tipo:** Minuta · Dirección Ejecutiva
@@ -194,19 +207,6 @@ Generado: 2026-07-02 · 17 proyectos
   - P-orq (deuda técnica, aprobado, diferido). Refactor: partir 32_render_minuta.R en pasos atómicos y crear 00_run_all.R canónico. Complejidad…
   - Deuda menor nueva: _archivo/20260630/ quedó versionado en Git. Los renames vía git mv entraron al commit 7d33adb antes de que .gitignore lo…
   - Deuda: backlog no extraído a backlog_acumulativo.md (POLITICA §10). Sigue embebido en traspasos. Requiere reconstruir el histórico desde tr…
-
-## Motor de comparación interactivo de los resultados de la PAES
-- **slug:** `slep_paes`
-- **tipo de pendiente:** sin dato
-- **semaforo:** sin dato
-- **estado:** sin clasificar
-- **datos sensibles:** FALSE
-- **última actualización:** 2026-07-01
-- **reseña del itinerario:** slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado.
-- **próximos pasos:**
-  - Archivos: ninguno modificado; solo lectura + log
-  - Categoría: dominio / diagnóstico.
-  - Qué: inspección empírica (rango de valores) + documental (Libro de
 
 ## CostaPresente
 - **slug:** `slep_costapresente`

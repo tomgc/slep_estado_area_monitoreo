@@ -470,26 +470,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 2,
-        "total_sesiones": 2,
+        "correlativo": 3,
+        "total_sesiones": 3,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-07-01",
-        "escaner": "2026-07-01",
-        "actividad": "2026-07-01",
+        "traspaso": "2026-07-02",
+        "escaner": "2026-07-02",
+        "actividad": "2026-07-02",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "e03949ee7737f56c9f6f2f264c771c64",
+        "md5_traspaso": "68ebbea30a11db7125aaf2c4fa24fb3f",
         "md5_resena": null,
         "md5_backlog": "f885419802629f5deb8acf22f807dd0a"
       },
       "documentos": {
         "resena": null,
-        "traspaso": "slep_paes/50_documentacion/traspasos/traspaso_cierre_v02.md",
+        "traspaso": "slep_paes/50_documentacion/traspasos/traspaso_cierre_v03.md",
         "backlog": "slep_paes/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_paes/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_paes/README.md",
