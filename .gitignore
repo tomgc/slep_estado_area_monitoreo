@@ -17,6 +17,9 @@ Thumbs.db
 _archivo/
 *.bak
 
+# Activos pesados de referencia (no se versionan)
+50_documentacion/andamios/design_handoff_monitoreo_cartera/
+
 # Outputs accidentales en raiz y scripts de diagnostico
 /*.docx
 /*.pdf
