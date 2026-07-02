@@ -1,9 +1,37 @@
 # POLITICA_PROYECTO.md
 
-> **Versión 5 — vigente y definitiva.** Documento maestro único de
-> arquitectura y gobernanza. Se copia a `50_documentacion/activa/` de cada
-> proyecto y vive en la knowledge base del Project. Aplica a Claude, Claude
-> Code y cualquier agente que trabaje sobre el proyecto.
+> **Versión 5.3 — vigente.** Documento maestro único de arquitectura y
+> gobernanza. Se copia a `50_documentacion/activa/` de cada proyecto y
+> vive en la knowledge base del Project. Aplica a Claude, Claude Code y
+> cualquier agente que trabaje sobre el proyecto.
+>
+> **Cambios respecto a v5.2:** sección 0.4 agrega el test de dos preguntas
+> antes de derivar cualquier tarea al usuario (guardrail GR-05, propuesta
+> P4 de la auditoría cruzada de errores del asistente, integrada junto con
+> `SETTINGS_Y_PROMPTS_OPERACIONALES.md` v8). Motivo: los dos errores de
+> patrón PAT-05 (clasificar como "mecánica del usuario" trabajo que exigía
+> producir o editar contenido) ocurrieron en la frontera entre operación
+> de plataforma y producción de contenido, que 0.4 no discriminaba por
+> criterio, solo por ejemplos. El titular pidió explícitamente una
+> solución estructural, no repetir la regla con más énfasis (registrado en
+> traspaso `slep_estado_proyectos_monitoreo` v05). El test es obligatorio,
+> respondido por escrito en una línea antes de derivar.
+>
+> **Cambios respecto a v5.1:** nueva regla 0.5 (registro obligatorio de
+> errores del asistente): toda desviación de una regla canónica, detectada
+> por el asistente o por el usuario, se registra en el momento y se
+> consolida en la nueva tabla de errores del traspaso de cierre
+> (`SETTINGS_Y_PROMPTS_OPERACIONALES.md` v7 §2.2.15). Disparador
+> exhaustivo, no limitado a cuando el asistente dice explícitamente "me
+> equivoqué". Objetivo: hacer analizable en conjunto, entre los 16
+> proyectos de la cartera, un problema de errores repetidos que las
+> salvaguardas existentes no han prevenido por sí solas.
+>
+> **Cambios respecto a v5:** §10 agrega `backlog_acumulativo.md` como
+> documento canónico obligatorio (nombre, ubicación y momento de
+> extracción). Complementa `SETTINGS_Y_PROMPTS_OPERACIONALES.md` v5
+> §2.2.5. Cierra la brecha que causó heterogeneidad de nombres y
+> ubicaciones en la cartera.
 >
 > **Cambios respecto a v4:** (a) absorbe `regla_estructura_proyectos.md`
 > (archivo retirado); (b) absorbe los principios técnicos de
@@ -56,6 +84,54 @@ de datos (sección 6) prevalece siempre sobre la autonomía.
 Descargar un archivo de una plataforma, arrastrarlo a una carpeta o
 reemplazarlo a mano son tareas del usuario. El asistente no genera
 scripts para ellas: indica qué hacer en una línea.
+
+Antes de derivar cualquier tarea al usuario, el asistente responde por
+escrito (una línea) el test de dos preguntas:
+
+1. ¿La tarea exige producir o editar contenido (redactar, editar un
+   documento, reparar un archivo)? Si sí, esa parte es del asistente,
+   siempre, y se entrega completa (archivo entero listo para usar), aunque
+   el paso final sea una operación de plataforma.
+2. Quitada la producción de contenido, ¿lo que resta es exclusivamente
+   mover, descargar, subir o pegar en una plataforma a la que el asistente
+   no accede? Solo esa parte se deriva, indicada en una línea.
+
+Si la tarea mezcla ambas capas, se divide: contenido completo primero,
+operación mecánica después. Derivar al usuario una tarea sin el test
+respondido es una desviación registrable (regla 0.5).
+
+### 0.5 Registro obligatorio de errores del asistente
+
+Todo error del asistente queda registrado en la sesión en que ocurre,
+para alimentar la tabla de errores del traspaso de cierre
+(`SETTINGS_Y_PROMPTS_OPERACIONALES.md` §2.2.15). Esta regla no es
+opcional ni queda a discreción del asistente: el registro es estructural,
+igual que el backlog o los bugs de código.
+
+**Qué cuenta como error (disparador exhaustivo):** cualquier desviación
+de una regla canónica (POLITICA, SETTINGS, `CLAUDE.md`, `userPreferences`,
+o una instrucción explícita ya dada en la sesión) detectada por el
+asistente o señalada por el usuario, **se haya nombrado como "error" o
+no**. No se limita a los casos donde el asistente dice "me equivoqué" o
+"cometí un error": incluye cualquier autocorrección silenciosa, cualquier
+corrección que el usuario tenga que pedir, y cualquier momento en que el
+asistente reconoce (aunque sea implícitamente, ajustando su respuesta)
+que una acción previa no siguió la regla vigente.
+
+**Cuándo se registra:** en el momento en que el error se identifica
+(no se difiere "para el cierre"), como una entrada provisional que se
+consolida en la sección de errores del traspaso al cerrar la sesión. Si
+la sesión termina sin cierre formal, el registro provisional igual debe
+quedar visible en el historial de la conversación para que una sesión
+futura pueda reconstruirlo.
+
+**Por qué existe esta regla:** las salvaguardas existentes (este
+documento, SETTINGS, `CLAUDE.md`, `userPreferences`) no han sido
+suficientes por sí solas para prevenir errores repetidos del mismo
+patrón. El registro estructurado no sustituye a esas salvaguardas: es un
+mecanismo adicional para hacer visible, medible y comparable entre
+proyectos un problema que de otro modo solo vive en la memoria de cada
+sesión y se pierde al cerrarla.
 
 ---
 
@@ -644,6 +720,16 @@ a medias es peor que no migrar.
   autocontenida, con alternativas y justificación.
 - **`50_documentacion/traspasos/`:** cierres de sesión
   `traspaso_cierre_vNN.md`.
+- **`50_documentacion/activa/backlog_acumulativo.md`** (obligatorio a
+  partir de la segunda sesión): backlog acumulativo del proyecto. Nombre
+  canónico exacto: `backlog_acumulativo.md`; ubicación canónica:
+  `50_documentacion/activa/`. Estructura interna: cinco secciones en
+  este orden — Objetivo del proyecto, Nota metodológica, Clasificación
+  temática, Resumen estadístico por sesión, Detalle cronológico. Ver
+  protocolo completo en `SETTINGS_Y_PROMPTS_OPERACIONALES.md` §2.2.5.
+  En el primer cierre el backlog va embebido en el traspaso; a partir
+  del segundo cierre se extrae a este archivo y el traspaso referencia
+  su ruta.
 - **`50_documentacion/andamios/`:** refactors ejecutados, congelados.
 
 ---
