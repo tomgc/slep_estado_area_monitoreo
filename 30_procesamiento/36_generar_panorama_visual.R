@@ -552,7 +552,8 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .der .slug{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.7rem;color:var(--muted);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .der .tp{font-size:.68rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
-.der .fecha{font-size:.76rem;color:var(--muted);white-space:nowrap}
+.der .fecha{font-size:.76rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 /* Indicador de semaforo (Fase 2 PUSH): punto de color puro CSS (sin glifo
    Unicode, para no introducir literales no-ASCII fuera del bloque u8()). */
 .der .sem{font-size:.68rem;font-weight:600;color:var(--muted);white-space:nowrap;
