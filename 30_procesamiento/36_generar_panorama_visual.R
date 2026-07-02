@@ -7,8 +7,17 @@
 #             curada de cada hermano (traspaso vigente + backlog_acumulativo.md).
 #             Reusa la localizacion del paso 32 leyendo el inventario; no la
 #             reescribe. Lectura de hermanos confinada a 50_documentacion/ (R2).
+#             Fase 2 PUSH: consume `semaforo` (+ "Proximo paso") de ESTADO.md de
+#             cada hermano, con fallback a PULL. Reusa en sesion la decision de
+#             sincronizacion YA computada por resolver_estado() (32, con margen
+#             P-DESYNC-MARGEN) via `lista_documentos`; si corre standalone
+#             (run_all(only=6), sin ese objeto en sesion) cae a una relectura
+#             autocontenida que reusa el MISMO parser/formula (ver
+#             leer_estado_hermano()). Deteccion de desync/tipo_pendiente NO se
+#             reimplementa de forma independiente (evita divergencia).
 # Insumos   : 40_salidas/inventario_cartera.json (34); 20_insumos/registro_proyectos.csv;
-#             por hermano: su traspaso vigente y backlog_acumulativo.md (si existe).
+#             por hermano: su traspaso vigente, backlog_acumulativo.md y
+#             ESTADO.md (si existen).
 # Salidas   : 40_salidas/panorama_visual.html y panorama_visual.md (escritura
 #             confinada por escribir_seguro).
 # Autor     : Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
@@ -206,6 +215,82 @@ parsear_data_js <- function(ruta_abs) {
   if (length(res) == 0) NULL else res
 }
 
+#' Fase 1+2 (PUSH de ESTADO.md, con fallback a PULL): resuelve semaforo,
+#' tipo_pendiente crudo y "Proximo paso" de un hermano.
+#'
+#' Camino primario: si `lista_documentos` existe EN SESION (36 corrio como
+#' parte de un run_all() completo, tras el paso 32), reusa integramente la
+#' decision de sincronizacion ya computada por resolver_estado() -incluido el
+#' margen de tolerancia P-DESYNC-MARGEN- sin releer ni reinterpretar nada.
+#' Evita una segunda implementacion de la regla de desync que podria divergir
+#' de la de 32 (p. ej. una version sin margen reintroduciria el falso-desync
+#' de medianoche ya corregido).
+#'
+#' Camino de respaldo (standalone, ej. run_all(only=6) sin haber corrido el
+#' paso 32 en esta sesion): relectura autocontenida que reusa el MISMO parser
+#' (parsear_front_matter, 10_utils.R) y la MISMA formula/constantes de margen
+#' (MARGEN_DESYNC_DIAS, TZ_ORQUESTADOR, 10_configuracion.R) para no divergir.
+#'
+#' Degradacion con gracia (mismo idioma que parsear_data_js): sin ESTADO.md,
+#' front matter no reconocible, o hermano desincronizado -> semaforo=NA y
+#' proximo_paso=NA (se trata como si no existiera, Fase 1 PULL). tipo_pendiente
+#' crudo se devuelve SIEMPRE que exista el campo (no gateado por sync: el
+#' inventario/34 ya lo trata asi "como hoy"; se usa solo para el chequeo
+#' cruzado de auditoria, no para decidir nada operativo aqui).
+#'
+#' @return list(semaforo, proximo_paso, tipo_pendiente_raw, sincronizado, presente)
+leer_estado_hermano <- function(slug, ruta_traspaso) {
+  vacio <- list(semaforo = NA_character_, proximo_paso = NA_character_,
+                tipo_pendiente_raw = NA_character_, sincronizado = FALSE,
+                presente = FALSE)
+
+  ld <- if (exists("lista_documentos", inherits = TRUE)) {
+    get("lista_documentos", inherits = TRUE)[[slug]]
+  } else NULL
+
+  if (!is.null(ld) && !is.null(ld$estado)) {
+    est <- ld$estado
+    sem <- est$meta$semaforo
+    tp  <- est$tipo_pendiente
+    return(list(
+      semaforo = if (isTRUE(est$sincronizado) && !is.null(sem) && nzchar(sem)) sem else NA_character_,
+      proximo_paso = if (isTRUE(est$sincronizado) && !is.null(est$proximo) && !is.na(est$proximo)) est$proximo else NA_character_,
+      tipo_pendiente_raw = if (is.null(tp) || is.na(tp) || !nzchar(tp)) NA_character_ else tp,
+      sincronizado = isTRUE(est$sincronizado),
+      presente = isTRUE(est$presente)
+    ))
+  }
+
+  # ---- Fallback standalone (sin lista_documentos en sesion) ------------------
+  ruta <- file.path(RAIZ_PROYECTOS, slug, "50_documentacion", "activa", "ESTADO.md")
+  if (!file.exists(ruta)) return(vacio)
+
+  L  <- readLines(ruta, warn = FALSE, encoding = "UTF-8")
+  fm <- parsear_front_matter(L)
+  meta <- fm$meta
+
+  ua <- suppressWarnings(as.Date(if (is.null(meta$ultima_actividad)) NA_character_ else meta$ultima_actividad))
+  tz_loc <- if (exists("TZ_ORQUESTADOR")) TZ_ORQUESTADOR else ""
+  mt <- if (!is.na(ruta_traspaso) && file.exists(ruta_traspaso))
+          as.Date(format(file.mtime(ruta_traspaso), "%Y-%m-%d", tz = tz_loc)) else NA
+  margen <- if (exists("MARGEN_DESYNC_DIAS")) MARGEN_DESYNC_DIAS else 0L
+  sinc <- !is.na(ua) && (is.na(mt) || !(ua < (mt - margen)))
+
+  prox_raw <- bloque_seccion(fm$cuerpo, "Proximo paso")
+  prox <- if (length(prox_raw) == 0) "" else
+    trimws(paste(prox_raw[nzchar(trimws(prox_raw))], collapse = " "))
+
+  sem <- meta$semaforo
+  tp  <- meta$tipo_pendiente
+  list(
+    semaforo = if (sinc && !is.null(sem) && nzchar(sem)) sem else NA_character_,
+    proximo_paso = if (sinc && nzchar(prox)) prox else NA_character_,
+    tipo_pendiente_raw = if (is.null(tp) || !nzchar(tp)) NA_character_ else tp,
+    sincronizado = sinc,
+    presente = TRUE
+  )
+}
+
 # ---- FASE 1: construir el objeto por proyecto --------------------------------
 
 if (!file.exists(RUTA_INVENTARIO_JSON)) {
@@ -246,6 +331,13 @@ abs_de <- function(rel) {
   if (is.na(r)) NA_character_ else file.path(RAIZ_PROYECTOS, r)
 }
 
+# Fase 2 PUSH: estado (semaforo/proximo_paso/tipo_pendiente crudo) por slug,
+# precomputado una vez (mismo patron que datos_por_slug para data.js).
+estados_hno <- stats::setNames(
+  lapply(inv$proyectos, function(p) leer_estado_hermano(p$slug, abs_de(p$documentos$traspaso))),
+  vapply(inv$proyectos, function(p) p$slug, character(1))
+)
+
 construir_objeto <- function(p) {
   slug <- p$slug
   rg <- registro[registro$slug == slug, , drop = FALSE]
@@ -265,6 +357,21 @@ construir_objeto <- function(p) {
   # truncar; MAX_RESENA es exclusivo de resena_itinerario del backlog).
   parrafos <- if (!is.null(dj)) unlist(dj$sintesis) else character(0)
 
+  # Fase 2 PUSH: semaforo + "Proximo paso" de ESTADO.md (NA si desincronizado,
+  # ausente, o front matter no reconocible -> se trata como PULL, con gracia).
+  eh <- estados_hno[[slug]]
+  semaforo_hno <- if (is.null(eh)) NA_character_ else o_null(eh$semaforo)
+
+  # proximo_paso de ESTADO.md se ANTEPONE a proximos_pasos (traspaso), no lo
+  # reemplaza; sin duplicar si ya coincide textualmente con el primer elemento.
+  proximos_base <- if (is.null(proximos)) character(0) else proximos
+  prox_hno <- if (is.null(eh)) NA_character_ else o_null(eh$proximo_paso)
+  if (!is.na(prox_hno)) {
+    ya_primero <- length(proximos_base) >= 1 &&
+      identical(trimws(proximos_base[1]), trimws(prox_hno))
+    if (!ya_primero) proximos_base <- head(c(prox_hno, proximos_base), MAX_PROXIMOS)
+  }
+
   list(
     slug             = slug,
     nombre_real      = if (tiene_rg) o_null(rg$nombre_real) else NA_character_,
@@ -276,18 +383,65 @@ construir_objeto <- function(p) {
     # Enum SETTINGS SS1.2.4 (bug|bloqueante|deuda_heredada|deuda_tecnica|nuevo|cosmetica|ninguno);
     # NA si el hermano no tiene ESTADO.md o no declaro el campo. Usado para el
     # ordenamiento de la Fase 2 (P-FASE2-PIEZA-C), no se traduce ni se amplia aqui.
+    # Puede ser reconciliado (override + advertencia) por el chequeo cruzado de
+    # abajo si difiere del ESTADO.md sincronizado (Fase 3, ver mas abajo).
     tipo_pendiente   = o_null(unlist(p$estado$tipo_pendiente)),
+    # Fase 2 PUSH (Fase 5 UI): semaforo activo|pausa|bloqueado|cerrado, NA si el
+    # hermano no tiene ESTADO.md sincronizado (fallback visual neutro en UI).
+    semaforo         = semaforo_hno,
     sintesis         = if (length(parrafos) >= 1) as.list(parrafos) else NA,  # todos los parrafos (o null)
     objetivo         = if (!is.null(dj)) o_null(dj$objetivo) else NA_character_,
     tipo             = if (!is.null(dj)) o_null(dj$tipo) else NA_character_,
     fecha_actualizacion = if (is.null(fecha) || is.na(fecha)) NA_character_ else fecha,
-    proximos_pasos   = if (is.null(proximos)) NA else as.list(proximos),
+    proximos_pasos   = if (length(proximos_base) == 0) NA else as.list(proximos_base),
     tiene_backlog    = tiene_backlog,
     resena_itinerario = if (is.null(resena)) NA_character_ else resena
   )
 }
 
 objetos <- lapply(inv$proyectos, construir_objeto)
+
+# ---- Fase 3 (reconciliacion) + mandato de auto-auditoria ---------------------
+#
+# Chequeo cruzado de precedencia: por cada hermano con ESTADO.md, imprime en
+# consola (evidencia de trabajo, NO en el reporte final) semaforo_estado_md vs
+# tipo_pendiente_inventario vs tipo_pendiente_final, para confirmar
+# EMPIRICAMENTE (no por diseno asumido) que "ESTADO.md manda" se aplica en
+# cada caso. Por construccion (tipo_pendiente del inventario YA proviene de
+# ESTADO.md via 32/34), normalmente no hay divergencia; si el chequeo la
+# encuentra (p. ej. inventario_cartera.json desactualizado respecto a un
+# ESTADO.md leido en esta misma corrida), ESTADO.md GANA (override + WARN),
+# tal como pide la Fase 3 del encargo.
+cat("\n=== Chequeo cruzado de precedencia (Fase 2 PUSH, auditoria) ===\n")
+for (i in seq_along(inv$proyectos)) {
+  p_i <- inv$proyectos[[i]]
+  eh_i <- estados_hno[[p_i$slug]]
+  if (is.null(eh_i) || !isTRUE(eh_i$presente)) next  # sin ESTADO.md: nada que auditar
+
+  sem_md <- eh_i$semaforo
+  tp_inventario <- objetos[[i]]$tipo_pendiente
+  tp_estado_md  <- eh_i$tipo_pendiente_raw
+
+  diverge <- isTRUE(eh_i$sincronizado) && !is.na(tp_estado_md) && !is.na(tp_inventario) &&
+    !identical(tp_estado_md, tp_inventario)
+  if (diverge) {
+    objetos[[i]]$tipo_pendiente <- tp_estado_md
+    advertencias <- c(advertencias, sprintf(
+      "Reconciliacion tipo_pendiente [%s]: ESTADO.md (%s) difiere del inventario (%s); ESTADO.md manda.",
+      p_i$slug, tp_estado_md, tp_inventario))
+  }
+  tp_final <- objetos[[i]]$tipo_pendiente
+
+  cat(sprintf(
+    "%-46s semaforo_estado_md=%-11s tipo_pendiente_inventario=%-16s tipo_pendiente_final=%-16s sincronizado=%-5s %s\n",
+    p_i$slug,
+    if (is.na(sem_md)) "NA" else sem_md,
+    if (is.na(tp_inventario)) "NA" else tp_inventario,
+    if (is.na(tp_final)) "NA" else tp_final,
+    isTRUE(eh_i$sincronizado),
+    if (diverge) "*** DIVERGE (reconciliado) ***" else "OK"
+  ))
+}
 
 # ---- FASE 2: ordenar las cards -----------------------------------------------
 
@@ -347,6 +501,11 @@ css <- '
   --coral:#E88663; --slate:#747474; --sand:#BCA493; --ink:#1C1212;
   --ink-2:#2E2230;
   --line:#e3dccf; --muted:#6f6a63; --card:#ffffff;
+  /* Semaforo (Fase 2 PUSH): activo/cerrado reusan tokens existentes; pausa y
+     bloqueado son nuevos, tomados 1:1 del handoff de diseno (colors_and_type.css
+     del handoff: --mark-red #EE2D49; pausa #C0871B "ambar derivado", sin token
+     propio en el handoff). Referencia visual, no fuente de datos. */
+  --amber:#C0871B; --danger:#EE2D49;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);
@@ -374,6 +533,16 @@ header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .der .tp{font-size:.68rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
 .der .fecha{font-size:.76rem;color:var(--muted);white-space:nowrap}
+/* Indicador de semaforo (Fase 2 PUSH): punto de color puro CSS (sin glifo
+   Unicode, para no introducir literales no-ASCII fuera del bloque u8()). */
+.der .sem{font-size:.68rem;font-weight:600;color:var(--muted);white-space:nowrap;
+  display:inline-flex;align-items:center;gap:5px}
+.punto{display:inline-block;width:7px;height:7px;border-radius:999px;flex:0 0 auto}
+.punto.sem-activo{background:var(--olive)}
+.punto.sem-pausa{background:var(--amber)}
+.punto.sem-bloqueado{background:var(--danger)}
+.punto.sem-cerrado{background:var(--slate)}
+.punto.sem-na{background:var(--line)}
 .cuerpo{display:none;padding:2px 16px 16px 40px}
 .fila.abierta .cuerpo{display:block}
 .cuerpo .tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
@@ -392,6 +561,7 @@ const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
   con_productos:"con productos",en_pausa:"en pausa",concluido:"concluido"};
 const ETIQUETA_TP = {bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
   deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno"};
+const ETIQUETA_SEMAFORO = {activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado"};
 const MES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
   "septiembre","octubre","noviembre","diciembre"];
 function fechaEs(s){
@@ -413,6 +583,12 @@ function fila(p){
   cab.appendChild(izq);
   const der=el("div","der");
   der.appendChild(el("div","slug",p.slug));
+  // Semaforo (Fase 2 PUSH): punto de color + etiqueta; fallback visual neutro si NA.
+  const semDiv=el("div","sem");
+  const semCls = p.semaforo ? ("sem-"+p.semaforo) : "sem-na";
+  semDiv.appendChild(el("span","punto "+semCls,null));
+  semDiv.appendChild(el("span",null, p.semaforo ? (ETIQUETA_SEMAFORO[p.semaforo]||p.semaforo) : "sin dato"));
+  der.appendChild(semDiv);
   if(p.tipo_pendiente) der.appendChild(el("div","tp",ETIQUETA_TP[p.tipo_pendiente]||p.tipo_pendiente));
   der.appendChild(el("div","fecha",fechaEs(p.fecha_actualizacion)));
   cab.appendChild(der);
@@ -485,6 +661,9 @@ et_tp <- function(tp) {
     deuda_tecnica="deuda tecnica", nuevo="nuevo", cosmetica="cosmetica",
     ninguno="ninguno")[tp] |> (\(x) if (is.na(x)) tp else x)()
 }
+# Fase 2 PUSH: semaforo activo|pausa|bloqueado|cerrado; "sin dato" si NA
+# (hermano sin ESTADO.md sincronizado). Valores ya son etiquetas legibles.
+et_semaforo <- function(s) if (is.na(s)) "sin dato" else s
 m_lin <- character(0)
 ap <- function(...) m_lin <<- c(m_lin, ...)
 ap(sprintf(u8("# Cartera de proyectos Área de Monitoreo")), "",
@@ -495,6 +674,7 @@ for (o in objetos) {
   ap(sprintf("- **slug:** `%s`", o$slug))
   if (!is.na(o$tipo)) ap(sprintf("- **tipo:** %s", o$tipo))
   ap(sprintf("- **tipo de pendiente:** %s", et_tp(o$tipo_pendiente)))
+  ap(sprintf("- **semaforo:** %s", et_semaforo(o$semaforo)))
   ap(sprintf("- **estado:** %s", et_estado(o$estado_proyecto)))
   ds <- if (is.na(o$datos_sensibles)) "sin clasificar" else o$datos_sensibles
   ap(sprintf("- **datos sensibles:** %s", ds))
@@ -524,6 +704,11 @@ n_sin_tp <- sum(vapply(objetos, function(o) is.na(o$tipo_pendiente), logical(1))
 n_prioritarios <- sum(vapply(objetos, function(o) {
   !is.na(o$tipo_pendiente) && o$tipo_pendiente %in% c("bug", "bloqueante")
 }, logical(1)))
+n_con_semaforo <- sum(vapply(objetos, function(o) !is.na(o$semaforo), logical(1)))
 for (a in advertencias) log_msg(a, "36_visual", "WARN")
-log_msg(sprintf("panorama_visual.html/.md generados: %d proyectos, %d con backlog, %d sin estado_proyecto, %d sin tipo_pendiente, %d bug/bloqueante en cabeza.",
-                n_total, n_backlog, n_sin_estado, n_sin_tp, n_prioritarios), "36_visual")
+log_msg(sprintf(paste(
+  "panorama_visual.html/.md generados: %d proyectos, %d con backlog,",
+  "%d sin estado_proyecto, %d sin tipo_pendiente, %d bug/bloqueante en cabeza,",
+  "%d con semaforo (Fase 2 PUSH)."),
+                n_total, n_backlog, n_sin_estado, n_sin_tp, n_prioritarios,
+                n_con_semaforo), "36_visual")

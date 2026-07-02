@@ -102,26 +102,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 25,
-        "total_sesiones": 25,
+        "correlativo": 26,
+        "total_sesiones": 26,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-06-20",
+        "traspaso": "2026-07-01",
         "escaner": "2026-07-01",
         "actividad": "2026-07-01",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "5f4f7a12e7371f42b83935016b2a4b2a",
+        "md5_traspaso": "11c4c2b0a6f86b8fdce049bc33bbc053",
         "md5_resena": "1a9f4338ce4a07e765962a279dfe0440",
         "md5_backlog": "658487c6afd9e3b3e2343acdbe181757"
       },
       "documentos": {
         "resena": "slep_categoria_desempeno/50_documentacion/activa/resena_slep_categoria_desempeno.md",
-        "traspaso": "slep_categoria_desempeno/50_documentacion/traspasos/traspaso_cierre_v25.md",
+        "traspaso": "slep_categoria_desempeno/50_documentacion/traspasos/traspaso_cierre_v26.md",
         "backlog": "slep_categoria_desempeno/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_categoria_desempeno/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_categoria_desempeno/README.md",
@@ -136,7 +136,7 @@
       },
       "estado": {
         "presente": true,
-        "tipo_pendiente": "nuevo"
+        "tipo_pendiente": null
       },
       "notas": "Nombre curado del sitio del Área (orden 5)."
     },
@@ -470,8 +470,8 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 1,
-        "total_sesiones": 1,
+        "correlativo": 2,
+        "total_sesiones": 2,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
@@ -483,13 +483,13 @@
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "9f173f4f9f738cae7f80be8cfe21911d",
+        "md5_traspaso": "e03949ee7737f56c9f6f2f264c771c64",
         "md5_resena": null,
         "md5_backlog": "f885419802629f5deb8acf22f807dd0a"
       },
       "documentos": {
         "resena": null,
-        "traspaso": "slep_paes/50_documentacion/traspasos/traspaso_cierre_v01.md",
+        "traspaso": "slep_paes/50_documentacion/traspasos/traspaso_cierre_v02.md",
         "backlog": "slep_paes/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_paes/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_paes/README.md",
@@ -605,7 +605,7 @@
       "nombre_real": "Reseñas del portafolio",
       "alias_corto": "Reseñas",
       "categoria": "auxiliar",
-      "estructura": "no_canonica",
+      "estructura": "canonica",
       "maneja_sensibles": false,
       "traspaso": {
         "correlativo": null,

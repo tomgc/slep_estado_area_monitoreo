@@ -16,7 +16,7 @@
 |---|---|---|---|---|
 | slep_alertas_ael | Sistema de alertas de Anótate en la Lista | activo | 2026-06-10 (hace 21 dias) | Abrir el `.docx` generado y verificar visualmente que el texto se renderiza en la fuente Aptos (no en la fuente por defecto), ya que se generó en macOS donde Aptos no viene preinstalada y officer degrada en silencio. |
 | slep_aprendizajes_ep | Monitoreo de aprendizajes en la educación parvularia | activo | 2026-06-29 (hace 2 dias) | Versionar primero los 3 archivos de v83 y luego implementar la capa 2 de D013 (ETL `32_etl.R`) para que el ETL deje de caer a fallback. |
-| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | activo | 2026-07-01 (hace 0 dias) | Consolidación administrativa de apertura (s26): versionar este traspaso v25 y el snapshot del escáner generado tras el último push de s25. |
+| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | (pendiente) | 2026-07-01 (hace 0 dias) | (pendiente de sintesis) |
 | slep_costapresente | CostaPresente | pausa | 2026-06-24 (hace 7 dias) | validar pipeline cross-OS en maquina Windows |
 | slep_dashboard_personal_monitoreo | Dashboard personal de monitoreo | activo | 2026-05-26 (hace 36 dias) | Ejecutar la migración estructural completa del repo a la convención canónica (`00_`, `10_utils/`, `20_insumos/`, `30_procesamiento/`, `40_salidas/`, `50_documentacion/`) siguiendo el protocolo de 7 pasos, como foco único de la sesión. |
 | slep_georreferenciacion | Georreferenciación de establecimientos del territorio | pausa | 2026-06-29 (hace 2 dias) | Validación con el director, que revisará las dos variantes; el proyecto queda en espera de aprobación externa antes de publicar. |
@@ -53,14 +53,17 @@ Versionar primero los 3 archivos de v83 y luego implementar la capa 2 de D013 (E
 ninguno
 
 ### slep_categoria_desempeno - Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país _(fuente: PUSH)_
-## En que vamos
-El proyecto está estable, portable, documentado y sincronizado en origin/main; el pipeline está operativo sin cambios desde v21 y no hay trabajo forzoso pendiente. La sesión 25 fue puramente administrativa: consolidó la entrada 89 del backlog y versionó el traspaso v24, en tres commits atómicos con árbol limpio. No se identifican bugs ni deuda técnica viva.
+## Estado
 
-## Proximo paso
-Consolidación administrativa de apertura (s26): versionar este traspaso v25 y el snapshot del escáner generado tras el último push de s25.
+Proyecto estable y publicado. Pipeline sin cambios desde v21; motor autocontenido (C3, sin Babel). La sesión 26 regeneró la suite de documentación en modo standalone offline (los 4 HTML embeben CSS, fuentes, logos e iconos; sin CDN ni dependencia del tema en disco), commit `eff95ef` pusheado a `origin/main`. La regeneración es mantenimiento de artefacto existente y no agrega entradas al backlog, que se mantiene en 89.
 
-## Bloqueantes
-ninguno
+## Foco próxima sesión
+
+CONTINUATION con foco único: incidente de gobernanza (PII en historial público). `directorio_oficial_ee.csv` crudo (con `RUT_SOSTENEDOR` y `MRUN`) está commiteado en el historial de este repo público; el de-versionado previo lo sacó del HEAD pero no del historial. Replicar el patrón de `slep_idps` (depurador → CSV público → `.gitignore` blindado → purga de historial con `git filter-repo`/BFG → `push --force` con gate explícito). Administrativo de apertura: versionar el traspaso v26 y el snapshot del escáner de s26.
+
+## Notas
+
+Delta observado no presenciado por s26 (a reconciliar en s27): renombre `backlog_consolidado.md`→`backlog_acumulativo.md`, aparición de `ESTADO.md` y reseña, crecimiento de POLITICA/SETTINGS. Interpretación provisional: infraestructura documental no contabilizable; verificar contra el backlog. El escáner lista disco, no el índice (A20): usar `git ls-files`.
 
 ### slep_costapresente - CostaPresente _(fuente: PULL)_
 **Tipo de producto:** tablero/app.
@@ -186,7 +189,7 @@ ninguno
 - ninguno.
 
 ### Estructura no canonica (paquete / escaparate; no es documentacion incompleta)
-- slep_resena_proyectos
+- ninguno.
 
 ### Documentacion incompleta (falta reseña, traspaso o backlog)
 - slep_alertas_ael (sin backlog)
