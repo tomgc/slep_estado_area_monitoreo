@@ -43,9 +43,14 @@ SLUG_ORQUESTADOR <- "slep_estado_proyectos_monitoreo"
 PREFIJO_UNIVERSO <- "slep_"
 
 # Patrones de EXCLUSION del universo: entradas que matchean el prefijo pero no
-# son proyectos (p. ej. respaldos bare de git slep_repo_backup_YYYYMMDD.git).
-# Es un filtro por patron, no una lista hardcodeada de proyectos.
-PATRON_EXCLUIR_UNIVERSO <- "\\.git$"
+# son proyectos (p. ej. respaldos bare de git slep_repo_backup_YYYYMMDD.git, o
+# directorios de respaldo ad-hoc tipo slep_<slug>_BACKUP_PRE_FILTER_REPO creados
+# antes de una purga de historial con git filter-repo/BFG). "_backup" se trata
+# como marcador de infijo/sufijo (delimitado por "_" o fin de cadena), NO como
+# sufijo literal estricto, porque el caso real observado es
+# "_BACKUP_PRE_FILTER_REPO" (con texto despues). Es un filtro por patron, no
+# una lista hardcodeada de proyectos.
+PATRON_EXCLUIR_UNIVERSO <- "(?i)\\.git$|_backup(_|$)"
 
 # Auxiliares conocidos (no son pipelines analiticos; seccion 7). El registro
 # curado a mano puede ampliar esta clasificacion; aqui va la semilla.
