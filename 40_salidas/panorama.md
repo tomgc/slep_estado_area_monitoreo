@@ -1,34 +1,34 @@
 # Panorama de la cartera - Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
 
-> Generado: 2026-07-01 · Proyectos activos: 15 · Auxiliares: 2
+> Generado: 2026-07-02 · Proyectos activos: 15 · Auxiliares: 2
 
 ## Alertas
 
 - **Bloqueados:** ninguno.
 - **Nuevos detectados:** ninguno.
 - **Dados de baja:** ninguno.
-- **Documentacion obsoleta (>21 dias):** slep_dashboard_personal_monitoreo, slep_simce_estandares_aprendizaje.
+- **Documentacion obsoleta (>21 dias):** slep_alertas_ael, slep_dashboard_personal_monitoreo, slep_simce_estandares_aprendizaje.
 - **Pendientes de sintesis:** slep_minuta_asistencia, slep_paes.
 
 ## L1 - Tabla semaforo
 
 | Codigo | Nombre | Semaforo | Ultima actividad | Proximo paso |
 |---|---|---|---|---|
-| slep_alertas_ael | Sistema de alertas de Anótate en la Lista | activo | 2026-06-10 (hace 21 dias) | Abrir el `.docx` generado y verificar visualmente que el texto se renderiza en la fuente Aptos (no en la fuente por defecto), ya que se generó en macOS donde Aptos no viene preinstalada y officer degrada en silencio. |
-| slep_aprendizajes_ep | Monitoreo de aprendizajes en la educación parvularia | activo | 2026-06-29 (hace 2 dias) | Versionar primero los 3 archivos de v83 y luego implementar la capa 2 de D013 (ETL `32_etl.R`) para que el ETL deje de caer a fallback. |
-| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | (pendiente) | 2026-07-01 (hace 0 dias) | (pendiente de sintesis) |
-| slep_costapresente | CostaPresente | pausa | 2026-06-24 (hace 7 dias) | validar pipeline cross-OS en maquina Windows |
-| slep_dashboard_personal_monitoreo | Dashboard personal de monitoreo | activo | 2026-05-26 (hace 36 dias) | Ejecutar la migración estructural completa del repo a la convención canónica (`00_`, `10_utils/`, `20_insumos/`, `30_procesamiento/`, `40_salidas/`, `50_documentacion/`) siguiendo el protocolo de 7 pasos, como foco único de la sesión. |
-| slep_georreferenciacion | Georreferenciación de establecimientos del territorio | pausa | 2026-06-29 (hace 2 dias) | Validación con el director, que revisará las dos variantes; el proyecto queda en espera de aprobación externa antes de publicar. |
-| slep_idps | Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS) | activo | 2026-06-25 (hace 6 dias) | Abordar la higiene de bajo riesgo no alcanzada en s25: resolver `# REVISAR (voz)` en `documentar.R` y subdividir la categoría "Rediseño UI" del backlog. |
-| slep_minuta_asistencia | Minuta de asistencia mensual | activo | 2026-07-01 (hace 0 dias) | limpieza de estructura de documentacion, luego refactor del orquestador canonico |
-| slep_minuta_desvinculacion | Análisis de trayectorias educativas interrumpidas | activo | 2026-06-30 (hace 1 dias) | Abordar el residuo de `flextable` en `00_run_all.R`: leer primero `41_minuta_desvinculacion_T2_2025.qmd` completo para confirmar si `flextable` aún se usa o es residuo, y si lo es, entregar `00_run_all.R` corregido. |
-| slep_paes | Motor de comparación interactivo de los resultados de la PAES | (pendiente) | 2026-07-01 (hace 0 dias) | (pendiente de sintesis) |
-| slep_rendimiento_historico | Diagnóstico histórico del rendimiento escolar | activo | 2026-06-15 (hace 16 dias) | Tomar P24: investigar el warning del Módulo B sobre 7.406 registros estudiante-año duplicados colapsados, para determinar si el colapso es benigno o enmascara un problema de la fuente. |
-| slep_reportes_modelo_resguardo_asistencia | Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio | activo | 2026-06-21 (hace 10 dias) | Abordar un pendiente de fondo: la auditoría de portabilidad cross-OS Windows (que además destraba P-VAR-CANONICA fase 2, tipo deuda técnica) o la auditoría línea a línea del pipeline. |
-| slep_seguimiento_educacion_inicial | Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles | activo | 2026-06-24 (hace 7 dias) | Validar visualmente el panel de detalle fijo (B1) en módulo privado y público, y commitear `35_app.R`. |
-| slep_simce_adecuado | Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce | activo | 2026-07-01 (hace 0 dias) | No hay pendientes activos ni bugs. Candidatos de sesión futura: regenerar la suite standalone (evaluar si `documentar.R` referencia terminología "entidad" a actualizar), actualización anual de insumos Simce 2025/2026. |
-| slep_simce_estandares_aprendizaje | Minuta de resultados Simce por estándares de aprendizaje | activo | 2026-05-28 (hace 34 dias) | No hay pendientes bloqueantes; la próxima sesión se orientará por necesidades sustantivas según surjan (incorporar datos Simce de un año nuevo, extender los gráficos G1–G6 o actualizar la minuta Word). |
+| slep_alertas_ael | Sistema de alertas de Anótate en la Lista | activo | 2026-06-10 (hace 22 dias) | Abrir el `.docx` generado y verificar visualmente que el texto se renderiza en la fuente Aptos (no en la fuente por defecto), ya que se generó en macOS donde Aptos no viene preinstalada y officer degrada en silencio. |
+| slep_aprendizajes_ep | Monitoreo de aprendizajes en la educación parvularia | activo | 2026-06-29 (hace 3 dias) | Versionar primero los 3 archivos de v83 y luego implementar la capa 2 de D013 (ETL `32_etl.R`) para que el ETL deje de caer a fallback. |
+| slep_categoria_desempeno | Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país | activo | 2026-07-02 (hace 0 dias) | Ninguno forzoso. Pendiente #2 (re-clonar cualquier clon previo del repo, historial reescrito) es acción manual del titular, fuera de sesión. |
+| slep_costapresente | CostaPresente | pausa | 2026-06-24 (hace 8 dias) | validar pipeline cross-OS en maquina Windows |
+| slep_dashboard_personal_monitoreo | Dashboard personal de monitoreo | activo | 2026-05-26 (hace 37 dias) | Ejecutar la migración estructural completa del repo a la convención canónica (`00_`, `10_utils/`, `20_insumos/`, `30_procesamiento/`, `40_salidas/`, `50_documentacion/`) siguiendo el protocolo de 7 pasos, como foco único de la sesión. |
+| slep_georreferenciacion | Georreferenciación de establecimientos del territorio | pausa | 2026-06-29 (hace 3 dias) | Validación con el director, que revisará las dos variantes; el proyecto queda en espera de aprobación externa antes de publicar. |
+| slep_idps | Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS) | activo | 2026-06-25 (hace 7 dias) | Abordar la higiene de bajo riesgo no alcanzada en s25: resolver `# REVISAR (voz)` en `documentar.R` y subdividir la categoría "Rediseño UI" del backlog. |
+| slep_minuta_asistencia | Minuta de asistencia mensual | activo | 2026-07-01 (hace 1 dias) | limpieza de estructura de documentacion, luego refactor del orquestador canonico |
+| slep_minuta_desvinculacion | Análisis de trayectorias educativas interrumpidas | activo | 2026-06-30 (hace 2 dias) | Abordar el residuo de `flextable` en `00_run_all.R`: leer primero `41_minuta_desvinculacion_T2_2025.qmd` completo para confirmar si `flextable` aún se usa o es residuo, y si lo es, entregar `00_run_all.R` corregido. |
+| slep_paes | Motor de comparación interactivo de los resultados de la PAES | (pendiente) | 2026-07-01 (hace 1 dias) | (pendiente de sintesis) |
+| slep_rendimiento_historico | Diagnóstico histórico del rendimiento escolar | activo | 2026-06-15 (hace 17 dias) | Tomar P24: investigar el warning del Módulo B sobre 7.406 registros estudiante-año duplicados colapsados, para determinar si el colapso es benigno o enmascara un problema de la fuente. |
+| slep_reportes_modelo_resguardo_asistencia | Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio | activo | 2026-06-21 (hace 11 dias) | Abordar un pendiente de fondo: la auditoría de portabilidad cross-OS Windows (que además destraba P-VAR-CANONICA fase 2, tipo deuda técnica) o la auditoría línea a línea del pipeline. |
+| slep_seguimiento_educacion_inicial | Análisis longitudinal de preferencias de matrícula de egresados de jardines infantiles | activo | 2026-06-24 (hace 8 dias) | Validar visualmente el panel de detalle fijo (B1) en módulo privado y público, y commitear `35_app.R`. |
+| slep_simce_adecuado | Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce | activo | 2026-07-01 (hace 1 dias) | No hay pendientes activos ni bugs. Candidatos de sesión futura: regenerar la suite standalone (evaluar si `documentar.R` referencia terminología "entidad" a actualizar), actualización anual de insumos Simce 2025/2026. |
+| slep_simce_estandares_aprendizaje | Minuta de resultados Simce por estándares de aprendizaje | activo | 2026-05-28 (hace 35 dias) | No hay pendientes bloqueantes; la próxima sesión se orientará por necesidades sustantivas según surjan (incorporar datos Simce de un año nuevo, extender los gráficos G1–G6 o actualizar la minuta Word). |
 
 ## L2 - Fichas ejecutivas por proyecto activo
 
@@ -53,17 +53,27 @@ Versionar primero los 3 archivos de v83 y luego implementar la capa 2 de D013 (E
 ninguno
 
 ### slep_categoria_desempeno - Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país _(fuente: PUSH)_
-## Estado
+## En que vamos
+Incidente de gobernanza PII resuelto en v27 (auditoría, saneamiento,
+reescritura de historial con git-filter-repo, push confirmado). Backlog
+consolidado a 90 entradas (v28, categoría nueva "Gobernanza de datos").
+Untracked histórico versionado (encargos PII, reseña, andamio, traspasos
+v25-v26).
 
-Proyecto estable y publicado. Pipeline sin cambios desde v21; motor autocontenido (C3, sin Babel). La sesión 26 regeneró la suite de documentación en modo standalone offline (los 4 HTML embeben CSS, fuentes, logos e iconos; sin CDN ni dependencia del tema en disco), commit `eff95ef` pusheado a `origin/main`. La regeneración es mantenimiento de artefacto existente y no agrega entradas al backlog, que se mantiene en 89.
+## Proximo paso
+Ninguno forzoso. Pendiente #2 (re-clonar cualquier clon previo del repo,
+historial reescrito) es acción manual del titular, fuera de sesión.
 
-## Foco próxima sesión
+## Bloqueantes
+Ninguno.
 
-CONTINUATION con foco único: incidente de gobernanza (PII en historial público). `directorio_oficial_ee.csv` crudo (con `RUT_SOSTENEDOR` y `MRUN`) está commiteado en el historial de este repo público; el de-versionado previo lo sacó del HEAD pero no del historial. Replicar el patrón de `slep_idps` (depurador → CSV público → `.gitignore` blindado → purga de historial con `git filter-repo`/BFG → `push --force` con gate explícito). Administrativo de apertura: versionar el traspaso v26 y el snapshot del escáner de s26.
-
-## Notas
-
-Delta observado no presenciado por s26 (a reconciliar en s27): renombre `backlog_consolidado.md`→`backlog_acumulativo.md`, aparición de `ESTADO.md` y reseña, crecimiento de POLITICA/SETTINGS. Interpretación provisional: infraestructura documental no contabilizable; verificar contra el backlog. El escáner lista disco, no el índice (A20): usar `git ls-files`.
+## Nota de corrección (v28)
+El pendiente "4b/depe4" heredado en traspaso_cierre_v27.md §8 ítem 3
+NO pertenece a este proyecto: es de `slep_simce_adecuado`, resuelto ahí
+en su sesión 20 (`20260620_decision_celda_unico_establecimiento.md`,
+backlog reconstruido 1-105). Entró por copia cruzada entre traspasos de
+proyectos hermanos. Se invalida como pendiente de `slep_categoria_desempeno`
+y no debe arrastrarse a v29+.
 
 ### slep_costapresente - CostaPresente _(fuente: PULL)_
 **Tipo de producto:** tablero/app.

@@ -1,6 +1,6 @@
 # Cartera de proyectos Área de Monitoreo
 
-Generado: 2026-07-01 · 17 proyectos
+Generado: 2026-07-02 · 17 proyectos
 
 > Versión texto del panorama visual (mismo orden y campos que las filas; orden por tipo_pendiente, estado y fecha).
 
@@ -15,6 +15,21 @@ Generado: 2026-07-01 · 17 proyectos
   - Validación con el director, que revisará las dos variantes; el proyecto queda en espera de aprobación externa antes de publicar.
   - Inventario de pendientes
   - Auditoría de cierre (política 5.6, preguntas "Cierre")
+
+## Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país
+- **slug:** `slep_categoria_desempeno`
+- **tipo:** Motor de comparación
+- **tipo de pendiente:** deuda heredada
+- **semaforo:** activo
+- **estado:** sin clasificar
+- **datos sensibles:** sin clasificar
+- **última actualización:** 2026-07-02
+- **síntesis:** Las Categorías de Desempeño son uno de los componentes clave del Sistema de Aseguramiento de la Calidad de la Educación. Esta ordenación evalúa a cada establecimiento bajo un modelo de rendimiento ajustado al contexto, el cual cruza sus resultados educativos y formativos con el perfil de vulnerabilidad de sus estudiantes para determinar qué tan cerca o lejos están de lo esperado. Para facilitar el análisis de estos datos, desarrollamos una herramienta interactiva que organiza la información a escala nacional y permite explorarla de manera dinámica por comuna, Servicio Local de Educación Pública (SLEP), región y nivel país, distinguiendo con precisión la educación básica de la media. Su aporte es ofrecer, en una sola herramienta, dos lecturas complementarias: la distribución de los establecimientos por categoría en cada territorio y la evolución de cada establecimiento en el tiempo. Como la Categoría de Desempeño ya incorpora el contexto socioeconómico en su construcción, el motor presenta las clasificaciones tal como las publica la Agencia de Calidad de la Educación, sin segmentaciones adicionales.
+- **reseña del itinerario:** slep_categoria_desempeno es un motor interactivo (R + HTML autocontenido) que compara la distribución de establecimientos por Categoría de Desempeño (Alto / Medio / Medio-Bajo / Insuficiente) de la Agencia de Calidad, entre comunas, SLEPs, regiones y el nivel nacional, separando básica y media. Pipeline en R (xlsx → parquet → JSON embebido → HTML), publicado en GitHub Pages. Para el equipo de Monitoreo del SLEP Costa Central, desde 2026. Datos públicos. (Nota v03: la opción "nacional" del selector se eliminó en la sesión 3 por volumen de EE; se agregó selección de establecimiento individual. …
+- **próximos pasos:**
+  - Ninguno forzoso. Pendiente #2 (re-clonar cualquier clon previo del repo, historial reescrito) es acción manual del titular, fuera de sesión.
+  - Qué: entrada 90 (incidente PII, ver traspaso v27 §4) agregada al
+  - Por qué: v26 no generó entrada (mantenimiento de suite, precedente
 
 ## Análisis de trayectorias educativas interrumpidas
 - **slug:** `slep_minuta_desvinculacion`
@@ -165,21 +180,6 @@ Generado: 2026-07-01 · 17 proyectos
   - No hay pendientes bloqueantes; la próxima sesión se orientará por necesidades sustantivas según surjan (incorporar datos Simce de un año nuevo, extender los gráficos G1–G6 o actualizar la minuta Word).
   - 11.1 Pendientes activos
   - Incorporar datos SIMCE de un año nuevo al pipeline.
-
-## Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país
-- **slug:** `slep_categoria_desempeno`
-- **tipo:** Motor de comparación
-- **tipo de pendiente:** sin dato
-- **semaforo:** sin dato
-- **estado:** sin clasificar
-- **datos sensibles:** sin clasificar
-- **última actualización:** 2026-07-01
-- **síntesis:** Las Categorías de Desempeño son uno de los componentes clave del Sistema de Aseguramiento de la Calidad de la Educación. Esta ordenación evalúa a cada establecimiento bajo un modelo de rendimiento ajustado al contexto, el cual cruza sus resultados educativos y formativos con el perfil de vulnerabilidad de sus estudiantes para determinar qué tan cerca o lejos están de lo esperado. Para facilitar el análisis de estos datos, desarrollamos una herramienta interactiva que organiza la información a escala nacional y permite explorarla de manera dinámica por comuna, Servicio Local de Educación Pública (SLEP), región y nivel país, distinguiendo con precisión la educación básica de la media. Su aporte es ofrecer, en una sola herramienta, dos lecturas complementarias: la distribución de los establecimientos por categoría en cada territorio y la evolución de cada establecimiento en el tiempo. Como la Categoría de Desempeño ya incorpora el contexto socioeconómico en su construcción, el motor presenta las clasificaciones tal como las publica la Agencia de Calidad de la Educación, sin segmentaciones adicionales.
-- **reseña del itinerario:** slep_categoria_desempeno es un motor interactivo (R + HTML autocontenido) que compara la distribución de establecimientos por Categoría de Desempeño (Alto / Medio / Medio-Bajo / Insuficiente) de la Agencia de Calidad, entre comunas, SLEPs, regiones y el nivel nacional, separando básica y media. Pipeline en R (xlsx → parquet → JSON embebido → HTML), publicado en GitHub Pages. Para el equipo de Monitoreo del SLEP Costa Central, desde 2026. Datos públicos. (Nota v03: la opción "nacional" del selector se eliminó en la sesión 3 por volumen de EE; se agregó selección de establecimiento individual. …
-- **próximos pasos:**
-  - Inventario de pendientes
-  - Evaluación de deuda técnica
-  - Auditoría de cierre (política 5.6)
 
 ## Minuta de asistencia mensual
 - **slug:** `slep_minuta_asistencia`

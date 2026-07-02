@@ -102,26 +102,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 26,
-        "total_sesiones": 26,
+        "correlativo": 28,
+        "total_sesiones": 28,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-07-01",
-        "escaner": "2026-07-01",
-        "actividad": "2026-07-01",
+        "traspaso": "2026-07-02",
+        "escaner": "2026-07-02",
+        "actividad": "2026-07-02",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "11c4c2b0a6f86b8fdce049bc33bbc053",
+        "md5_traspaso": "b9a797a5aaac186ad442abc79df67502",
         "md5_resena": "1a9f4338ce4a07e765962a279dfe0440",
-        "md5_backlog": "658487c6afd9e3b3e2343acdbe181757"
+        "md5_backlog": "3963322e6467eebaac37c2722f7b9725"
       },
       "documentos": {
         "resena": "slep_categoria_desempeno/50_documentacion/activa/resena_slep_categoria_desempeno.md",
-        "traspaso": "slep_categoria_desempeno/50_documentacion/traspasos/traspaso_cierre_v26.md",
+        "traspaso": "slep_categoria_desempeno/50_documentacion/traspasos/traspaso_cierre_v28.md",
         "backlog": "slep_categoria_desempeno/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_categoria_desempeno/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_categoria_desempeno/README.md",
@@ -136,7 +136,7 @@
       },
       "estado": {
         "presente": true,
-        "tipo_pendiente": null
+        "tipo_pendiente": "deuda_heredada"
       },
       "notas": "Nombre curado del sitio del Área (orden 5)."
     },

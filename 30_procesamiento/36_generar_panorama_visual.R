@@ -543,6 +543,57 @@ header.top .meta{color:var(--muted);font-size:.9rem;margin-top:4px}
 .punto.sem-bloqueado{background:var(--danger)}
 .punto.sem-cerrado{background:var(--slate)}
 .punto.sem-na{background:var(--line)}
+/* P-DESIGN-PANORAMA-ADOPCION: KPIs, banda de atencion y filtros. Reusan
+   integramente los tokens de :root ya existentes (--plum/--olive/--amber/
+   --danger/--slate/--ocean/--line/--cream/--card/--muted/--ink-2); no se
+   introduce ningun hex nuevo ni color derivado (color-mix/rgba), porque
+   ninguno de estos bloques necesita un tono que no exista ya. */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px}
+@media(max-width:640px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:420px){.kpis{grid-template-columns:repeat(1,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:12px 10px;text-align:center}
+.kpi-num{font-size:1.6rem;font-weight:700;color:var(--plum);line-height:1}
+.kpi-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.03em;margin-top:4px}
+.kpi-activo .kpi-num{color:var(--olive)}
+.kpi-pausa .kpi-num{color:var(--amber)}
+.kpi-bloqueado .kpi-num{color:var(--danger)}
+.kpi-cerrado .kpi-num{color:var(--slate)}
+.kpi-na .kpi-num{color:var(--muted)}
+
+.atencion{margin-bottom:18px}
+.atn-eyebrow{font-size:.78rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.04em;color:var(--muted);margin-bottom:8px}
+.atn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+/* Borde de acento = color del semaforo PROPIO de cada item (no un rojo fijo);
+   sigue el patron del handoff de referencia, reutilizando tokens existentes. */
+.atn-card{display:block;background:var(--card);border:1px solid var(--line);
+  border-left:4px solid var(--line);border-radius:8px;padding:10px 12px;
+  text-decoration:none;color:inherit}
+.atn-card.sem-activo{border-left-color:var(--olive)}
+.atn-card.sem-pausa{border-left-color:var(--amber)}
+.atn-card.sem-bloqueado{border-left-color:var(--danger)}
+.atn-card.sem-cerrado{border-left-color:var(--slate)}
+.atn-card:hover{background:var(--cream)}
+.atn-card:focus-visible{outline:2px solid var(--ocean);outline-offset:-2px}
+.atn-nombre{font-weight:600;color:var(--plum);font-size:.9rem;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.atn-meta{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:.74rem;color:var(--muted)}
+
+.filtros{margin-bottom:14px;display:flex;flex-direction:column;gap:10px}
+.filtro-grupo{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+@media(max-width:420px){.filtro-grupo{flex-direction:column;align-items:flex-start}}
+.filtro-titulo{font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.03em;color:var(--muted);flex:0 0 auto;min-width:80px}
+.filtro-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:.78rem;padding:5px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink-2);
+  cursor:pointer;min-height:30px}
+.chip:hover{background:var(--cream)}
+.chip:focus-visible{outline:2px solid var(--ocean);outline-offset:-2px}
+.chip.chip-activo{background:var(--ocean);color:#fff;border-color:var(--ocean)}
+.fila.oculta{display:none}
 .cuerpo{display:none;padding:2px 16px 16px 40px}
 .fila.abierta .cuerpo{display:block}
 .cuerpo .tipo{font-size:.72rem;font-weight:600;color:var(--ocean);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
@@ -562,6 +613,17 @@ const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
 const ETIQUETA_TP = {bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
   deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno"};
 const ETIQUETA_SEMAFORO = {activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado"};
+const SEMAFOROS = ["activo","pausa","bloqueado","cerrado"];
+const TIPOS_PENDIENTE = ["bug","bloqueante","deuda_heredada","deuda_tecnica","nuevo","cosmetica","ninguno"];
+// slug -> elemento .fila (llenado en render()); evita re-consultar el DOM al
+// filtrar/hacer scroll desde la banda de atencion (P-DESIGN-PANORAMA-ADOPCION).
+const FILAS_POR_SLUG = {};
+// Estado de filtro (Fase 3): sets vacios = ese grupo no filtra (muestra todos).
+// No persiste entre cargas (HTML estatico via GitHub Pages, sin sesion que
+// valga la pena recordar).
+const FILTRO = { semaforo: new Set(), tp: new Set() };
+function bucketSemaforo(p){ return (p.semaforo && SEMAFOROS.includes(p.semaforo)) ? p.semaforo : "na"; }
+function bucketTp(p){ return (p.tipo_pendiente && TIPOS_PENDIENTE.includes(p.tipo_pendiente)) ? p.tipo_pendiente : "na"; }
 const MES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
   "septiembre","octubre","noviembre","diciembre"];
 function fechaEs(s){
@@ -575,6 +637,7 @@ function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=
 // Construye una fila del acordeon: cabecera colapsada (clic -> toggle) + cuerpo.
 function fila(p){
   const f=el("div","fila");
+  f.id="fila-"+p.slug;  // ancla para el scroll+expand desde la banda de atencion
   const cab=el("button","cab"); cab.type="button";
   cab.appendChild(el("span","chev","▸"));
   const izq=el("div","izq");
@@ -613,9 +676,98 @@ function fila(p){
   f.appendChild(cuerpo);
   return f;
 }
+// ---- Fase 2: KPIs por semaforo (fijos, resumen de TODA la cartera) --------
+function renderKPIs(cartera){
+  const div=document.getElementById("kpis");
+  if(!div) return;
+  const ETQ={activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado",na:"sin dato"};
+  const cont={activo:0,pausa:0,bloqueado:0,cerrado:0,na:0};
+  cartera.forEach(p=>{ cont[bucketSemaforo(p)]++; });
+  ["activo","pausa","bloqueado","cerrado","na"].forEach(k=>{
+    const item=el("div","kpi kpi-"+k);
+    item.appendChild(el("div","kpi-num",String(cont[k])));
+    item.appendChild(el("div","kpi-lbl",ETQ[k]));
+    div.appendChild(item);
+  });
+}
+
+// ---- Fase 1: banda "Requieren atencion hoy" -------------------------------
+// Criterio (dato, no UX): tipo_pendiente en {bug, bloqueante}. Omite el
+// bloque COMPLETO si no hay ninguno (nunca banda vacia). Fija: no se filtra.
+function renderAtencion(cartera){
+  const div=document.getElementById("atencion");
+  if(!div) return;
+  const items=cartera.filter(p=>p.tipo_pendiente==="bug"||p.tipo_pendiente==="bloqueante");
+  if(items.length===0) return;
+  div.appendChild(el("div","atn-eyebrow","Requieren atención hoy ("+items.length+")"));
+  const grid=el("div","atn-grid");
+  items.forEach(p=>{
+    const card=el("a","atn-card sem-"+bucketSemaforo(p));
+    card.href="#fila-"+p.slug;
+    card.addEventListener("click",e=>{
+      e.preventDefault();
+      const f=FILAS_POR_SLUG[p.slug];
+      if(f){ f.classList.add("abierta"); f.scrollIntoView({behavior:"smooth",block:"center"}); }
+    });
+    card.appendChild(el("div","atn-nombre",p.nombre_real||p.slug));
+    const meta=el("div","atn-meta");
+    meta.appendChild(el("span","punto sem-"+bucketSemaforo(p),null));
+    meta.appendChild(el("span",null,(ETIQUETA_TP[p.tipo_pendiente]||p.tipo_pendiente)));
+    card.appendChild(meta);
+    grid.appendChild(card);
+  });
+  div.appendChild(grid);
+}
+
+// ---- Fase 3: filtros (client-side, AND entre grupos) ----------------------
+function renderFiltros(cartera){
+  const div=document.getElementById("filtros");
+  if(!div) return;
+  const ETQ_SEM={activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado",na:"sin dato"};
+  const ETQ_TP={bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
+    deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno",na:"sin dato"};
+
+  function grupo(titulo,valores,etiquetas,filtroSet){
+    const g=el("div","filtro-grupo");
+    g.appendChild(el("div","filtro-titulo",titulo));
+    const chips=el("div","filtro-chips");
+    valores.forEach(v=>{
+      const chip=el("button","chip"); chip.type="button";
+      chip.textContent=etiquetas[v]||v;
+      chip.addEventListener("click",()=>{
+        if(filtroSet.has(v)) filtroSet.delete(v); else filtroSet.add(v);
+        chip.classList.toggle("chip-activo",filtroSet.has(v));
+        aplicarFiltros(cartera);
+      });
+      chips.appendChild(chip);
+    });
+    g.appendChild(chips);
+    return g;
+  }
+
+  div.appendChild(grupo("Semáforo",["activo","pausa","bloqueado","cerrado","na"],ETQ_SEM,FILTRO.semaforo));
+  div.appendChild(grupo("Pendiente",[...TIPOS_PENDIENTE,"na"],ETQ_TP,FILTRO.tp));
+}
+
+// Aplica FILTRO.semaforo x FILTRO.tp (AND) sobre la LISTA unicamente; los KPIs
+// (Fase 2) y la banda (Fase 1) NO se recalculan aqui: son resumen fijo de toda
+// la cartera, no del subconjunto filtrado.
+function aplicarFiltros(cartera){
+  cartera.forEach(p=>{
+    const f=FILAS_POR_SLUG[p.slug];
+    if(!f) return;
+    const pasaSem=FILTRO.semaforo.size===0||FILTRO.semaforo.has(bucketSemaforo(p));
+    const pasaTp=FILTRO.tp.size===0||FILTRO.tp.has(bucketTp(p));
+    f.classList.toggle("oculta",!(pasaSem&&pasaTp));
+  });
+}
+
 function render(){
   const lista=document.getElementById("lista");
-  CARTERA.forEach(p=>lista.appendChild(fila(p)));
+  CARTERA.forEach(p=>{ const f=fila(p); FILAS_POR_SLUG[p.slug]=f; lista.appendChild(f); });
+  renderKPIs(CARTERA);
+  renderAtencion(CARTERA);
+  renderFiltros(CARTERA);
   // Conteos por estado en el footer.
   const cont={};
   CARTERA.forEach(p=>{const k=p.estado_proyecto||"sin clasificar";cont[k]=(cont[k]||0)+1;});
@@ -637,6 +789,9 @@ html <- paste0(
   "<style>", css, "</style>\n</head>\n<body>\n<div class=\"wrap\">\n",
   u8("<header class=\"top\">\n<h1>Cartera de proyectos Área de Monitoreo</h1>\n"),
   "<div class=\"meta\">Generado: ", fecha_generacion, u8(" · "), n_total, " proyectos</div>\n</header>\n",
+  "<section id=\"kpis\" class=\"kpis\" aria-label=\"Resumen por semaforo\"></section>\n",
+  "<section id=\"atencion\" class=\"atencion\" aria-label=\"Requieren atencion hoy\"></section>\n",
+  "<section id=\"filtros\" class=\"filtros\" aria-label=\"Filtros\"></section>\n",
   "<main id=\"lista\" class=\"lista\"></main>\n",
   "<footer class=\"bot\">Total de proyectos: ", n_total,
   "<div class=\"conteos\" id=\"conteos\"></div>",
