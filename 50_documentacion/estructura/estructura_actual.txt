@@ -1,10 +1,10 @@
 # Estructura del proyecto (escaner)
 
 - Raiz       : slep_estado_proyectos_monitoreo
-- Fecha      : 2026-07-02 07:28:09
+- Fecha      : 2026-07-02 12:29:03
 - Directorios: 18
-- Archivos   : 82
-- Tamano     : 1.48M
+- Archivos   : 83
+- Tamano     : 1.51M
 
 ## Arbol
 
@@ -28,7 +28,7 @@ slep_estado_proyectos_monitoreo/
   33_extraer_metadatos.R  (3.16K)
   34_compilar_inventario.R  (6.57K)
   35_compilar_panorama.R  (8.98K)
-  36_generar_panorama_visual.R  (44.2K)
+  36_generar_panorama_visual.R  (50.1K)
 40_salidas/
   .DS_Store  (6K)
   .Rhistory  (0)
@@ -49,52 +49,53 @@ slep_estado_proyectos_monitoreo/
     slep_simce_estandares_aprendizaje.md  (1.92K)
   inventario_cartera.json  (26.5K)
   inventario_cartera.parquet  (19.5K)
+  panorama_visual.html  (52.1K)
+  panorama_visual.md  (24K)
   panorama.md  (19.7K)
-  panorama_visual.html  (46.4K)
-  panorama_visual.md  (23.8K)
 50_documentacion/
   .DS_Store  (14K)
   activa/
     .DS_Store  (6K)
-    ESTADO.md  (848)
-    POLITICA_PROYECTO.md  (34.6K)
-    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (57.3K)
     backlog_acumulativo.md  (18.4K)
     decisiones/
       20260628_decision_arquitectura_orquestador.md  (4.21K)
     esbozo_fase2_estado_estandarizado.md  (4.36K)
+    ESTADO.md  (848)
+    POLITICA_PROYECTO.md  (34.6K)
     reporte_cobertura_documental.md  (6.46K)
+    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (57.3K)
   andamios/
     .DS_Store  (10K)
     auditoria_backlogs_20260629.md  (11.9K)
     design_handoff_monitoreo_cartera/
-      Panorama de cartera.dc.html  (34.4K)
-      README.md  (7.72K)
       assets/
         colors_and_type.css  (8.31K)
         fonts/
-          MuseoSans-300.otf  (61.5K)
-          MuseoSans_500.otf  (61K)
-          MuseoSans_700.otf  (62.1K)
           gobCL_Heavy.otf  (43.7K)
           gobCL_Light.otf  (37.1K)
           gobCL_Regular.otf  (35.7K)
+          MuseoSans_500.otf  (61K)
+          MuseoSans_700.otf  (62.1K)
+          MuseoSans-300.otf  (61.5K)
         logo-color-stacked.png  (126K)
         logo-mark-cc.png  (118K)
         logo-white-stacked.png  (143K)
+      Panorama de cartera.dc.html  (34.4K)
+      README.md  (7.72K)
       registro_proyectos.csv  (2.84K)
       support.js  (58.7K)
     logs/
       20260629_panorama_visual_log.md  (6.49K)
       20260701_panorama_semaforo_log.md  (17.1K)
       20260702_panorama_rediseno_log.md  (12.4K)
+      20260702_patron_visual_handoff_log.md  (16.8K)
   estructura/
-    20260702_002234_estructura.md  (3.41K)
-    20260702_002234_estructura.txt  (3.41K)
     20260702_071455_estructura.md  (3.44K)
     20260702_071455_estructura.txt  (3.44K)
-    estructura_actual.md  (3.44K)
-    estructura_actual.txt  (3.44K)
+    20260702_072809_estructura.md  (3.7K)
+    20260702_072809_estructura.txt  (3.7K)
+    estructura_actual.md  (3.7K)
+    estructura_actual.txt  (3.7K)
   traspasos/
     traspaso_cierre_v01.md  (13.1K)
     traspaso_cierre_v02.md  (15.2K)
@@ -115,7 +116,7 @@ tests/
 ## Conteo por extension
 
 ```
-  md                 42
+  md                 43
   R                  11
   otf                6
   (sin extension)    5
@@ -123,12 +124,12 @@ tests/
   txt                3
   csv                2
   html               2
-  Rhistory           1
-  Rproj              1
   css                1
   gitignore          1
   js                 1
   json               1
   parquet            1
+  Rhistory           1
+  Rproj              1
   yml                1
 ```
