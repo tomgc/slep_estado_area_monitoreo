@@ -17,6 +17,26 @@
     rprojroot::has_file(".here") |
     rprojroot::is_git_root
 )
+
+# ---- Guarda de locale (POLITICA §5.2bis) ------------------------------------
+# Este script es un punto de entrada propio: no pasa por
+# 10_utils/10_configuracion.R y escribe texto acentuado.
+ruta_guarda <- file.path(.raiz, "10_utils", "10_locale.R")
+
+if (!file.exists(ruta_guarda)) {
+  stop(
+    "[ locale ] ABORTADO en 00_escanear_proyecto.R: el proyecto no tiene la\n",
+    "  guarda de locale en 10_utils/10_locale.R.\n",
+    "  Ruta buscada: ", ruta_guarda, "\n",
+    "  Consecuencia de seguir: el snapshot se escribiría con todo el texto\n",
+    "  acentuado escapado como <c3><a1>, sin error visible.\n",
+    "  Remedio: POLITICA §5.2bis.",
+    call. = FALSE
+  )
+}
+
+source(ruta_guarda)
+asegurar_locale_utf8("00_escanear_proyecto.R")
 source(file.path(.raiz, "10_utils", "10_utils.R"), chdir = TRUE)
 source(file.path(.raiz, "10_utils", "10_configuracion.R"), chdir = TRUE)
 

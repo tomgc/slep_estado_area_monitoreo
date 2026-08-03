@@ -12,6 +12,11 @@
 # Nota      : Sin library(); solo paquete::funcion() (bootstrapping, POLITICA 1.4).
 # ==============================================================================
 
+# Guarda de locale UTF-8 (POLITICA 5.2bis): primera linea ejecutable, antes de
+# cualquier lectura o escritura.
+source(here::here("10_utils", "10_locale.R"))
+asegurar_locale_utf8("10_configuracion.R")
+
 # ---- Anclaje del repo del orquestador ----------------------------------------
 
 # Criterios multiples para que resuelva igual desde RStudio, Rscript o source().
