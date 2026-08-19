@@ -1,0 +1,34 @@
+# =============================================================================
+# .Renviron.example — Plantilla de configuracion de la raiz de datos
+# -----------------------------------------------------------------------------
+# Copiar la linea que corresponda a ~/.Renviron (archivo en tu carpeta de
+# usuario, NO en el proyecto), ajustar la ruta a tu maquina y reiniciar R.
+# Este archivo de ejemplo SI se versiona; ~/.Renviron jamas.
+# Contrato: protocolo_portabilidad_cross_os.md 4.2 y 6.2.
+# =============================================================================
+
+# ---- Opcion A (recomendada): una sola variable global por maquina ----
+# El proyecto se resuelve como <workspace>/slep_estado_area_monitoreo.
+# macOS:
+# WORKSPACE_DATA_ROOT=/Users/<usuario>/Library/CloudStorage/OneDrive-<tenant>/Proyectos
+# Windows:
+# WORKSPACE_DATA_ROOT=C:/Users/<usuario>/OneDrive - <tenant>/Proyectos
+
+# ---- Opcion B (override por proyecto; gana sobre la global) ----
+# macOS:
+# SLEP_ESTADO_AREA_MONITOREO_DATA_ROOT=/Users/<usuario>/Library/CloudStorage/OneDrive-<tenant>/Proyectos/slep_estado_area_monitoreo
+# Windows:
+# SLEP_ESTADO_AREA_MONITOREO_DATA_ROOT=C:/Users/<usuario>/OneDrive - <tenant>/Proyectos/slep_estado_area_monitoreo
+
+# ---- Validacion tras configurar (en R, desde la raiz del repo) ----
+# source(here::here("10_utils", "10_configuracion.R"))
+# obtener_data_root_proyecto()   # debe devolver una ruta valida
+# source(here::here("10_utils", "10_validar_portabilidad.R")); validar_portabilidad()
+
+# =============================================================================
+# Locale UTF-8 obligatoria (guarda asegurar_locale_utf8, POLITICA 5.2bis)
+# =============================================================================
+# Un proceso de R lanzado sin locale (LC_CTYPE=C: cron, CI, shells no
+# interactivos) escribe el texto acentuado escapado byte a byte, sin error
+# visible. R lee ~/.Renviron antes de parsear cualquier script.
+LANG=es_ES.UTF-8
