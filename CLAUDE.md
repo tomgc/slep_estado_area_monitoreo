@@ -1,74 +1,32 @@
-# CLAUDE.md - slep_estado_proyectos_monitoreo
+# CLAUDE.md — Contrato operativo de Claude Code
 
-## Descripcion
+> Versión 3. Reemplaza a `asistente_claude_code_seguro_v3.md`
+> y al par Karpathy (`CLAUDE_karpathy.md`, `EXAMPLES_karpathy.md`).
+> Vive en la raíz de cada proyecto. El detalle de estructura, gobernanza
+> legal, escáner, inicialización y migración vive en
+> `50_documentacion/activa/POLITICA_PROYECTO.md`: consúltala, no la dupliques.
+>
+> **Cambios respecto a v2 (revisión de coherencia del kit, 2026-08-16):**
+> (a) §7 suma la locale UTF-8 entre las reglas técnicas. `POLITICA_PROYECTO.md`
+> §5.2bis la declara invariante desde la v5.6, pero este contrato no la
+> nombraba, y quien escribe los scripts que la necesitan es justamente Claude
+> Code. (b) §9 declara que su bloque de brevedad es **copia literal** de
+> `SETTINGS_Y_PROMPTS_OPERACIONALES.md` §1.2.6 y cuál manda si divergen: la
+> duplicación es deliberada (Claude Code lee el disco del repo, no la knowledge
+> base), pero sin declararla dos copias divergen en silencio. (c) Las citas de
+> versión con número suelto se sustituyen por la referencia a la sección: la
+> regla de cita de versión de SETTINGS §2.1 obliga a transcribir la línea de
+> encabezado, y un número embebido en este archivo envejece en cada repo por
+> separado. Contrato del marcador de fuente: `POLITICA_PROYECTO.md` §0.6 y
+> `SETTINGS_Y_PROMPTS_OPERACIONALES.md` §1.2.6.
+>
+> **Cambios de la v2 (ola canónica mínima de la auditoría de errores de
+> la cartera, 2026-07-25):** §9 sumó el marcador de fuente en línea (ficha
+> S-01), acotado a cuatro tipos de afirmación, con la constancia explícita de
+> que no cuenta contra los topes de líneas de esa misma sección.
 
-Orquestador de estado de la cartera del Area de Monitoreo y Seguimiento de
-Procesos y Resultados Educativos (SLEP Costa Central). Descubre los proyectos
-hermanos `~/Projects/slep_*`, lee SOLO su documentacion curada y sintetiza un
-panorama de la cartera. No ejecuta ni modifica los pipelines hermanos.
+---
 
-## Stack
-
-R: tidyverse, pipe nativo `|>`, `dplyr >= 1.1` con `.by=`, `here`/`rprojroot`,
-`fs`, `arrow`, `jsonlite`, `readr`.
-
-## Estructura relevante
-
-- `00_run_all.R` orquesta 31->35; `00_escanear_proyecto.R` escanea ESTE repo.
-- `10_utils/10_utils.R` (bootstrapping: `instalar_si_falta`, `log_msg`,
-  `escribir_seguro`, `escribir_atomico`, `hash_archivo`).
-- `10_utils/10_configuracion.R` (resuelve `RAIZ_ORQUESTADOR` y `RAIZ_PROYECTOS`;
-  `descubrir_hermanos()`; constantes `DIAS_OBSOLETO=21`, `LEER_GIT=FALSE`).
-- `30_procesamiento/31..35`: descubrir, localizar, metadatos, inventario, panorama.
-- `20_insumos/registro_proyectos.csv`: unico insumo curado a mano (el titular
-  completa `nombre_real`, `alias_corto`, `notas`; 31 jamas los pisa).
-- `40_salidas/`: `inventario_cartera.{json,parquet}` (determinista),
-  `cache/<slug>.md` (prosa de sintesis del agente con sello de frescura),
-  `panorama.md`.
-
-## Convenciones del proyecto
-
-- Rama A (publico, raiz unificada). `.gitignore` SIN bloque de datos.
-- Naming sin tildes/ñ/espacios/guiones medios; estructura por decenas; archivos
-  con prefijo numerico de su carpeta. Contenido en espanol pleno; commits en espanol.
-- Gobernanza de lectura R1-R4 (ver README): escritura confinada por
-  `escribir_seguro`; solo documentacion curada de hermanos; salida saneada
-  (sin nombres reales de EE/personas, sin RUT, sin rutas `/Users/`); no ejecutar
-  pipelines hermanos.
-- Determinista (31-34) vs. sintesis (agente, en `cache/<slug>.md`). El inventario
-  es byte-estable; la sintesis se reutiliza literal mientras el sello no cambie.
-- Locale de la maquina = C: usar `readr` para CSV y `writeLines(useBytes=TRUE)`
-  para texto; no concatenar literales no-ASCII con datos acentuados via sprintf.
-- Tras regenerar `panorama.md`, el titular lo sube a la knowledge base del
-  Project de consumo (tarea manual).
-
-## Ultimos cambios (max 5, recientes primero)
-
-1. 2026-06-30 (v05, cierre sesion 5): paso 36 endurecido. (a) Paleta sincronizada
-   con los valores hex reales de la marca SLEP Costa Central (commit 80b72d0).
-   (b) Fix bug B6 (mojibake): bajo locale C los literales no-ASCII se parseaban
-   como Encoding "unknown" y al concatenarse con strings UTF-8 (JSON/readLines) R
-   los escapaba como texto "<c3><81>"; helper u8() declara UTF-8 antes de mezclar
-   (commit 96e1433; misma familia que el em-dash de la sesion 1). (c) P-DATA-JS-RUTA:
-   parseo in situ de slep_monitoreo/data.js (R2, nunca copiado) via jsonlite tras
-   quotear claves + tryCatch por entrada; mapeo orden->slug aprobado y clavado por
-   orden; cards muestran tipo/objetivo/sintesis (primer parrafo + "+N parrafos mas",
-   N_PARRAFOS_SINTESIS_CARD=1); 11/16 pobladas, 5 null con gracia (commit 6ecbb43).
-2. 2026-06-30 (v05): backlog acumulativo extraido a archivo independiente
-   50_documentacion/activa/backlog_acumulativo.md (P-BACKLOG-PROPIO-EXTRAER, 47
-   entradas, 5 sesiones; commit 1c3912f); auditoria_backlogs.md archivada como
-   andamio congelado en 50_documentacion/andamios/.
-3. 2026-06-29 (v02): operacion/regeneracion tras cierre parcial de H4; 3 caches
-   re-sintetizados (georreferenciacion v05, minuta_desvinculacion v29,
-   simce_adecuado v24), 11 reutilizados literal; maneja_sensibles FALSE->TRUE en
-   los 3 de H4; registro curado por el titular preservado; reporte de cobertura
-   actualizado. Aprendizaje: el orquestador lee el WORKING TREE (un gobernanza
-   en rama no mergeada se ve presente; seguimiento_ed_inicial en docs/suitedoc).
-4. 2026-06-28 (v01): andamiaje Rama A completo; pipeline 31->35 funcional;
-   registro sembrado; inventario + panorama generados; reporte de cobertura;
-   esbozo Fase 2; tests en verde; primer commit.
-
-<!-- CANONICO_SLEP:INICIO v2 -->
 ## 1. Identidad y prioridades
 
 Eres mi asistente de desarrollo en Claude Code. Tres responsabilidades,
@@ -209,6 +167,16 @@ eso: dime qué hacer en una línea.
   RMarkdown.
 - Llaves de identificación (RBD, RUT, códigos comunales) SIEMPRE como
   `character`, consistentes entre caché y recálculo.
+- **Locale UTF-8, invariante de entorno** (`POLITICA_PROYECTO.md` §5.2bis).
+  La guarda `asegurar_locale_utf8()` se copia idéntica desde
+  `herramientas_dev/plantillas/10_locale.R`, nunca se edita por proyecto, y se
+  invoca en la primera línea ejecutable de `10_utils/10_configuracion.R`.
+  PROHIBIDO envolver `Sys.setlocale()` en `try(..., silent = TRUE)` o
+  `suppressWarnings()`: una locale que falla en silencio escribe escapado todo
+  el texto acentuado y el defecto no es que esté mal, es que nadie se entera.
+  En workflows de integración continua, `LANG` explícito en todo job que
+  ejecute R. Si un script que vas a tocar no pasa por esa guarda, dilo en una
+  línea antes de editarlo.
 - Auto-instalación de paquetes al inicio de cada script ejecutable
   (`requireNamespace()` antes de `library()`); funciones de
   bootstrapping en `10_utils/10_utils.R` con cero dependencias de
@@ -232,6 +200,14 @@ tras cualquier reorganización de estructura y antes de cerrar sesión.
 El escáner nunca toca el data root de OneDrive.
 
 ## 9. Formato de respuesta
+
+> **Esta sección es copia literal de `SETTINGS_Y_PROMPTS_OPERACIONALES.md`
+> §1.2.6 ("Brevedad por forma, no por cantidad") y del marcador de fuente de la
+> misma sección.** La duplicación es deliberada: Claude Code lee este archivo
+> desde el disco del repo y no la knowledge base, así que la regla tiene que
+> estar donde se aplica. **Si ambas divergen, manda SETTINGS**, y la divergencia
+> es un pendiente a corregir aquí, no un criterio a interpretar. Verificable con
+> un diff entre este bloque y esa subsección.
 
 - **Forma por defecto: 3 líneas de prosa.** No "unas tres": tres. Si la
   respuesta cabe en una línea, va en una línea. El techo por palabras
@@ -275,7 +251,10 @@ El escáner nunca toca el data root de OneDrive.
   ejecutado EN ESTA SESIÓN>)` o `(hipótesis, verificar con: <comando>)`. Las
   cifras solo admiten recuento programático del mismo turno: contarlas a mano,
   heredarlas de un reporte anterior o recordarlas no son fuente. Fuera de esos
-  cuatro tipos el marcador es opcional.
+  cuatro tipos el marcador es opcional. Contrato completo en
+  `POLITICA_PROYECTO.md` §0.6 y `SETTINGS_Y_PROMPTS_OPERACIONALES.md` §1.2.6
+  (sin número de versión: la vigente es la de la knowledge base, citada por
+  transcripción de su línea de encabezado, SETTINGS §2.1).
   - *El marcador no cuenta contra los topes de líneas de esta sección.* Es
     parte de la afirmación, no prosa adicional. Recortarlo para caber en el
     tope es precisamente la falla que la regla existe para impedir.
@@ -291,4 +270,3 @@ El escáner nunca toca el data root de OneDrive.
   declararlo.
 - Español neutro latinoamericano, sin voseo. Sin rayas largas; usar
   paréntesis para incisos.
-<!-- CANONICO_SLEP:FIN -->
