@@ -4,10 +4,14 @@ slep_aprendizajes_ep,Monitoreo de aprendizajes en la educación parvularia,Apren
 slep_categoria_desempeno,Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país,Categoría de Desempeño,activo,Nombre curado del sitio del Área (orden 5).,NA,NA
 slep_costapresente,CostaPresente,CostaPresente,activo,Nombre curado del sitio del Área (orden 8).,NA,NA
 slep_dashboard_personal_monitoreo,Dashboard personal de monitoreo,Dashboard personal,activo,Herramienta interna; no figura en el sitio del Área. Nombre funcional.,NA,NA
+slep_estudio_oferta_demanda,,,activo,,,
 slep_georreferenciacion,Georreferenciación de establecimientos del territorio,Georreferenciación,activo,No figura en el sitio del Área (insumo/afiche). Nombre funcional.,NA,NA
 slep_idps,Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS),IDPS,activo,Nombre curado del sitio del Área (orden 4).,NA,NA
+slep_lectoescritura,,,activo,,,
 slep_minuta_asistencia,Minuta de asistencia mensual,Minuta asistencia,activo,Nombre curado del sitio del Área (orden 1).,NA,NA
+slep_minuta_buenas_senales,,,activo,,,
 slep_minuta_desvinculacion,Análisis de trayectorias educativas interrumpidas,Trayectorias interrumpidas,activo,Nombre curado del sitio del Área (orden 10; estado desarrollo).,NA,NA
+slep_minuta_matricula,,,activo,,,
 slep_monitoreo,Portafolio del Área (escaparate web),Portafolio,auxiliar,Sitio web del Área que aloja este data.js. No es pipeline analítico.,NA,NA
 slep_paes,Motor de comparación interactivo de los resultados de la PAES,PAES,activo,Nombre curado del sitio del Área.,FALSE,NA
 slep_rendimiento_historico,Diagnóstico histórico del rendimiento escolar,Rendimiento histórico,activo,Nombre curado del sitio del Área (orden 11; estado desarrollo).,NA,NA

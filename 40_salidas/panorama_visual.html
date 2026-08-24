@@ -179,37 +179,39 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 <div class="card">
 <header class="card-header">
 <h1>Cartera de proyectos Área de Monitoreo</h1>
-<div class="meta">Área de Monitoreo · 2026-07-02</div>
-<div class="meta-hora">Generado: 09:52</div>
+<div class="meta">Área de Monitoreo · 2026-07-10</div>
+<div class="meta-hora">Generado: 11:37</div>
 </header>
 <div class="card-body">
 <section id="kpis" class="kpis" aria-label="Resumen por semaforo"></section>
 <section id="atencion" class="atencion" aria-label="Requieren atencion hoy"></section>
 <section id="filtros" class="filtros" aria-label="Filtros"></section>
 <main id="lista" class="lista"></main>
-<footer class="bot">Total de proyectos: 17<div class="conteos" id="conteos"></div><div class="conteos" id="conteos-tp"></div></footer>
+<footer class="bot">Total de proyectos: 21<div class="conteos" id="conteos"></div><div class="conteos" id="conteos-tp"></div></footer>
 </div>
 </div>
 </div>
 <script type="application/json" id="datos-cartera">
 [
   {
-    "slug": "slep_georreferenciacion",
-    "nombre_real": "Georreferenciación de establecimientos del territorio",
-    "alias_corto": "Georreferenciación",
+    "slug": "slep_costapresente",
+    "nombre_real": "CostaPresente",
+    "alias_corto": "CostaPresente",
     "categoria": "activo",
     "datos_sensibles": null,
     "estado_proyecto": null,
     "tipo_pendiente": "bloqueante",
-    "semaforo": "pausa",
-    "sintesis": null,
-    "objetivo": null,
-    "tipo": null,
-    "fecha_actualizacion": "2026-06-28",
+    "semaforo": "activo",
+    "sintesis": [
+      "CostaPresente nace para apoyar el seguimiento de las trayectorias escolares de los estudiantes que, en algún momento de los últimos años, han pasado por algún establecimiento del SLEP Costa Central. A partir de registros mensuales de asistencia reconstruye, para cada estudiante, dónde ha estado matriculado y cómo ha evolucionado su escolaridad en términos de asistencia, promoción y retiros."
+    ],
+    "objetivo": "Sistema que, de forma similar a la plataforma ministerial ChilePresente, permite realizar un seguimiento preciso de las trayectorias de los estudiantes que alguna vez han estado matriculados en alguno de los establecimientos del SLEP Costa Central.",
+    "tipo": "Plataforma · CostaPresente",
+    "fecha_actualizacion": "2026-05-31",
     "proximos_pasos": [
-      "Validación con el director, que revisará las dos variantes; el proyecto queda en espera de aprobación externa antes de publicar.",
-      "Inventario de pendientes",
-      "Auditoría de cierre (política 5.6, preguntas \"Cierre\")"
+      "Validar el pipeline completo (ETL + app) en una maquina Windows: configurar entorno, verificar la ruta de datos institucional y correr end-to-end con el mismo output que en macOS.",
+      "Pendiente 1 (P1): Validación cross-OS en Windows",
+      "Descripción: Clonar el repo en una máquina Windows, configurar ~/.Renviron, verificar NBSP en ruta OneDrive, ejecutar pipeline ETL + App en…"
     ],
     "tiene_backlog": false,
     "resena_itinerario": null
@@ -231,12 +233,59 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "tipo": "Motor de comparación",
     "fecha_actualizacion": "2026-07-02",
     "proximos_pasos": [
-      "Ninguno forzoso. Pendiente #2 (re-clonar cualquier clon previo del repo, historial reescrito) es acción manual del titular, fuera de sesión.",
+      "Re-clonar cualquier clon previo del repositorio, ya que el historial fue reescrito y los hashes anteriores dejaron de existir (acción manual del titular, una sola vez).",
       "Qué: entrada 90 (incidente PII, ver traspaso v27 §4) agregada al",
       "Por qué: v26 no generó entrada (mantenimiento de suite, precedente"
     ],
     "tiene_backlog": true,
     "resena_itinerario": "slep_categoria_desempeno es un motor interactivo (R + HTML autocontenido) que compara la distribución de establecimientos por Categoría de Desempeño (Alto / Medio / Medio-Bajo / Insuficiente) de la Agencia de Calidad, entre comunas, SLEPs, regiones y el nivel nacional, separando básica y media. Pipeline en R (xlsx → parquet → JSON embebido → HTML), publicado en GitHub Pages. Para el equipo de Monitoreo del SLEP Costa Central, desde 2026. Datos públicos. (Nota v03: la opción \"nacional\" del selector se eliminó en la sesión 3 por volumen de EE; se agregó selección de establecimiento individual. …"
+  },
+  {
+    "slug": "slep_minuta_asistencia",
+    "nombre_real": "Minuta de asistencia mensual",
+    "alias_corto": "Minuta asistencia",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "tipo_pendiente": "deuda_tecnica",
+    "semaforo": null,
+    "sintesis": [
+      "La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio.",
+      "En este reporte, dirigido al Director Ejecutivo y construido a partir del análisis de los registros de asistencia diaria de cada estudiante del territorio, se le informa respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo, entre otros. Contiene una selección de alertas de inasistencia priorizadas para la toma de decisiones, así como una proyección de la asistencia anual basada en años anteriores."
+    ],
+    "objetivo": "Reporte dirigido al Director Ejecutivo cuyo propósito es informar respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo.",
+    "tipo": "Minuta · Dirección Ejecutiva",
+    "fecha_actualizacion": "2026-07-09",
+    "proximos_pasos": [
+      "Qué: main estaba 6 commits adelante de origin/main sin pushear (v2 + sección 1.2 + docs + los commits de esta sesión). Se pushearon (149a6f…",
+      "Por qué: 6 commits sin pushear es riesgo de pérdida."
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
+    "slug": "slep_reportes_modelo_resguardo_asistencia",
+    "nombre_real": "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio",
+    "alias_corto": "Resguardo asistencia",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "tipo_pendiente": "deuda_tecnica",
+    "semaforo": null,
+    "sintesis": [
+      "El Plan para el Fortalecimiento de la Asistencia Educativa del SLEP Costa Central fija como uno de sus objetivos establecer un marco institucional de trabajo en materia de asistencia para todos los establecimientos del territorio. Lo anterior se materializa a través del Modelo de Resguardo de la Asistencia Educativa del Territorio, el cual, además de orientaciones, planes de acción y actividades de socialización, evaluación y mejora, tiene como uno de sus componentes un reporte sobre esta temática dirigido a todos los directores y directoras del SLEP.",
+      "Este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de cada establecimiento. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa."
+    ],
+    "objetivo": "Dirigido a cada director y directora de los establecimientos del SLEP Costa Central, este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de su unidad educativa. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa.",
+    "tipo": "Reporte · Directores/as",
+    "fecha_actualizacion": "2026-07-08",
+    "proximos_pasos": [
+      "¿Pipeline corre de cero sin intervención manual? → Sí (73/73 verificado dos veces en esta sesión).",
+      "¿Outputs reproducibles e idempotentes? → Sí.",
+      "¿Decisiones metodológicas como constantes nombradas? → Sí (UMBRAL_ASISTENCIA_BAJO85, SIGLA_ENS_MEDIA nuevas, ambas nombradas)."
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "`slep_reportes_modelo_resguardo_asistencia` genera, por lote y cada mes, un reporte por director/a para los 73 establecimientos del SLEP Costa Central, implementando el \"Modelo de Resguardo de la Asistencia Educativa del Territorio\": un PDF (Quarto + typst + tinytable) más una planilla xlsx por establecimiento. Cada reporte muestra la asistencia del propio EE y su posición frente al territorio de forma anonimizada (percentiles y medianas, sin nombrar a otros EE) y cierra con la identificación nominal de los estudiantes en alerta del propio EE. Es variante de la minuta ejecutiva (`slep_minuta_…"
   },
   {
     "slug": "slep_minuta_desvinculacion",
@@ -261,54 +310,6 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     ],
     "tiene_backlog": false,
     "resena_itinerario": null
-  },
-  {
-    "slug": "slep_idps",
-    "nombre_real": "Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)",
-    "alias_corto": "IDPS",
-    "categoria": "activo",
-    "datos_sensibles": null,
-    "estado_proyecto": null,
-    "tipo_pendiente": "deuda_tecnica",
-    "semaforo": "activo",
-    "sintesis": [
-      "Los Indicadores de Desarrollo Personal y Social (IDPS) que la Agencia mide junto al Simce capturan aspectos que, si bien están planteados como no estrictamente académicos, resultan fundamentales para comprender de manera integral la experiencia educativa de los estudiantes. Estos indicadores (autoestima académica y motivación, clima de convivencia, participación y formación ciudadana, y hábitos de vida saludable) sirven de barómetro para leer en contexto los resultados de las pruebas académicas del Simce.",
-      "Para analizar estos resultados, desarrollamos un motor de comparación interactivo que organiza y visualiza los resultados de todo el país y desde el inicio de su medición, a través del cual es posible navegar por los resultados actuales e históricos de un establecimiento, además de explorar uno o múltiples territorios de manera simultánea y comparativa."
-    ],
-    "objetivo": "Desarrollamos un motor de comparación interactivo que organiza y visualiza los resultados de los Indicadores de Desarrollo Personal y Social (IDPS) de todo el país y desde el inicio de su medición. De esta forma, es posible navegar por los resultados actuales e históricos de un establecimiento, además de explorar uno o múltiples territorios de manera simultánea y comparativa.",
-    "tipo": "Motor de comparación",
-    "fecha_actualizacion": "2026-06-25",
-    "proximos_pasos": [
-      "Abordar la higiene de bajo riesgo no alcanzada en s25: resolver `# REVISAR (voz)` en `documentar.R` y subdividir la categoría \"Rediseño UI\" del backlog.",
-      "Qué: se verificó que el histórico 2014–2025 ya está integrado en el parquet (rama 3b del 34), idempotente (md5 intacto tras re-correr), y s…",
-      "Por qué (R10): el pendiente heredado describía premisas falsas. No se fabricó trabajo de integración inexistente (B.1); se reorientó a docu…"
-    ],
-    "tiene_backlog": true,
-    "resena_itinerario": "`slep_idps` es un motor de visualización interactivo de los Indicadores de Desarrollo Personal y Social (IDPS) de la Agencia de Calidad de la Educación. Produce un HTML autocontenido (React 18 + D3 v7 inline) publicado en GitHub Pages que muestra el dato por establecimiento educacional, sin agregación territorial, segmentado por grupo socioeconómico (GSE), con serie histórica 2014→2025. Para el equipo de Monitoreo y Seguimiento del SLEP Costa Central y, desde v05, para cualquier SLEP/comuna del país. Hermano de `slep_simce_adecuado` y `slep_categoria_desempeno`, de los que reutiliza catálogos…"
-  },
-  {
-    "slug": "slep_reportes_modelo_resguardo_asistencia",
-    "nombre_real": "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio",
-    "alias_corto": "Resguardo asistencia",
-    "categoria": "activo",
-    "datos_sensibles": null,
-    "estado_proyecto": null,
-    "tipo_pendiente": "deuda_tecnica",
-    "semaforo": "activo",
-    "sintesis": [
-      "El Plan para el Fortalecimiento de la Asistencia Educativa del SLEP Costa Central fija como uno de sus objetivos establecer un marco institucional de trabajo en materia de asistencia para todos los establecimientos del territorio. Lo anterior se materializa a través del Modelo de Resguardo de la Asistencia Educativa del Territorio, el cual, además de orientaciones, planes de acción y actividades de socialización, evaluación y mejora, tiene como uno de sus componentes un reporte sobre esta temática dirigido a todos los directores y directoras del SLEP.",
-      "Este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de cada establecimiento. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa."
-    ],
-    "objetivo": "Dirigido a cada director y directora de los establecimientos del SLEP Costa Central, este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de su unidad educativa. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa.",
-    "tipo": "Reporte · Directores/as",
-    "fecha_actualizacion": "2026-06-20",
-    "proximos_pasos": [
-      "Abordar un pendiente de fondo: la auditoría de portabilidad cross-OS Windows (que además destraba P-VAR-CANONICA fase 2, tipo deuda técnica) o la auditoría línea a línea del pipeline.",
-      "Inventario de pendientes",
-      "Auditoría de cierre (política 5.6)"
-    ],
-    "tiene_backlog": true,
-    "resena_itinerario": "`slep_reportes_modelo_resguardo_asistencia` genera, por lote y cada mes, un reporte por director/a para los 73 establecimientos del SLEP Costa Central, implementando el \"Modelo de Resguardo de la Asistencia Educativa del Territorio\": un PDF (Quarto + typst + tinytable) más una planilla xlsx por establecimiento. Cada reporte muestra la asistencia del propio EE y su posición frente al territorio de forma anonimizada (percentiles y medianas, sin nombrar a otros EE) y cierra con la identificación nominal de los estudiantes en alerta del propio EE. Es variante de la minuta ejecutiva (`slep_minuta_…"
   },
   {
     "slug": "slep_rendimiento_historico",
@@ -348,12 +349,98 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "tipo": null,
     "fecha_actualizacion": "2026-05-25",
     "proximos_pasos": [
-      "Ejecutar la migración estructural completa del repo a la convención canónica (`00_`, `10_utils/`, `20_insumos/`, `30_procesamiento/`, `40_salidas/`, `50_documentacion/`) siguiendo el protocolo de 7 pasos, como foco único de la sesión.",
+      "Ejecutar la migracion estructural completa del repo a la convencion canonica (00_, 10_utils/, 20_insumos/, 30_procesamiento/, 40_salidas/, 50_documentacion/) siguiendo el protocolo de 7 pasos, como foco unico de la sesion.",
       "Archivo(s) afectado(s): docs/traspaso/traspaso_cierre_v17.md (nuevo), docs/referencia/principios_desarrollo_v3.md (eliminado).",
       "Categoría temática: Mecánica de PR / Incorporación de traspaso."
     ],
     "tiene_backlog": false,
     "resena_itinerario": null
+  },
+  {
+    "slug": "slep_idps",
+    "nombre_real": "Motor de comparación interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)",
+    "alias_corto": "IDPS",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "tipo_pendiente": "deuda_tecnica",
+    "semaforo": null,
+    "sintesis": [
+      "Los Indicadores de Desarrollo Personal y Social (IDPS) que la Agencia mide junto al Simce capturan aspectos que, si bien están planteados como no estrictamente académicos, resultan fundamentales para comprender de manera integral la experiencia educativa de los estudiantes. Estos indicadores (autoestima académica y motivación, clima de convivencia, participación y formación ciudadana, y hábitos de vida saludable) sirven de barómetro para leer en contexto los resultados de las pruebas académicas del Simce.",
+      "Para analizar estos resultados, desarrollamos un motor de comparación interactivo que organiza y visualiza los resultados de todo el país y desde el inicio de su medición, a través del cual es posible navegar por los resultados actuales e históricos de un establecimiento, además de explorar uno o múltiples territorios de manera simultánea y comparativa."
+    ],
+    "objetivo": "Desarrollamos un motor de comparación interactivo que organiza y visualiza los resultados de los Indicadores de Desarrollo Personal y Social (IDPS) de todo el país y desde el inicio de su medición. De esta forma, es posible navegar por los resultados actuales e históricos de un establecimiento, además de explorar uno o múltiples territorios de manera simultánea y comparativa.",
+    "tipo": "Motor de comparación",
+    "fecha_actualizacion": null,
+    "proximos_pasos": [
+      "Item 11 (bloqueado, sin nueva información)",
+      "Tooltip \"vs evaluación anterior\": de title a body (cosmético, menor)"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "`slep_idps` es un motor de visualización interactivo de los Indicadores de Desarrollo Personal y Social (IDPS) de la Agencia de Calidad de la Educación. Produce un HTML autocontenido (React 18 + D3 v7 inline) publicado en GitHub Pages que muestra el dato por establecimiento educacional, sin agregación territorial, segmentado por grupo socioeconómico (GSE), con serie histórica 2014→2025. Para el equipo de Monitoreo y Seguimiento del SLEP Costa Central y, desde v05, para cualquier SLEP/comuna del país. Hermano de `slep_simce_adecuado` y `slep_categoria_desempeno`, de los que reutiliza catálogos…"
+  },
+  {
+    "slug": "slep_estudio_oferta_demanda",
+    "nombre_real": null,
+    "alias_corto": null,
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "tipo_pendiente": "nuevo",
+    "semaforo": "activo",
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-07-10",
+    "proximos_pasos": [
+      "Confirmar push de los commits locales, luego evaluar iniciar el alcance ampliado de `40_` (matrícula regional per-mrun) para cerrar el 15,7% de transiciones \"sin registro observable\" con desfase entre bases documentado.",
+      "¿Pipeline corre de cero sin intervención manual? → Sí para 31→40; 92_ sigue",
+      "¿Cada transformación crítica tiene check de validación? → Sí; el eje 40_ tiene"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "Estudio de oferta y demanda del servicio educativo del SLEP Costa Central: diagnostico territorial y proyeccion de la red educativa, a partir de microdatos de Censo 2024 (INE) y Casen 2024 (MDSF), y de los registros oficiales de establecimientos (directorio MINEDUC, caracterizacion SLEP CC). Unidad de analisis: el establecimiento (RBD). Comunas del SLEP CC: Vina del Mar, Concon, Quintero, Puchuncavi. Foco territorial: Region de Valparaiso (05), aplicado como vista en codigo (sin recorte en disco). Herramientas: R (tidyverse, arrow, haven, sf, renv), arquitectura de dos raices. Desde 2026-07-0…"
+  },
+  {
+    "slug": "slep_lectoescritura",
+    "nombre_real": null,
+    "alias_corto": null,
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "tipo_pendiente": "nuevo",
+    "semaforo": "activo",
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-07-08",
+    "proximos_pasos": [
+      "Iniciar el producto: vistas longitudinales por instrumento en metrica nativa, por comuna/territorio, con NO APLICADO visible (PV1). No homologar entre escalas (decision §2.3).",
+      "PV1 — Producto / vistas sobre las tres fuentes (funcionalidad nueva). Con DIA+SIMCE+PAES integradas en fuentes_largo e indicadores, el sigu…",
+      "PV2 — Universo SIMCE teórico: verificar impacto en años futuros (deuda técnica menor). La implementación teórica es numéricamente no-op hoy…"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "slep_lectoescritura es la plataforma de monitoreo del desarrollo de la lectoescritura de los estudiantes del SLEP Costa Central. Integra las principales evaluaciones de lectura del territorio (SIMCE Lectura, DIA/Reactivación, PAES Competencia Lectora, y fuentes futuras como DIA Educación Parvularia y evaluaciones en jardines) en una vista comparable en el tiempo, para orientar decisiones técnico-pedagógicas. Construida en R (arquitectura de dos raíces: código en GitHub privado, datos en OneDrive institucional), para el equipo de análisis del SLEP. Iniciada el 2026-07-08."
+  },
+  {
+    "slug": "slep_paes",
+    "nombre_real": "Motor de comparación interactivo de los resultados de la PAES",
+    "alias_corto": "PAES",
+    "categoria": "activo",
+    "datos_sensibles": "FALSE",
+    "estado_proyecto": null,
+    "tipo_pendiente": "nuevo",
+    "semaforo": null,
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-07-04",
+    "proximos_pasos": [
+      "Archivos: ninguno modificado; solo verificación (git status, git log,",
+      "Categoría: gate del titular / verificación.",
+      "Qué: confirmado que HEAD local (e632e4e) ya coincidía con"
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado."
   },
   {
     "slug": "slep_aprendizajes_ep",
@@ -415,7 +502,7 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "tipo": "Análisis longitudinal",
     "fecha_actualizacion": "2026-06-14",
     "proximos_pasos": [
-      "Validar visualmente el panel de detalle fijo (B1) en módulo privado y público, y commitear `35_app.R`.",
+      "Validar visualmente el panel de detalle fijo (B1) en los módulos privado y público, y commitear el archivo de la app.",
       "Inventario de pendientes vigentes",
       "Auditoría de cierre (POLITICA §5.6)"
     ],
@@ -438,12 +525,31 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "tipo": "Sistema de alertas",
     "fecha_actualizacion": "2026-06-09",
     "proximos_pasos": [
-      "Abrir el `.docx` generado y verificar visualmente que el texto se renderiza en la fuente Aptos (no en la fuente por defecto), ya que se generó en macOS donde Aptos no viene preinstalada y officer degrada en silencio.",
+      "Abrir el `.docx` generado y verificar visualmente que el texto se renderiza en la fuente Aptos, ya que se generó en macOS (donde Aptos no viene preinstalada) y officer degrada en silencio.",
       "Archivo(s) afectado(s): 30_procesamiento/31_alertas_establecimientos.R (usa validar_columnas() de 10_utils.R).",
       "Categoría temática: Validación y robustez."
     ],
     "tiene_backlog": false,
     "resena_itinerario": null
+  },
+  {
+    "slug": "slep_minuta_buenas_senales",
+    "nombre_real": null,
+    "alias_corto": null,
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "tipo_pendiente": "cosmetica",
+    "semaforo": "activo",
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": null,
+    "proximos_pasos": [
+      "Revision visual del HTML contra el handoff y, si el titular confirma licencia de las tipografias (P12), embeberlas en el HTML via @font-face (P14, baja)."
+    ],
+    "tiene_backlog": true,
+    "resena_itinerario": "slep_minuta_buenas_senales consolida indicadores positivos de distintos proyectos SLEP en una minuta breve para el equipo de comunicaciones, con el propósito de difundir buenas noticias de la educación pública del territorio (4 comunas, SLEP Costa Central). Es puramente consumidor: no decide qué es \"positivo\"; esa regla vive en cada proyecto fuente vía el contrato `indicadores_positivos`."
   },
   {
     "slug": "slep_simce_adecuado",
@@ -471,6 +577,27 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "resena_itinerario": null
   },
   {
+    "slug": "slep_georreferenciacion",
+    "nombre_real": "Georreferenciación de establecimientos del territorio",
+    "alias_corto": "Georreferenciación",
+    "categoria": "activo",
+    "datos_sensibles": null,
+    "estado_proyecto": null,
+    "tipo_pendiente": "ninguno",
+    "semaforo": "cerrado",
+    "sintesis": null,
+    "objetivo": null,
+    "tipo": null,
+    "fecha_actualizacion": "2026-06-28",
+    "proximos_pasos": [
+      "ninguno",
+      "Inventario de pendientes",
+      "Auditoría de cierre (política 5.6, preguntas \"Cierre\")"
+    ],
+    "tiene_backlog": false,
+    "resena_itinerario": null
+  },
+  {
     "slug": "slep_simce_estandares_aprendizaje",
     "nombre_real": "Minuta de resultados Simce por estándares de aprendizaje",
     "alias_corto": "Minuta Simce",
@@ -492,70 +619,19 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
     "resena_itinerario": null
   },
   {
-    "slug": "slep_paes",
-    "nombre_real": "Motor de comparación interactivo de los resultados de la PAES",
-    "alias_corto": "PAES",
+    "slug": "slep_minuta_matricula",
+    "nombre_real": null,
+    "alias_corto": null,
     "categoria": "activo",
-    "datos_sensibles": "FALSE",
+    "datos_sensibles": null,
     "estado_proyecto": null,
     "tipo_pendiente": null,
     "semaforo": null,
     "sintesis": null,
     "objetivo": null,
     "tipo": null,
-    "fecha_actualizacion": "2026-07-02",
-    "proximos_pasos": [
-      "¿Datos crudos aislados e inmutables? → Sí, sin cambios en 31/32 (Rama B intacta, código en Git, no aplica en slep_paes porque es Rama A con…",
-      "¿Pipeline corre de cero sin intervención manual? → Sí, run_all() completo verificado end-to-end.",
-      "¿Outputs reproducibles e idempotentes? → Sí, confirmado por regeneración repetida durante la sesión sin cambios de contenido salvo los fixe…"
-    ],
-    "tiene_backlog": true,
-    "resena_itinerario": "slep_paes es el cuarto panorama nacional del Área de Monitoreo y Seguimiento de Procesos y Resultados Educativos del SLEP Costa Central, construido con datos 100% públicos del DEMRE/MINEDUC sobre la PAES (Prueba de Acceso a la Educación Superior), publicado como sitio HTML autocontenido en GitHub Pages, navegable por territorio, leído desde dos focos pares (cobertura y rendimiento), hermano arquitectónico de slep_categoria_desempeno, slep_idps y slep_simce_adecuado."
-  },
-  {
-    "slug": "slep_minuta_asistencia",
-    "nombre_real": "Minuta de asistencia mensual",
-    "alias_corto": "Minuta asistencia",
-    "categoria": "activo",
-    "datos_sensibles": null,
-    "estado_proyecto": null,
-    "tipo_pendiente": null,
-    "semaforo": null,
-    "sintesis": [
-      "La asistencia escolar es uno de los principales barómetros de la trayectoria educativa de un estudiante. En este contexto, la minuta mensual de asistencia surge a partir de una necesidad concreta para la gestión del servicio educativo gestionado por el SLEP Costa Central en el territorio.",
-      "En este reporte, dirigido al Director Ejecutivo y construido a partir del análisis de los registros de asistencia diaria de cada estudiante del territorio, se le informa respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo, entre otros. Contiene una selección de alertas de inasistencia priorizadas para la toma de decisiones, así como una proyección de la asistencia anual basada en años anteriores."
-    ],
-    "objetivo": "Reporte dirigido al Director Ejecutivo cuyo propósito es informar respecto a los principales indicadores que se desprenden de esta variable, segmentándola a nivel de territorio, comuna, tipo de enseñanza, establecimiento y nivel educativo.",
-    "tipo": "Minuta · Dirección Ejecutiva",
-    "fecha_actualizacion": "2026-07-01",
-    "proximos_pasos": [
-      "P-orq (deuda técnica, aprobado, diferido). Refactor: partir 32_render_minuta.R en pasos atómicos y crear 00_run_all.R canónico. Complejidad…",
-      "Deuda menor nueva: _archivo/20260630/ quedó versionado en Git. Los renames vía git mv entraron al commit 7d33adb antes de que .gitignore lo…",
-      "Deuda: backlog no extraído a backlog_acumulativo.md (POLITICA §10). Sigue embebido en traspasos. Requiere reconstruir el histórico desde tr…"
-    ],
-    "tiene_backlog": false,
-    "resena_itinerario": null
-  },
-  {
-    "slug": "slep_costapresente",
-    "nombre_real": "CostaPresente",
-    "alias_corto": "CostaPresente",
-    "categoria": "activo",
-    "datos_sensibles": null,
-    "estado_proyecto": null,
-    "tipo_pendiente": null,
-    "semaforo": null,
-    "sintesis": [
-      "CostaPresente nace para apoyar el seguimiento de las trayectorias escolares de los estudiantes que, en algún momento de los últimos años, han pasado por algún establecimiento del SLEP Costa Central. A partir de registros mensuales de asistencia reconstruye, para cada estudiante, dónde ha estado matriculado y cómo ha evolucionado su escolaridad en términos de asistencia, promoción y retiros."
-    ],
-    "objetivo": "Sistema que, de forma similar a la plataforma ministerial ChilePresente, permite realizar un seguimiento preciso de las trayectorias de los estudiantes que alguna vez han estado matriculados en alguno de los establecimientos del SLEP Costa Central.",
-    "tipo": "Plataforma · CostaPresente",
-    "fecha_actualizacion": "2026-05-31",
-    "proximos_pasos": [
-      "Pendiente 1 (P1): Validación cross-OS en Windows",
-      "Descripción: Clonar el repo en una máquina Windows, configurar ~/.Renviron, verificar NBSP en ruta OneDrive, ejecutar pipeline ETL + App en…",
-      "Contexto: Todo el desarrollo y pruebas han sido en macOS arm64. Los colegas que usarán la app son usuarios Windows. La portabilidad real no…"
-    ],
+    "fecha_actualizacion": null,
+    "proximos_pasos": null,
     "tiene_backlog": false,
     "resena_itinerario": null
   },

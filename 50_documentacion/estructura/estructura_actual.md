@@ -1,27 +1,28 @@
 # Estructura del proyecto (escaner)
 
 - Raiz       : slep_estado_proyectos_monitoreo
-- Fecha      : 2026-07-02 12:29:03
+- Fecha      : 2026-08-24 08:30:51
 - Directorios: 18
-- Archivos   : 83
-- Tamano     : 1.51M
+- Archivos   : 86
+- Tamano     : 1.67M
 
 ## Arbol
 
 ```
 slep_estado_proyectos_monitoreo/
-.DS_Store  (10K)
+.DS_Store  (8K)
 .github/
   workflows/
     pages.yml  (704)
-.gitignore  (694)
-00_escanear_proyecto.R  (4.84K)
+.gitignore  (805)
+00_escanear_proyecto.R  (5.57K)
 00_run_all.R  (4.66K)
 10_utils/
-  10_configuracion.R  (6.58K)
+  10_configuracion.R  (6.78K)
+  10_locale.R  (8.91K)
   10_utils.R  (6.15K)
 20_insumos/
-  registro_proyectos.csv  (2.84K)
+  registro_proyectos.csv  (2.98K)
 30_procesamiento/
   31_descubrir_proyectos.R  (7.76K)
   32_localizar_documentos.R  (11.4K)
@@ -30,7 +31,6 @@ slep_estado_proyectos_monitoreo/
   35_compilar_panorama.R  (8.98K)
   36_generar_panorama_visual.R  (50.1K)
 40_salidas/
-  .DS_Store  (6K)
   .Rhistory  (0)
   cache/
     slep_alertas_ael.md  (1.75K)
@@ -47,25 +47,26 @@ slep_estado_proyectos_monitoreo/
     slep_seguimiento_educacion_inicial.md  (2.01K)
     slep_simce_adecuado.md  (1.78K)
     slep_simce_estandares_aprendizaje.md  (1.92K)
-  inventario_cartera.json  (26.5K)
-  inventario_cartera.parquet  (19.5K)
-  panorama_visual.html  (52.1K)
-  panorama_visual.md  (24K)
-  panorama.md  (19.7K)
+  inventario_cartera.json  (31.7K)
+  inventario_cartera.parquet  (20.2K)
+  panorama_visual.html  (55.6K)
+  panorama_visual.md  (26.8K)
+  panorama.md  (23.8K)
 50_documentacion/
-  .DS_Store  (14K)
+  .DS_Store  (10K)
   activa/
-    .DS_Store  (6K)
+    50_locale_utf8.md  (2.06K)
     backlog_acumulativo.md  (18.4K)
     decisiones/
       20260628_decision_arquitectura_orquestador.md  (4.21K)
+      20260710_decision_desalineacion_nombres_repos.md  (5.38K)
     esbozo_fase2_estado_estandarizado.md  (4.36K)
     ESTADO.md  (848)
-    POLITICA_PROYECTO.md  (34.6K)
+    POLITICA_PROYECTO.md  (42.8K)
     reporte_cobertura_documental.md  (6.46K)
-    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (57.3K)
+    SETTINGS_Y_PROMPTS_OPERACIONALES.md  (137K)
   andamios/
-    .DS_Store  (10K)
+    20260710_inventario_repos_y_nuevos.md  (10.6K)
     auditoria_backlogs_20260629.md  (11.9K)
     design_handoff_monitoreo_cartera/
       assets/
@@ -90,12 +91,12 @@ slep_estado_proyectos_monitoreo/
       20260702_panorama_rediseno_log.md  (12.4K)
       20260702_patron_visual_handoff_log.md  (16.8K)
   estructura/
-    20260702_071455_estructura.md  (3.44K)
-    20260702_071455_estructura.txt  (3.44K)
-    20260702_072809_estructura.md  (3.7K)
-    20260702_072809_estructura.txt  (3.7K)
-    estructura_actual.md  (3.7K)
-    estructura_actual.txt  (3.7K)
+    20260702_122903_estructura.md  (3.75K)
+    20260702_122903_estructura.txt  (3.75K)
+    20260702_145708_estructura.md  (3.78K)
+    20260702_145708_estructura.txt  (3.78K)
+    estructura_actual.md  (3.78K)
+    estructura_actual.txt  (3.78K)
   traspasos/
     traspaso_cierre_v01.md  (13.1K)
     traspaso_cierre_v02.md  (15.2K)
@@ -106,7 +107,9 @@ slep_estado_proyectos_monitoreo/
     traspaso_cierre_v07.md  (15.2K)
     traspaso_cierre_v08.md  (17.2K)
     traspaso_cierre_v09.md  (22.3K)
-CLAUDE.md  (3.96K)
+    traspaso_cierre_v10.md  (26.6K)
+    traspaso_cierre_v11.md  (24.5K)
+CLAUDE.md  (14.8K)
 README.md  (4.24K)
 slep_estado_proyectos_monitoreo.Rproj  (248)
 tests/
@@ -116,12 +119,12 @@ tests/
 ## Conteo por extension
 
 ```
-  md                 43
-  R                  11
+  md                 48
+  R                  12
   otf                6
-  (sin extension)    5
   png                3
   txt                3
+  (sin extension)    2
   csv                2
   html               2
   css                1
