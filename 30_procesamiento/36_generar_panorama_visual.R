@@ -15,7 +15,7 @@
 #             autocontenida que reusa el MISMO parser/formula (ver
 #             leer_estado_hermano()). Deteccion de desync/tipo_pendiente NO se
 #             reimplementa de forma independiente (evita divergencia).
-# Insumos   : 40_salidas/inventario_cartera.json (34); 20_insumos/registro_proyectos.csv;
+# Insumos   : 40_salidas/inventario_cartera.json (34); 40_salidas/registro_proyectos.csv;
 #             por hermano: su traspaso vigente, backlog_acumulativo.md y
 #             ESTADO.md (si existen).
 # Salidas   : 40_salidas/panorama_visual.html y panorama_visual.md (escritura
@@ -299,6 +299,9 @@ if (!file.exists(RUTA_INVENTARIO_JSON)) {
 log_msg("Construyendo objetos de cartera para el panorama visual...", "36_visual")
 
 inv <- jsonlite::read_json(RUTA_INVENTARIO_JSON, simplifyVector = FALSE)
+if (!file.exists(RUTA_REGISTRO)) {
+  stop("36: falta 40_salidas/registro_proyectos.csv. Lo escribe el paso 1: ejecute run_all(only = 1) y reintente.")
+}
 registro <- as.data.frame(
   readr::read_csv(RUTA_REGISTRO, col_types = readr::cols(.default = readr::col_character())),
   stringsAsFactors = FALSE

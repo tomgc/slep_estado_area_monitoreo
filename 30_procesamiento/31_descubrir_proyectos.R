@@ -4,7 +4,7 @@
 # Proposito : Descubrir en tiempo de ejecucion el universo de proyectos hermanos
 #             slep_* bajo RAIZ_PROYECTOS, clasificarlos (estructura canonica vs
 #             no_canonica; categoria activo/auxiliar/baja), detectar altas y
-#             bajas y sincronizar 20_insumos/registro_proyectos.csv SIN pisar lo
+#             bajas y sincronizar 40_salidas/registro_proyectos.csv SIN pisar lo
 #             que el titular escribio a mano (secciones 6 y 7 del encargo).
 # Insumos   : RAIZ_PROYECTOS y constantes (10_configuracion.R); el registro
 #             previo si existe; reseñas de cada hermano (solo para sugerir

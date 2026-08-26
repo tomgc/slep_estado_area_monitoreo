@@ -41,6 +41,15 @@ for (req in c("df_proyectos", "lista_documentos", "df_metadatos")) {
 log_msg("Compilando inventario determinista de la cartera...", "34_compilar")
 
 # Registro (para nombre_real, alias_corto, notas finales).
+# El registro es destino del paso 1 y ya no se versiona: en un clon nuevo
+# puede no existir. Abortar con causa y remedio; nunca degradar a tabla
+# vacia, que produciria un inventario silenciosamente incompleto.
+if (!file.exists(RUTA_REGISTRO)) {
+  stop(sprintf(
+    "34_compilar_inventario.R: falta el registro %s. Lo escribe el paso 1 (31_descubrir_proyectos.R): ejecute run_all(only = 1) y reintente.",
+    RUTA_REGISTRO
+  ))
+}
 registro <- as.data.frame(
   readr::read_csv(RUTA_REGISTRO, col_types = readr::cols(.default = readr::col_character())),
   stringsAsFactors = FALSE

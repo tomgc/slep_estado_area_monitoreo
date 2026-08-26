@@ -92,10 +92,12 @@ TZ_ORQUESTADOR <- tryCatch({
 # ---- Rutas del orquestador (todas bajo RAIZ_ORQUESTADOR) ----------------------
 
 RUTA_INSUMOS    <- file.path(RAIZ_ORQUESTADOR, "20_insumos")
-RUTA_REGISTRO   <- file.path(RUTA_INSUMOS, "registro_proyectos.csv")
 
 RUTA_SALIDAS         <- file.path(RAIZ_ORQUESTADOR, "40_salidas")
 RUTA_CACHE           <- file.path(RUTA_SALIDAS, "cache")
+# El registro es DESTINO del pipeline (lo escribe el paso 1), no fuente: vive
+# en 40_salidas y no se versiona. D-01, sesion 13.
+RUTA_REGISTRO        <- file.path(RUTA_SALIDAS, "registro_proyectos.csv")
 RUTA_INVENTARIO_JSON <- file.path(RUTA_SALIDAS, "inventario_cartera.json")
 RUTA_INVENTARIO_PARQ <- file.path(RUTA_SALIDAS, "inventario_cartera.parquet")
 RUTA_PANORAMA        <- file.path(RUTA_SALIDAS, "panorama.md")

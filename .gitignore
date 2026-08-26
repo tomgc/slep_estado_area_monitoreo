@@ -44,3 +44,7 @@ _archivo/
 POLITICA_PROYECTO.md
 SETTINGS_Y_PROMPTS_OPERACIONALES.md
 CLAUDE.md
+
+# Registro de proyectos: lo escribe el paso 1 en cada corrida (D-01, sesion 13).
+# Es destino del pipeline, no fuente (A21). No se versiona: I8.
+40_salidas/registro_proyectos.csv
