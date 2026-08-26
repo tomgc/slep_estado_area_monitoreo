@@ -7,11 +7,11 @@ sesion_actual: v12
 ultima_actividad: 2026-08-26
 maneja_sensibles: false
 tipo_pendiente: bloqueante
-sesion_abierta: false
+sesion_abierta: true
 maquina: macbook-titular
 commit_cierre: acdc6ff
 traspaso_vigente: traspaso_cierre_v12.md
-cierre_incompleto: I8 falla porque 20_insumos/registro_proyectos.csv esta versionado y el paso 1 lo escribe; la decision sobre su destino esta pendiente
+cierre_incompleto: no
 insumos_verificados: 2026-08-26
 ventana_insumos: ./20_insumos
 ---
