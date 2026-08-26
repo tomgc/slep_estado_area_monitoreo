@@ -449,15 +449,19 @@ for (i in seq_along(inv$proyectos)) {
 # sesion, SETTINGS SS1.2.4) primero, estado_proyecto segundo, fecha (desc)
 # tercero. Decision del titular (sesion 6): tipo_pendiente -> estado_proyecto
 # -> fecha_actualizacion.
+# Acceso por [ ] y no por [[ ]]: sobre un vector atomico con nombres, `[[` con
+# un nombre inexistente ABORTA ("subscript out of bounds"); solo `[` devuelve NA.
+# El fallback escrito con is.null() era inalcanzable y un hermano que declarara
+# un tipo_pendiente fuera del enum de SETTINGS SS1.2.4 tumbaba el paso 6 entero.
 rango_tp_de <- function(tp) {
   if (is.na(tp)) return(length(RANGO_TIPO_PENDIENTE))  # sin dato -> ultimo, junto a "ninguno"
-  r <- RANGO_TIPO_PENDIENTE[[tp]]
-  if (is.null(r)) length(RANGO_TIPO_PENDIENTE) else r
+  r <- unname(RANGO_TIPO_PENDIENTE[as.character(tp)])
+  if (is.na(r)) length(RANGO_TIPO_PENDIENTE) else r    # fuera del enum -> ultimo
 }
 rango_de <- function(estado) {
   if (is.na(estado)) return(0L)                 # null -> primero (como inicial)
-  r <- RANGO_ESTADO[[estado]]
-  if (is.null(r)) 0L else r
+  r <- unname(RANGO_ESTADO[as.character(estado)])
+  if (is.na(r)) 0L else r                       # fuera del enum -> primero
 }
 clave_fecha <- function(f) if (is.na(f)) "0000-00-00" else f  # NA al final del grupo
 
