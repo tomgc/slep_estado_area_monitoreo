@@ -74,7 +74,13 @@ los commits.
 | 4 | v04 | 13 | Sonnet 4.6 | Estandarizacion de backlogs + parche de protocolo + P4 (panorama visual) + cierre de deuda |
 | 5 | v05 | 8 | Sonnet 4.6 | Bug B6 + P-DATA-JS-RUTA + extraccion de backlog propio + rediseno acordeon + Fase 2 (diseno+propagacion+lector) + parche registro de errores |
 | 6 | (en curso) | 1 (en curso) | Sonnet 5 | Curacion slep_paes + incorporacion de backlog s5 |
-| **Total** | | **54** (53 cerradas + 1 en curso) | | |
+| 7 | v07 | 0 | n/d | Cierre de pendientes de v06, idempotencia, categoria de backlog, refresco de cartera, encargo a Claude Design |
+| 8 | v08 | 2 (perdidas) | n/d | Handoff de Claude Design vs. contrato de datos, semaforo desde ESTADO.md, fix de exclusion `_BACKUP` |
+| 9 | v09 | 2 (perdidas) | n/d | GitHub Pages permanente via Actions + P-DESIGN-PANORAMA-ADOPCION (KPIs, banda de atencion, filtros) |
+| 10 | v10 | 3 (perdidas) | n/d | Consolidacion de backlog atrasado, fix del escaner (`.github`), resto del patron visual, cobertura ESTADO.md 16/17 |
+| 11 | v11 | 6 | n/d | Resolucion de P3 (desalineacion de nombres) e incorporacion de los hermanos nuevos descubiertos en disco |
+| 12 | v12 | 10 | Opus 5 | Apertura de emergencia, rescate del repositorio en dos tramos, primer censo completo del estado documental de la cartera y trazado de la ruta hacia un comando unico de actualizacion y publicacion. |
+| **Total** | | **77** (70 conservadas, 7 perdidas) | | |
 
 ## Detalle cronologico
 
@@ -215,6 +221,81 @@ presente archivo de las 6 entradas de sesion 5 (48-53) que habian quedado
 pendientes de consolidar al cierre de esa sesion (nota explicita en
 `traspaso_cierre_v05.md` §5).
 
+> **Entradas 55 a 61: perdidas.** Volcadas en la sesion 10 sobre una copia de
+> trabajo que nunca llego a git (`git log --all --follow` sobre este archivo tiene
+> dos commits). Su existencia consta en `traspaso_cierre_v10.md` §4.1 y §5; su
+> texto no se conserva. No se reconstruyen: seria redaccion nueva sobre registro
+> historico.
+
+**Sesion 11 (entradas 62-67, trasladadas de `traspaso_cierre_v11.md` §5):**
+
+62. Inventario de solo-lectura de los 22 directorios `slep_*`: nombre local
+vs. remoto, registro, `ESTADO.md`, traspasos.
+
+63. Corrección del universo de la cartera: 17 → 21 hermanos + orquestador.
+
+64. Decisión formal sobre las 3 desalineaciones de nombre (2 mapeos
+aceptados, 1 alineación real).
+
+65. Alineación del remoto de `slep_lectoescritura` a la forma corta canónica.
+
+66. Incorporación de los 4 hermanos nuevos al registro vía `run_all()`.
+
+67. Rescate del traspaso v07 de `slep_paes` (untracked → versionado).
+
+**Sesion 12 (entradas 68-77):**
+
+68. Apertura de emergencia (SETTINGS 1.2.8) tras 44 dias sin integrar. El punto 0bis
+fallo por las cuatro causas simultaneas: sin campos de candado en ESTADO.md, arbol
+sucio, stash pendiente y diez commits sin integrar, con los traspasos v10 y v11
+existiendo solo en disco. Se fotografio el estado antes de tocar nada. [gobernanza]
+
+69. Revision linea por linea de la knowledge base: POLITICA de v5.3 a v5.8 y SETTINGS
+de v8 a v34, veintiseis versiones de delta. Producto: 20260824_delta_normativo_kb.md,
+con la tabla de obligaciones que el delta impone al proyecto en sus dos roles. Hallazgo
+principal: ESTADO.md gano siete campos que los pasos 33 y 35 no leen. [gobernanza]
+
+70. Censo de solo lectura de la cartera sobre 25 directorios slep_*, con autotest de
+ocho casos y dos controles negativos previos a la recoleccion. Salidas: informe de 883
+lineas y CSV de 26 lineas por 58 columnas. El autotest atrapo un defecto real del
+clasificador de ventana_insumos antes de que contaminara el censo. [diagnostico]
+
+71. Hallazgo del censo: 20 de 25 hermanos sin ningun campo de candado, cero parciales;
+14 incumplen el invariante I5; el mayor riesgo de perdida de la cartera se desplazo a
+slep_rendimiento_historico. El pendiente P1 del traspaso v11 quedo obsoleto: ese repo ya
+esta en v78 y limpio. [diagnostico]
+
+72. Rescate tramo A: rama rescate/20260824 con cuatro commits selectivos que publican
+los traspasos v10 y v11, los artefactos de las sesiones 11 y 12, y las salidas
+regeneradas. Publicada y verificada por ls-remote contra HEAD (98a4097). [gobernanza]
+
+73. Regresion normativa detectada y revertida: el arbol de trabajo y el indice tenian
+POLITICA v5.6 y SETTINGS v16 mientras HEAD conservaba v5.8 y v34, con 901 borrados
+staged en SETTINGS. Un commit habria consolidado el retroceso de dieciocho versiones.
+Revertido con git restore --source=HEAD. [gobernanza]
+
+74. Rescate tramo B: dos merges. El primero (5953106) integro origin/main resolviendo el
+conflicto modify/delete de los normativos con la decision de cartera de no versionarlos;
+el segundo (1c74ad0) integro origin/rescate/20260824 y trajo los traspasos v10 y v11 a
+main. Estado final 0 0, pusheado. [gobernanza]
+
+75. Bugfix del paso 6: acceso por [[ ]] sobre vector con nombres abortaba ante cualquier
+tipo_pendiente fuera del enum, y el fallback escrito con is.null() era inalcanzable por
+construccion. Corregido a [ ] con guarda is.na() en rango_tp_de() y rango_de(). Commit
+0304334. [codigo]
+
+76. Incorporacion de siete hermanos nuevos por descubrimiento de convencion de nombre,
+sin edicion manual del registro: el universo del pipeline paso de 17 a 24. Se confirmo
+que registro_proyectos.csv es destino y no fuente. [operacion]
+
+77. Reconstruccion parcial del backlog y hallazgo de perdida irrecuperable. Se
+trasladaron las entradas 62-67 desde el traspaso v11. Las entradas 55-61 constan como
+volcadas en el traspaso v10 pero ninguna version del archivo con 61 entradas llego jamas
+a git: el trabajo se hizo sobre una copia perdida. No se reconstruyen. Producto
+adicional: la ruta de siete encargos hacia el comando unico y el inventario consolidado
+de 21 pendientes. [gobernanza]
+
+
 ## Delta del backlog
 
 7 entradas nuevas (48-54) respecto al estado reflejado en `traspaso_cierre_v05.md`
@@ -229,3 +310,19 @@ no encajan limpio en ninguna categoria existente; revisar si conviene una
 categoria "Mantenimiento de registro/cartera" cuando haya mas casos similares
 (hoy serian solo 2, bajo el umbral de 2% declarado en SETTINGS §2.2.5 para
 crear categoria nueva salvo que se anticipe recurrencia).
+
+10 entradas nuevas (68-77) respecto al estado reflejado en
+`traspaso_cierre_v11.md` (que llego a la 67). El tramo 55-61 sigue declarado
+como perdido y no se recupera en este cierre. Sin categorias nuevas. Las diez
+entradas se reparten en cuatro existentes: gobernanza (6), diagnostico (2),
+codigo (1) y operacion (1). El peso de gobernanza refleja que la sesion fue
+de rescate y no de desarrollo.
+
+El movimiento tematico de esta sesion es hacia adentro: seis de diez entradas
+son sobre la integridad del propio sistema de registro (candado, traspasos
+versionados, backlog, normativos) y no sobre el producto. La causa es que el
+censo hizo medible por primera vez el estado documental de la cartera
+completa, y lo que midio fue una deuda de custodia extendida: 20 de 25
+hermanos sin campos de candado y siete entradas de backlog perdidas sin que
+nadie lo notara en dos meses. La sesion siguiente deberia devolver el peso al
+producto, empezando por las dos degradaciones del panorama.
