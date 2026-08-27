@@ -66,6 +66,7 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .punto.sem-pausa{background:var(--amber)}
 .punto.sem-bloqueado{background:var(--danger)}
 .punto.sem-cerrado{background:var(--slate)}
+.punto.sem-amarillo{background:var(--amber)}
 .punto.sem-na{background:var(--line)}
 /* P-DESIGN-PANORAMA-ADOPCION: KPIs, banda de atencion y filtros. Reusan
    integramente los tokens de :root ya existentes (--plum/--olive/--amber/
@@ -109,6 +110,7 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .atn-card.sem-pausa{border-left-color:var(--amber)}
 .atn-card.sem-bloqueado{border-left-color:var(--danger)}
 .atn-card.sem-cerrado{border-left-color:var(--slate)}
+.atn-card.sem-amarillo{border-left-color:var(--amber)}
 .atn-card:hover{background:var(--cream)}
 .atn-card:focus-visible{outline:2px solid var(--ocean);outline-offset:-2px}
 .atn-nombre{font-weight:600;color:var(--plum);font-size:.9rem;white-space:nowrap;
@@ -180,7 +182,7 @@ footer.bot .conteos{display:flex;flex-wrap:wrap;gap:14px;margin-top:6px}
 <header class="card-header">
 <h1>Cartera de proyectos Área de Monitoreo</h1>
 <div class="meta">Área de Monitoreo · 2026-08-27</div>
-<div class="meta-hora">Generado: 15:39</div>
+<div class="meta-hora">Generado: 16:23</div>
 </header>
 <div class="card-body">
 <section id="kpis" class="kpis" aria-label="Resumen por semaforo"></section>
@@ -718,11 +720,11 @@ const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
   con_productos:"con productos",en_pausa:"en pausa",concluido:"concluido"};
 const ETIQUETA_TP = {bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
   deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno"};
-const ETIQUETA_SEMAFORO = {activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado"};
+const ETIQUETA_SEMAFORO = {activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado",amarillo:"amarillo"};
 // Resto del patron, s10, Fase 4: categoriaLabel del handoff (mapeo binario
 // activo/auxiliar, 1:1; nuestro campo "categoria" solo toma esos 2 valores).
 const CATEGORIA_LABEL = {activo:"Pipeline analítico", auxiliar:"Auxiliar · insumo del portafolio"};
-const SEMAFOROS = ["activo","pausa","bloqueado","cerrado"];
+const SEMAFOROS = ["activo","pausa","bloqueado","cerrado","amarillo"];
 const TIPOS_PENDIENTE = ["bug","bloqueante","deuda_heredada","deuda_tecnica","nuevo","cosmetica","ninguno"];
 // slug -> elemento .fila (llenado en render()); evita re-consultar el DOM al
 // filtrar/hacer scroll desde la banda de atencion (P-DESIGN-PANORAMA-ADOPCION).

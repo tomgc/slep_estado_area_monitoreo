@@ -53,6 +53,18 @@ RANGO_ESTADO <- c(inicial = 0L, en_desarrollo = 1L, con_productos = 2L,
 RANGO_TIPO_PENDIENTE <- c(bug = 0L, bloqueante = 1L, deuda_heredada = 2L,
                           deuda_tecnica = 3L, nuevo = 4L, cosmetica = 5L,
                           ninguno = 6L)
+# Enum de `semaforo` y su token de color. FUENTE UNICA: de aqui se generan la
+# lista del JS, el mapa de etiquetas, y las reglas CSS .punto.sem-* y
+# .atn-card.sem-*. Antes el enum vivia solo en el JS y el CSS repetia sus
+# clases a mano: un valor presente en los datos pero ausente del enum producia
+# una clase emitida y NO definida (`sem-amarillo`), de modo que la ficha salia
+# con etiqueta en la lista y contada como "sin dato" en los KPIs, en el mismo
+# archivo. Generar los tres desde esta lista hace esa contradiccion imposible.
+# `amarillo` reusa --amber (ambar); no se introduce ningun hex nuevo, como
+# declara el bloque de paleta del CSS. D-24-F.
+RANGO_SEMAFORO <- c(activo = "olive", pausa = "amber", bloqueado = "danger",
+                    cerrado = "slate", amarillo = "amber")
+
 MAX_RESENA <- 600L      # tope de caracteres de resena_itinerario.
 MAX_PROXIMOS <- 3L      # tope de entradas de proximos_pasos.
 
@@ -607,6 +619,30 @@ advertir_contradiccion_sensibles <- function(objetos, registro) {
 }
 invisible(advertir_contradiccion_sensibles(objetos, registro))
 
+# ---- Semaforo fuera del enum: advertencia nombrada (D-24-F) -----------------
+# Un valor desconocido caia mudo en el bucket "sin dato" de la UI. Que un dato
+# presente se trate como ausente sin decirlo es el mismo fallo silencioso que
+# B-14-01 en otro sitio: aqui se nombra el repo y el valor.
+advertir_semaforo_desconocido <- function(objetos) {
+  n <- 0L
+  for (o in objetos) {
+    v <- o$semaforo
+    if (is.null(v) || length(v) != 1L || is.na(v) || !nzchar(v)) next
+    if (!(v %in% names(RANGO_SEMAFORO))) {
+      n <- n + 1L
+      log_msg(sprintf(paste0(
+        "semaforo desconocido [%s]: el ESTADO.md declara '%s', que no esta en el ",
+        "enum (%s). La ficha lo muestra, pero los KPIs y el filtro lo cuentan ",
+        "como 'sin dato'."), o$slug, v, paste(names(RANGO_SEMAFORO), collapse = "|")),
+        "36_visual", "WARN")
+    }
+  }
+  log_msg(sprintf("semaforos fuera del enum: %d.", n), "36_visual",
+          if (n > 0L) "WARN" else "INFO")
+  invisible(n)
+}
+invisible(advertir_semaforo_desconocido(objetos))
+
 # ---- Fase 3 (reconciliacion) + mandato de auto-auditoria ---------------------
 #
 # Chequeo cruzado de precedencia: por cada hermano con ESTADO.md, imprime en
@@ -773,10 +809,7 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .der .sem{font-size:.68rem;font-weight:600;color:var(--muted);white-space:nowrap;
   display:inline-flex;align-items:center;gap:5px}
 .punto{display:inline-block;width:7px;height:7px;border-radius:999px;flex:0 0 auto}
-.punto.sem-activo{background:var(--olive)}
-.punto.sem-pausa{background:var(--amber)}
-.punto.sem-bloqueado{background:var(--danger)}
-.punto.sem-cerrado{background:var(--slate)}
+/*__SEM_PUNTO__*/
 .punto.sem-na{background:var(--line)}
 /* P-DESIGN-PANORAMA-ADOPCION: KPIs, banda de atencion y filtros. Reusan
    integramente los tokens de :root ya existentes (--plum/--olive/--amber/
@@ -816,10 +849,7 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .atn-card{display:block;background:var(--card);border:1px solid var(--line);
   border-left:4px solid var(--line);border-radius:8px;padding:10px 12px;
   text-decoration:none;color:inherit}
-.atn-card.sem-activo{border-left-color:var(--olive)}
-.atn-card.sem-pausa{border-left-color:var(--amber)}
-.atn-card.sem-bloqueado{border-left-color:var(--danger)}
-.atn-card.sem-cerrado{border-left-color:var(--slate)}
+/*__SEM_CARD__*/
 .atn-card:hover{background:var(--cream)}
 .atn-card:focus-visible{outline:2px solid var(--ocean);outline-offset:-2px}
 .atn-nombre{font-weight:600;color:var(--plum);font-size:.9rem;white-space:nowrap;
@@ -892,11 +922,11 @@ const ETIQUETA_ESTADO = {inicial:"inicial",en_desarrollo:"en desarrollo",
   con_productos:"con productos",en_pausa:"en pausa",concluido:"concluido"};
 const ETIQUETA_TP = {bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
   deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno"};
-const ETIQUETA_SEMAFORO = {activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado"};
+/*__SEM_ETIQUETA__*/
 // Resto del patron, s10, Fase 4: categoriaLabel del handoff (mapeo binario
 // activo/auxiliar, 1:1; nuestro campo "categoria" solo toma esos 2 valores).
 const CATEGORIA_LABEL = {activo:"Pipeline analítico", auxiliar:"Auxiliar · insumo del portafolio"};
-const SEMAFOROS = ["activo","pausa","bloqueado","cerrado"];
+/*__SEM_LISTA__*/
 const TIPOS_PENDIENTE = ["bug","bloqueante","deuda_heredada","deuda_tecnica","nuevo","cosmetica","ninguno"];
 // slug -> elemento .fila (llenado en render()); evita re-consultar el DOM al
 // filtrar/hacer scroll desde la banda de atencion (P-DESIGN-PANORAMA-ADOPCION).
@@ -1087,6 +1117,41 @@ function render(){
 }
 render();
 ')
+
+# ---- Enum de semaforo: una sola lista, tres artefactos (D-24-F) --------------
+# Sustituye los marcadores de css y js por las reglas generadas desde
+# RANGO_SEMAFORO. La guarda de abajo convierte en ERROR lo que antes era un
+# silencio: una clase emitida sin definir.
+nom_sem <- names(RANGO_SEMAFORO)
+css <- sub("/*__SEM_PUNTO__*/",
+  paste(sprintf(".punto.sem-%s{background:var(--%s)}", nom_sem, RANGO_SEMAFORO),
+        collapse = "\n"), css, fixed = TRUE)
+css <- sub("/*__SEM_CARD__*/",
+  paste(sprintf(".atn-card.sem-%s{border-left-color:var(--%s)}", nom_sem, RANGO_SEMAFORO),
+        collapse = "\n"), css, fixed = TRUE)
+js <- sub("/*__SEM_ETIQUETA__*/",
+  sprintf("const ETIQUETA_SEMAFORO = {%s};",
+          paste(sprintf('%s:"%s"', nom_sem, nom_sem), collapse = ",")), js, fixed = TRUE)
+js <- sub("/*__SEM_LISTA__*/",
+  sprintf("const SEMAFOROS = [%s];",
+          paste(sprintf('"%s"', nom_sem), collapse = ",")), js, fixed = TRUE)
+
+# Guarda de auto-consistencia: cada valor del enum DEBE tener su regla CSS y
+# figurar en la lista del JS. Si no, la ficha saldria con clase inexistente y
+# contada como "sin dato": exactamente el defecto que este bloque cierra.
+for (s in nom_sem) {
+  if (!grepl(sprintf(".punto.sem-%s{", s), css, fixed = TRUE)) {
+    stop(sprintf("36: el valor de semaforo '%s' esta en RANGO_SEMAFORO y no tiene regla CSS .punto.sem-%s", s, s))
+  }
+  if (!grepl(sprintf('"%s"', s), sub("^.*const SEMAFOROS = \\[", "", js), fixed = FALSE)) {
+    stop(sprintf("36: el valor de semaforo '%s' no llego a la lista SEMAFOROS del JS", s))
+  }
+}
+if (grepl("__SEM_", paste(css, js), fixed = TRUE)) {
+  stop("36: quedo un marcador __SEM_* sin sustituir en css o js.")
+}
+log_msg(sprintf("enum de semaforo: %d valores (%s), con regla CSS y entrada JS generadas.",
+                length(nom_sem), paste(nom_sem, collapse = ", ")), "36_visual")
 
 html <- paste0(
   "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n<meta charset=\"utf-8\">\n",
