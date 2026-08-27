@@ -7,11 +7,11 @@ sesion_actual: v13
 ultima_actividad: 2026-08-27
 maneja_sensibles: false
 tipo_pendiente: bug
-sesion_abierta: false
-maquina: macbook-titular
+sesion_abierta: true
+maquina: MacBook-Pro-de-Tomas
 commit_cierre: 88394ad
 traspaso_vigente: traspaso_cierre_v13.md
-cierre_incompleto: PR #4 (rama ordenacion/20260826) abierto sin mergear; el marcador 4bis y el fix del escaner viven solo en la rama, asi que el gatillo se enciende en la apertura siguiente
+cierre_incompleto: no
 insumos_verificados: 2026-08-27
 ventana_insumos: ./40_salidas
 ---
