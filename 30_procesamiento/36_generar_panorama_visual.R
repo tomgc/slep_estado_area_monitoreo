@@ -688,7 +688,11 @@ json_cartera <- jsonlite::toJSON(
 # Blindaje para embeber en <script>: evitar cierre prematuro.
 json_embebido <- str_replace_all(as.character(json_cartera), "</", "<\\\\/")
 
-fecha_generacion <- format(Sys.Date(), "%Y-%m-%d")
+# Fecha del sello con zona explicita, por el mismo motivo que hora_generacion:
+# Sys.Date() usa la zona del proceso, que bajo locale C puede no ser la del
+# titular. D-24-D.
+fecha_generacion <- format(Sys.time(), "%Y-%m-%d",
+                           tz = if (exists("TZ_ORQUESTADOR")) TZ_ORQUESTADOR else "")
 # Hora de generacion (resto del patron del handoff, s10: "Sintesis generada a
 # las {hora}"). Reusa TZ_ORQUESTADOR (10_configuracion.R, ya establecido para
 # evitar el bug de zona horaria de sesiones previas) en vez de una formula

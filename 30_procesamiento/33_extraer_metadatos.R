@@ -15,9 +15,18 @@
 # ---- Funciones ---------------------------------------------------------------
 
 #' Fecha (YYYY-MM-DD) del mtime de un archivo, o NA si no existe.
+#'
+#' La zona es EXPLICITA (TZ_ORQUESTADOR, capturada al bootstrap en
+#' 10_configuracion.R). `as.Date()` sobre un POSIXct usa tz = "UTC" por defecto,
+#' asi que un archivo guardado de noche en America/Santiago se fechaba un dia
+#' MAS TARDE aqui que en la regla de sincronia del paso 32, que si declaraba la
+#' zona. Mientras el desync toleraba un margen de 1 dia la discrepancia quedaba
+#' absorbida; al migrar la regla a correlativos (v14b) ese amortiguador
+#' desaparecio y la diferencia quedo a la vista. D-24-D.
 fecha_mtime <- function(ruta) {
   if (is.na(ruta) || !file.exists(ruta)) return(NA_character_)
-  format(as.Date(file.info(ruta)$mtime), "%Y-%m-%d")
+  tz_loc <- if (exists("TZ_ORQUESTADOR")) TZ_ORQUESTADOR else ""
+  format(file.info(ruta)$mtime, "%Y-%m-%d", tz = tz_loc)
 }
 
 #' Fecha del ultimo commit del hermano (solo lectura de metadatos git). Devuelve
