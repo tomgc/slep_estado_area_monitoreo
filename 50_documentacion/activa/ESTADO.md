@@ -3,36 +3,33 @@ slug: slep_estado_proyectos_monitoreo
 nombre_real: Orquestador de estado de la cartera (Area de Monitoreo)
 categoria: activo
 semaforo: activo
-sesion_actual: v12
-ultima_actividad: 2026-08-26
+sesion_actual: v13
+ultima_actividad: 2026-08-27
 maneja_sensibles: false
-tipo_pendiente: bloqueante
-sesion_abierta: true
+tipo_pendiente: bug
+sesion_abierta: false
 maquina: macbook-titular
-commit_cierre: acdc6ff
-traspaso_vigente: traspaso_cierre_v12.md
-cierre_incompleto: no
-insumos_verificados: 2026-08-26
+commit_cierre: 88394ad
+traspaso_vigente: traspaso_cierre_v13.md
+cierre_incompleto: PR #4 (rama ordenacion/20260826) abierto sin mergear; el marcador 4bis y el fix del escaner viven solo en la rama, asi que el gatillo se enciende en la apertura siguiente
+insumos_verificados: 2026-08-27
 ventana_insumos: ./40_salidas
 ---
 ## En que vamos
-Sesion de rescate. El repositorio estuvo 44 dias sin integrar y con dos traspasos
-existiendo solo en disco; los dos tramos del rescate los publicaron y dejaron main
-sincronizado en 0 0. Se reviso la knowledge base completa (POLITICA v5.8, SETTINGS v34)
-y se censaron los 25 directorios de la cartera: 20 de 25 hermanos no tienen ningun campo
-de candado y 14 incumplen el invariante I5. Se corrigio un bug que tumbaba el paso 6
-ante cualquier tipo_pendiente fuera del enum. El intento de reconstruir el backlog
-destapo que las entradas 55 a 61 nunca llegaron a git y son irrecuperables.
+Sesion de desbloqueo y correccion. El candado abrio recien tras ejecutar D-01, que saco
+registro_proyectos.csv del control de versiones y lo movio a 40_salidas. Restaurado renv,
+el pipeline volvio a operacion. El censo de los 26 directorios de la cartera resolvio la
+duda heredada: la perdida de las entradas 55-61 fue un accidente aislado y no un patron.
+El diagnostico de data.js encontro tres defectos apilados, no uno, y los tres se
+corrigieron: once fichas del panorama recuperaron tipo, objetivo y sintesis.
 
 ## Proximo paso
-Ejecutar renv::restore() para devolver el pipeline a operacion, comprobar si hay mas
-backlogs de la cartera con entradas perdidas, y despachar las cinco decisiones del
-inventario de pendientes, que desbloquean cuatro encargos. Antes de tocar codigo, el
-diagnostico de data.js y de estado_proyecto.
+Diagnosticar por que semaforo llega nulo a todas las fichas del panorama publicado,
+midiendo primero en los ESTADO.md de los hermanos antes de suponer una cadena de
+extraccion. Es el campo por el que se lee la cartera de un vistazo y ninguna de las trece
+sesiones lo habia visto.
 
 ## Bloqueantes
-El pipeline no corre hasta que se restauren los 38 paquetes que declara renv.lock. La
-decision sobre registro_proyectos.csv bloquea el paso de cierre de arbol del comando
-unico. El rescate de slep_rendimiento_historico requiere autorizacion de escritura y
-sesion propia.
-
+El PR #4 sin mergear deja la ordenacion fuera de main. _archivo/ esta en .gitignore, asi
+que cualquier archivo nuevo depositado ahi queda sin versionar sin aviso. El paso 1 no es
+idempotente sobre campos curados vacios y corrompe el registro en la segunda corrida.
