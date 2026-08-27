@@ -499,7 +499,11 @@ construir_objeto <- function(p) {
     nombre_real      = if (tiene_rg) o_null(rg$nombre_real) else NA_character_,
     alias_corto      = if (tiene_rg) o_null(rg$alias_corto) else NA_character_,
     categoria        = if (tiene_rg) o_null(rg$categoria) else o_null(p$categoria),
-    datos_sensibles  = if (tiene_rg) o_null(rg$datos_sensibles) else NA_character_,
+    # T2: el campo se llama `maneja_sensibles` en origen (front matter de los
+    # ESTADO.md y campo del inventario, 34:73). El nombre viejo `datos_sensibles`
+    # solo existia como columna del registro curado, poblada en 1 de 25 filas.
+    # Se corrige el NOMBRE y el ORIGEN; el contenido no se cura (invariante).
+    maneja_sensibles = o_null(p$maneja_sensibles),
     estado_proyecto  = if (tiene_rg) o_null(rg$estado_proyecto) else NA_character_,
     # Fase 2 PUSH: tipo_pendiente ya viene tipado desde 34 (inv$proyectos[[i]]$estado$tipo_pendiente).
     # Enum SETTINGS SS1.2.4 (bug|bloqueante|deuda_heredada|deuda_tecnica|nuevo|cosmetica|ninguno);
@@ -522,6 +526,86 @@ construir_objeto <- function(p) {
 }
 
 objetos <- lapply(inv$proyectos, construir_objeto)
+
+# ---- Guarda de asimetria entre el panorama y la cartera en disco -------------
+# Hasta ahora las dos asimetrias eran MUDAS: una ficha sin repositorio y un
+# repositorio sin ficha se veian igual que todo lo demas. Ahora cada una emite un
+# error NOMBRADO que dice el slug y el lado que falta.
+#
+# Advierte y NO aborta, con el mismo criterio de la guarda del mapeo de data.js
+# (arriba): esa distingue "no lo encontre" de "declare que no existe", y aborta
+# solo en el segundo caso. `simce` existe en el sitio y no en la cartera, y
+# abortar por el dejaria el paso inejecutable por un dato verdadero. Aqui vale lo
+# mismo: una asimetria es un hecho del mundo, no una contradiccion del codigo,
+# SALVO que el slug este declarado en MAPEO_ID_SLUG, donde si contradice una
+# declaracion explicita del propio repositorio.
+verificar_asimetria_cartera <- function(slugs_ficha) {
+  dirs <- basename(Sys.glob(file.path(RAIZ_PROYECTOS, paste0(PREFIJO_UNIVERSO, "*"))))
+  dirs <- dirs[!grepl(PATRON_EXCLUIR_UNIVERSO, dirs, perl = TRUE)]
+  dirs <- setdiff(dirs, SLUG_ORQUESTADOR)
+
+  sin_directorio <- setdiff(slugs_ficha, dirs)
+  sin_ficha      <- setdiff(dirs, slugs_ficha)
+  declarados     <- if (exists("MAPEO_ID_SLUG")) unname(MAPEO_ID_SLUG) else character(0)
+
+  for (s in sort(sin_directorio)) {
+    log_msg(sprintf(
+      "asimetria: la ficha '%s' no tiene directorio en la cartera (falta el lado del repositorio).",
+      s), "36_visual", "WARN")
+    if (s %in% declarados) {
+      stop(sprintf(paste0(
+        "36: el slug '%s' esta declarado en MAPEO_ID_SLUG pero no existe como ",
+        "directorio en la cartera. Una declaracion explicita que no se cumple no ",
+        "es un dato del mundo: es una contradiccion del repositorio."), s))
+    }
+  }
+  for (s in sort(sin_ficha)) {
+    tiene_estado <- file.exists(file.path(RAIZ_PROYECTOS, s, SUBRUTA_ESTADO))
+    log_msg(sprintf(
+      "asimetria: el directorio '%s'%s no tiene ficha en el panorama (falta el lado de data.js/registro).",
+      s, if (tiene_estado) " (CON ESTADO.md)" else " (sin ESTADO.md)"),
+      "36_visual", "WARN")
+  }
+  n <- length(sin_directorio) + length(sin_ficha)
+  log_msg(sprintf(
+    "asimetrias cartera<->panorama: %d (%d fichas sin directorio, %d directorios sin ficha); %d slugs calzan en ambos lados.",
+    n, length(sin_directorio), length(sin_ficha), length(intersect(slugs_ficha, dirs))),
+    "36_visual", if (n > 0L) "WARN" else "INFO")
+  invisible(list(sin_directorio = sin_directorio, sin_ficha = sin_ficha,
+                 calzan = intersect(slugs_ficha, dirs)))
+}
+asimetrias <- verificar_asimetria_cartera(vapply(objetos, function(o) o$slug, character(1)))
+
+# ---- Contradiccion entre el registro curado y el origen real ----------------
+# Al corregir el NOMBRE del campo cambio tambien su ORIGEN: antes venia de la
+# columna `datos_sensibles` del registro curado a mano (poblada en 1 de 25
+# filas), ahora de `maneja_sensibles` del inventario (34:73), derivado de la
+# presencia de gobernanza_datos.md en el hermano. Donde ambas fuentes existen y
+# discrepan, el panorama muestra el origen real y lo ADVIERTE con nombre: curar
+# cual de las dos tiene razon es decision del titular, no de este paso (invariante).
+advertir_contradiccion_sensibles <- function(objetos, registro) {
+  n <- 0L
+  for (o in objetos) {
+    fila <- registro[registro$slug == o$slug, , drop = FALSE]
+    if (nrow(fila) != 1L) next
+    curado <- o_null(fila$datos_sensibles)
+    if (is.na(curado) || !nzchar(as.character(curado))) next
+    real <- o$maneja_sensibles
+    if (is.null(real) || is.na(real)) next
+    if (!identical(toupper(as.character(curado)), toupper(as.character(real)))) {
+      n <- n + 1L
+      log_msg(sprintf(paste0(
+        "sensibilidad [%s]: el registro curado dice datos_sensibles=%s y el origen ",
+        "real dice maneja_sensibles=%s (derivado de gobernanza_datos.md). Se muestra ",
+        "el origen real; la curacion del registro es decision del titular."),
+        o$slug, curado, real), "36_visual", "WARN")
+    }
+  }
+  log_msg(sprintf("contradicciones registro<->origen en sensibilidad: %d.", n),
+          "36_visual", if (n > 0L) "WARN" else "INFO")
+  invisible(n)
+}
+invisible(advertir_contradiccion_sensibles(objetos, registro))
 
 # ---- Fase 3 (reconciliacion) + mandato de auto-auditoria ---------------------
 #
@@ -1051,8 +1135,8 @@ for (o in objetos) {
   ap(sprintf("- **tipo de pendiente:** %s", et_tp(o$tipo_pendiente)))
   ap(sprintf("- **semaforo:** %s", et_semaforo(o$semaforo)))
   ap(sprintf("- **estado:** %s", et_estado(o$estado_proyecto)))
-  ds <- if (is.na(o$datos_sensibles)) "sin clasificar" else o$datos_sensibles
-  ap(sprintf("- **datos sensibles:** %s", ds))
+  ds <- if (is.na(o$maneja_sensibles)) "sin clasificar" else o$maneja_sensibles
+  ap(sprintf("- **maneja sensibles:** %s", ds))
   ap(sprintf(u8("- **última actualización:** %s"),
              if (is.na(o$fecha_actualizacion)) "sin traspaso" else o$fecha_actualizacion))
   # .md no interactivo: muestra TODOS los parrafos de sintesis[] como texto corrido

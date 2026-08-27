@@ -145,6 +145,56 @@ seccion_md <- function(cuerpo_lineas, titulo) {
   trimws(paste(sec[nzchar(trimws(sec))], collapse = " "))
 }
 
+# ---- Tolerancia a esquemas no canonicos (B-14-02, D-14-E) --------------------
+# Un hermano de la cartera escribe su ESTADO.md con otras claves: `sesion:` en vez
+# de `sesion_actual:`, `fecha:` en vez de `ultima_actividad:`, `sensibilidad:` en
+# vez de `maneja_sensibles:`. Tolerar en SILENCIO convertiria la deriva de esquema
+# en invisible, que es el defecto que se corrige, no una variante de el. Por eso el
+# lector ACEPTA el alias y ADVIERTE nombrando el repo y las claves.
+# La correccion del ESTADO.md vive en el hermano y exige autorizacion nominal
+# propia (D-14-E se resolvio como *no* en esta sesion): aqui no se toca.
+ALIAS_FRONT_MATTER <- list(
+  sesion_actual    = "sesion",
+  ultima_actividad = "fecha",
+  maneja_sensibles = "sensibilidad"
+)
+
+#' Lee una clave del front matter aceptando su alias no canonico conocido.
+#' Devuelve el valor y el alias efectivamente usado (NA si se uso la canonica),
+#' para que el llamador pueda advertir sin volver a inspeccionar el archivo.
+leer_clave_tolerante <- function(meta, canonica) {
+  v <- meta[[canonica]]
+  if (!is.null(v) && nzchar(v)) return(list(valor = v, alias = NA_character_))
+  ali <- ALIAS_FRONT_MATTER[[canonica]]
+  if (!is.null(ali)) {
+    w <- meta[[ali]]
+    if (!is.null(w) && nzchar(w)) return(list(valor = w, alias = ali))
+  }
+  list(valor = NULL, alias = NA_character_)
+}
+
+#' Advierte una sola vez por repo y por corrida sobre las claves no canonicas
+#' halladas. El registro de lo ya advertido vive en un entorno propio para no
+#' ensuciar el global ni depender del orden de las llamadas.
+.avisos_esquema <- new.env(parent = emptyenv())
+advertir_esquema <- function(repo, alias_usados) {
+  alias_usados <- alias_usados[!is.na(alias_usados)]
+  if (!length(alias_usados)) return(invisible(NULL))
+  if (!is.null(.avisos_esquema[[repo]])) return(invisible(NULL))
+  .avisos_esquema[[repo]] <- TRUE
+  pares <- vapply(alias_usados, function(a) {
+    can <- names(ALIAS_FRONT_MATTER)[vapply(ALIAS_FRONT_MATTER, identical, logical(1), a)]
+    sprintf("'%s' (canonica: '%s')", a, if (length(can)) can[1] else "?")
+  }, character(1))
+  log_msg(sprintf(
+    "ESTADO.md de [%s] usa claves NO canonicas: %s. Se aceptan por tolerancia; " ,
+    repo, paste(pares, collapse = ", ")), "32_localizar", "WARN")
+  log_msg(sprintf(
+    "  la correccion vive en el repo hermano [%s] y exige autorizacion nominal propia.",
+    repo), "32_localizar", "WARN")
+  invisible(NULL)
+}
+
 #' Extrae el correlativo entero de una etiqueta de sesion del front matter
 #' ("v13", "V07", "13"). Devuelve NA_integer_ si no hay entero legible.
 #' No compone el identificador desde el nombre del archivo: el vNN del traspaso
@@ -206,7 +256,11 @@ resolver_estado <- function(ruta_proyecto, traspaso) {
   # lista de resolver_traspaso(), se acepta el entero desnudo. No se adivina.
   vnn <- if (is.list(traspaso)) traspaso$correlativo else traspaso
   vnn <- if (is.null(vnn)) NA_integer_ else suppressWarnings(as.integer(vnn))
-  ses <- correlativo_de_sesion(meta$sesion_actual)
+  lec_ses <- leer_clave_tolerante(meta, "sesion_actual")
+  lec_ua  <- leer_clave_tolerante(meta, "ultima_actividad")
+  lec_ms  <- leer_clave_tolerante(meta, "maneja_sensibles")
+  advertir_esquema(basename(ruta_proyecto), c(lec_ses$alias, lec_ua$alias, lec_ms$alias))
+  ses <- correlativo_de_sesion(lec_ses$valor)
 
   if (is.na(ses)) {
     veredicto <- "indeterminado"
