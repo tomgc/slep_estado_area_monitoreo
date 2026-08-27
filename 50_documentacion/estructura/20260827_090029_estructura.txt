@@ -1,10 +1,10 @@
 # Estructura del proyecto (escaner)
 
 - Raiz       : slep_estado_proyectos_monitoreo
-- Fecha      : 2026-08-26 18:29:38
+- Fecha      : 2026-08-27 09:00:29
 - Directorios: 19
-- Archivos   : 105
-- Tamano     : 2.04M
+- Archivos   : 116
+- Tamano     : 2.18M
 
 ## Arbol
 
@@ -18,7 +18,7 @@ slep_estado_proyectos_monitoreo/
 .Renviron.example  (1.93K)
 .Rhistory  (76)
 .Rprofile  (26)
-00_escanear_proyecto.R  (5.57K)
+00_escanear_proyecto.R  (5.63K)
 00_run_all.R  (4.66K)
 10_utils/
   10_configuracion.R  (6.91K)
@@ -32,7 +32,7 @@ slep_estado_proyectos_monitoreo/
   33_extraer_metadatos.R  (3.16K)
   34_compilar_inventario.R  (6.99K)
   35_compilar_panorama.R  (8.98K)
-  36_generar_panorama_visual.R  (50.7K)
+  36_generar_panorama_visual.R  (55.3K)
 40_salidas/
   .Rhistory  (0)
   cache/
@@ -52,25 +52,24 @@ slep_estado_proyectos_monitoreo/
     slep_simce_estandares_aprendizaje.md  (1.92K)
   inventario_cartera.json  (36K)
   inventario_cartera.parquet  (20.9K)
-  panorama_visual.html  (47.6K)
-  panorama_visual.md  (21.6K)
+  panorama_visual.html  (59.6K)
+  panorama_visual.md  (30.4K)
   panorama.md  (31.7K)
-  registro_proyectos.csv  (3.21K)
+  registro_proyectos.csv  (3.14K)
 50_documentacion/
   .DS_Store  (14K)
   activa/
     .DS_Store  (6K)
     50_locale_utf8.md  (2.06K)
-    backlog_acumulativo.md  (24.3K)
+    backlog_acumulativo.md  (25K)
     decisiones/
       20260628_decision_arquitectura_orquestador.md  (4.21K)
       20260710_decision_desalineacion_nombres_repos.md  (5.38K)
-    esbozo_fase2_estado_estandarizado.md  (4.36K)
     ESTADO.md  (1.61K)
     POLITICA_PROYECTO.md  (42.8K)
-    reporte_cobertura_documental.md  (6.46K)
     SETTINGS_Y_PROMPTS_OPERACIONALES.md  (137K)
   andamios/
+    .DS_Store  (6K)
     20260710_inventario_repos_y_nuevos.md  (10.6K)
     20260824_censo_cartera.csv  (13.5K)
     20260824_censo_cartera.md  (91.1K)
@@ -80,9 +79,20 @@ slep_estado_proyectos_monitoreo/
     20260824_encargo_rescate_tramo_b.md  (10.7K)
     20260824_pendientes_y_encargos.md  (12.9K)
     20260824_ruta_comando_unico.md  (17.4K)
+    20260826_censo_backlogs_autotest.R  (5.43K)
+    20260826_censo_backlogs_cartera.csv  (5.5K)
+    20260826_censo_backlogs_cartera.md  (15.4K)
+    20260826_censo_backlogs_motor.R  (9.94K)
+    20260826_diagnostico_campos_perdidos.md  (11.4K)
     20260826_encargo_apertura_s13.md  (10.1K)
     20260826_encargo_backlog_55_67.md  (9.61K)
+    20260826_encargo_censo_backlogs.md  (8.49K)
+    20260826_encargo_correccion_frente_a.md  (6.41K)
+    20260826_encargo_deuda_documental.md  (5.75K)
+    20260826_encargo_diagnostico_a05.md  (6.93K)
+    20260826_encargo_ordenacion_a03.md  (8.51K)
     20260826_encargo_rescate_tramo_b_v2.md  (12.2K)
+    20260826_verificacion_frente_a.md  (21.2K)
     auditoria_backlogs_20260629.md  (11.9K)
     design_handoff_monitoreo_cartera/
       assets/
@@ -108,13 +118,14 @@ slep_estado_proyectos_monitoreo/
       20260702_patron_visual_handoff_log.md  (16.8K)
       cierres_log.md  (6.87K)
   estructura/
-    20260702_145708_estructura.md  (3.78K)
-    20260702_145708_estructura.txt  (3.78K)
-    20260824_083051_estructura.md  (3.93K)
-    20260824_083051_estructura.txt  (3.93K)
-    estructura_actual.md  (3.93K)
-    estructura_actual.txt  (3.93K)
+    20260826_182938_estructura.md  (4.72K)
+    20260826_182938_estructura.txt  (4.72K)
+    20260827_090022_estructura.md  (5.18K)
+    20260827_090022_estructura.txt  (5.18K)
+    estructura_actual.md  (5.18K)
+    estructura_actual.txt  (5.18K)
   traspasos/
+    .DS_Store  (8K)
     archivo/
       traspaso_cierre_v01.md  (13.1K)
       traspaso_cierre_v02.md  (15.2K)
@@ -128,8 +139,8 @@ slep_estado_proyectos_monitoreo/
       traspaso_cierre_v10.md  (26.6K)
       traspaso_cierre_v11.md  (24.5K)
     traspaso_cierre_v12.md  (29.1K)
-CLAUDE.md  (14.8K)
-README.md  (6.47K)
+CLAUDE.md  (15K)
+README.md  (6.9K)
 renv.lock  (65.7K)
 slep_estado_proyectos_monitoreo.Rproj  (248)
 tests/
@@ -139,11 +150,11 @@ tests/
 ## Conteo por extension
 
 ```
-  md                 60
-  R                  13
+  md                 66
+  R                  15
   otf                6
-  (sin extension)    3
-  csv                3
+  (sin extension)    5
+  csv                4
   png                3
   txt                3
   html               2
