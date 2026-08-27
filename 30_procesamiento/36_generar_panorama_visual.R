@@ -302,20 +302,50 @@ parsear_data_js <- function(ruta_abs) {
 #' de la de 32 (p. ej. una version sin margen reintroduciria el falso-desync
 #' de medianoche ya corregido).
 #'
+# ---- Fuente unica del veredicto de sincronia (B-14-03) -----------------------
+# La deteccion de desync vive SOLO en 32_localizar_documentos.R. Este paso la
+# CARGA y la LLAMA; no la reimplementa. Antes habia aqui una segunda copia de la
+# formula. El booleano era identico (verificado por barrido exhaustivo sobre
+# ua x mt x margen: 0 divergencias), pero el payload adjunto divergia en tres
+# puntos que nadie medisa:
+#   1. extraia "Proximo paso" con bloque_seccion() (laxo: cualquier nivel,
+#      insensible a mayusculas, por subcadena) en vez de seccion_md() (estricto:
+#      "## Proximo paso" exacto). Divergencia LATENTE: los 23 ESTADO.md de la
+#      cartera usan hoy la forma exacta, asi que ninguna regresion la habria visto.
+#   2. tomaba el mtime del traspaso desde inventario_cartera.json (foto en disco)
+#      en vez de resolver el traspaso EN VIVO: con el inventario atrasado, los dos
+#      caminos podian dar veredictos opuestos para el mismo ESTADO.md.
+#   3. rehardcodeaba la ruta de ESTADO.md en vez de usar SUBRUTA_ESTADO.
+# Unificar cierra las tres. Se conserva la semantica de 32, la mas estricta.
+cargar_reglas_sincronia <- function() {
+  if (exists("resolver_estado", inherits = TRUE) &&
+      exists("resolver_traspaso", inherits = TRUE)) return(invisible(FALSE))
+  ruta32 <- file.path(RAIZ_ORQUESTADOR, "30_procesamiento", "32_localizar_documentos.R")
+  L32 <- readLines(ruta32, warn = FALSE, encoding = "UTF-8")
+  corte <- grep("^# ---- Flujo principal", L32)
+  if (length(corte) != 1L) {
+    stop("36: no se pudo aislar el bloque de funciones de 32 (centinela ",
+         "'# ---- Flujo principal' ausente o repetido).")
+  }
+  eval(parse(text = paste(L32[seq_len(corte - 1L)], collapse = "\n")), envir = globalenv())
+  invisible(TRUE)
+}
+cargar_reglas_sincronia()
+
 #' Camino de respaldo (standalone, ej. run_all(only=6) sin haber corrido el
-#' paso 32 en esta sesion): relectura autocontenida que reusa el MISMO parser
-#' (parsear_front_matter, 10_utils.R) y la MISMA formula/constantes de margen
-#' (MARGEN_DESYNC_DIAS, TZ_ORQUESTADOR, 10_configuracion.R) para no divergir.
+#' paso 32 en esta sesion): LLAMA a resolver_traspaso() + resolver_estado() de
+#' 32_localizar_documentos.R, cargadas por cargar_reglas_sincronia(). No hay
+#' segunda formula: hay una sola regla y dos formas de llegar a ella.
 #'
-#' Degradacion con gracia (mismo idioma que parsear_data_js): sin ESTADO.md,
-#' front matter no reconocible, o hermano desincronizado -> semaforo=NA y
-#' proximo_paso=NA (se trata como si no existiera, Fase 1 PULL). tipo_pendiente
-#' crudo se devuelve SIEMPRE que exista el campo (no gateado por sync: el
-#' inventario/34 ya lo trata asi "como hoy"; se usa solo para el chequeo
-#' cruzado de auditoria, no para decidir nada operativo aqui).
+#' Degradacion con gracia (mismo idioma que parsear_data_js): sin ESTADO.md o
+#' front matter no reconocible -> semaforo=NA y proximo_paso=NA. Solo un
+#' veredicto "desincronizado" APAGA los campos; "indeterminado" los conserva
+#' (B-14-01). tipo_pendiente crudo se devuelve SIEMPRE que exista el campo (no
+#' gateado por sync: el inventario/34 ya lo trata asi; se usa solo para el
+#' chequeo cruzado de auditoria, no para decidir nada operativo aqui).
 #'
 #' @return list(semaforo, proximo_paso, tipo_pendiente_raw, sincronizado, presente)
-leer_estado_hermano <- function(slug, ruta_traspaso) {
+leer_estado_hermano <- function(slug) {
   vacio <- list(semaforo = NA_character_, proximo_paso = NA_character_,
                 tipo_pendiente_raw = NA_character_, sincronizado = FALSE,
                 presente = FALSE)
@@ -343,32 +373,20 @@ leer_estado_hermano <- function(slug, ruta_traspaso) {
     ))
   }
 
-  # ---- Fallback standalone (sin lista_documentos en sesion) ------------------
-  ruta <- file.path(RAIZ_PROYECTOS, slug, "50_documentacion", "activa", "ESTADO.md")
-  if (!file.exists(ruta)) return(vacio)
+  # ---- Fallback standalone: la MISMA regla, resuelta en vivo -----------------
+  dir_hno <- file.path(RAIZ_PROYECTOS, slug)
+  tr  <- resolver_traspaso(dir_hno)
+  est <- resolver_estado(dir_hno, tr$ruta)
+  if (!isTRUE(est$presente)) return(vacio)
 
-  L  <- readLines(ruta, warn = FALSE, encoding = "UTF-8")
-  fm <- parsear_front_matter(L)
-  meta <- fm$meta
-
-  ua <- suppressWarnings(as.Date(if (is.null(meta$ultima_actividad)) NA_character_ else meta$ultima_actividad))
-  tz_loc <- if (exists("TZ_ORQUESTADOR")) TZ_ORQUESTADOR else ""
-  mt <- if (!is.na(ruta_traspaso) && file.exists(ruta_traspaso))
-          as.Date(format(file.mtime(ruta_traspaso), "%Y-%m-%d", tz = tz_loc)) else NA
-  margen <- if (exists("MARGEN_DESYNC_DIAS")) MARGEN_DESYNC_DIAS else 0L
-  sinc <- !is.na(ua) && (is.na(mt) || !(ua < (mt - margen)))
-
-  prox_raw <- bloque_seccion(fm$cuerpo, "Proximo paso")
-  prox <- if (length(prox_raw) == 0) "" else
-    trimws(paste(prox_raw[nzchar(trimws(prox_raw))], collapse = " "))
-
-  sem <- meta$semaforo
-  tp  <- meta$tipo_pendiente
+  sem <- est$meta$semaforo
+  tp  <- est$tipo_pendiente
+  apaga <- identical(est$veredicto, "desincronizado")
   list(
-    semaforo = if (sinc && !is.null(sem) && nzchar(sem)) sem else NA_character_,
-    proximo_paso = if (sinc && nzchar(prox)) prox else NA_character_,
-    tipo_pendiente_raw = if (is.null(tp) || !nzchar(tp)) NA_character_ else tp,
-    sincronizado = sinc,
+    semaforo = if (!apaga && !is.null(sem) && nzchar(sem)) sem else NA_character_,
+    proximo_paso = if (!apaga && !is.null(est$proximo) && !is.na(est$proximo)) est$proximo else NA_character_,
+    tipo_pendiente_raw = if (is.null(tp) || is.na(tp) || !nzchar(tp)) NA_character_ else tp,
+    sincronizado = isTRUE(est$sincronizado),
     presente = TRUE
   )
 }
@@ -438,7 +456,7 @@ abs_de <- function(rel) {
 # Fase 2 PUSH: estado (semaforo/proximo_paso/tipo_pendiente crudo) por slug,
 # precomputado una vez (mismo patron que datos_por_slug para data.js).
 estados_hno <- stats::setNames(
-  lapply(inv$proyectos, function(p) leer_estado_hermano(p$slug, abs_de(p$documentos$traspaso))),
+  lapply(inv$proyectos, function(p) leer_estado_hermano(p$slug)),
   vapply(inv$proyectos, function(p) p$slug, character(1))
 )
 
