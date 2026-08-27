@@ -145,6 +145,41 @@ seccion_md <- function(cuerpo_lineas, titulo) {
   trimws(paste(sec[nzchar(trimws(sec))], collapse = " "))
 }
 
+#' Busca un encabezado que PAREZCA la seccion pedida pero no calce la forma
+#' canonica de seccion_md() (`## <Titulo>` exacto, nivel 2, sin sufijo). Devuelve
+#' la linea literal hallada, o NA si no hay ninguna.
+#'
+#' Existe porque seccion_md() es estricto y devuelve "" tanto cuando la seccion
+#' NO ESTA como cuando esta escrita de otra forma. Los dos casos son distintos y
+#' el segundo es un fallo silencioso: el hermano declaro su proximo paso y el
+#' panorama lo perdio sin decir nada. D-24-H. (SETTINGS no se toca: la deteccion
+#' vive aqui, en el consumidor.)
+forma_no_canonica_seccion <- function(cuerpo_lineas, titulo) {
+  laxo <- sprintf("(?i)^#{1,6}[[:space:]]+.*%s", gsub(" ", "[[:space:]]+", titulo))
+  cand <- cuerpo_lineas[grepl(laxo, cuerpo_lineas, perl = TRUE)]
+  if (!length(cand)) return(NA_character_)
+  exacto <- sprintf("^##\\s+%s\\s*$", titulo)
+  fuera <- cand[!grepl(exacto, cand)]
+  if (!length(fuera)) return(NA_character_)
+  trimws(fuera[1])
+}
+
+#' Advierte una sola vez por repo sobre una seccion escrita fuera de la forma
+#' canonica. Mismo registro que advertir_esquema(): un aviso por repo y corrida.
+.avisos_seccion <- new.env(parent = emptyenv())
+advertir_seccion_no_canonica <- function(repo, titulo, forma) {
+  if (is.na(forma)) return(invisible(NULL))
+  clave <- paste(repo, titulo, sep = "::")
+  if (!is.null(.avisos_seccion[[clave]])) return(invisible(NULL))
+  .avisos_seccion[[clave]] <- TRUE
+  log_msg(sprintf(paste0(
+    "ESTADO.md de [%s]: la seccion '%s' existe pero NO en la forma canonica ",
+    "'## %s'; se hallo [%s]. El campo queda vacio: el lector es estricto a ",
+    "proposito y solo avisa, no adivina."),
+    repo, titulo, titulo, forma), "32_localizar", "WARN")
+  invisible(NULL)
+}
+
 # ---- Tolerancia a esquemas no canonicos (B-14-02, D-14-E) --------------------
 # Un hermano de la cartera escribe su ESTADO.md con otras claves: `sesion:` en vez
 # de `sesion_actual:`, `fecha:` en vez de `ultima_actividad:`, `sensibilidad:` en
@@ -279,6 +314,10 @@ resolver_estado <- function(ruta_proyecto, traspaso) {
   tp <- if (is.null(meta$tipo_pendiente) || !nzchar(meta$tipo_pendiente))
            NA_character_ else meta$tipo_pendiente
   prox <- seccion_md(fm$cuerpo, "Proximo paso")
+  if (!nzchar(prox)) {
+    advertir_seccion_no_canonica(basename(ruta_proyecto), "Proximo paso",
+                                 forma_no_canonica_seccion(fm$cuerpo, "Proximo paso"))
+  }
 
   list(
     presente       = TRUE,
