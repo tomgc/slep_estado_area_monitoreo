@@ -13,7 +13,7 @@ commit_cierre: acdc6ff
 traspaso_vigente: traspaso_cierre_v12.md
 cierre_incompleto: no
 insumos_verificados: 2026-08-26
-ventana_insumos: ./20_insumos
+ventana_insumos: ./40_salidas
 ---
 ## En que vamos
 Sesion de rescate. El repositorio estuvo 44 dias sin integrar y con dos traspasos

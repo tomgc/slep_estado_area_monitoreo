@@ -50,12 +50,18 @@ Tests: `Rscript tests/test_orquestador.R`.
 00_run_all.R              orquestador (POLITICA 4)
 00_escanear_proyecto.R    escaner de ESTE repo
 10_utils/                 bootstrapping + configuracion
-20_insumos/               registro_proyectos.csv (unico insumo curado a mano)
+20_insumos/               (vacio desde D-01: el registro se mudo a 40_salidas)
 30_procesamiento/         31..35
-40_salidas/               inventario_cartera.*, cache/, panorama.md
+40_salidas/               inventario_cartera.*, cache/, panorama.md, registro_proyectos.csv
 50_documentacion/         activa (POLITICA + SETTINGS + decisiones + reportes), traspasos, andamios, estructura
 tests/                    test_orquestador.R
 ```
+
+**El registro (`40_salidas/registro_proyectos.csv`).** Lo escribe el paso 1 en cada
+corrida: es destino del pipeline y no fuente (A21), y por eso no se versiona (I8).
+Los campos curados (`nombre_real`, `alias_corto`, `notas`) los completa el titular
+sobre el archivo generado, y el paso 1 jamas los pisa. En un clon nuevo no existe
+hasta la primera corrida; los pasos 4 y 6 abortan con causa y remedio si falta.
 
 ## Resolucion de rutas (portable Mac/Windows)
 
