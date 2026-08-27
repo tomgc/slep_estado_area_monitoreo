@@ -67,6 +67,18 @@ leer_registro_previo <- function(ruta) {
     readr::read_csv(ruta, col_types = readr::cols(.default = readr::col_character())),
     stringsAsFactors = FALSE
   )
+  # O-20 / B13-03. `readr::read_csv()` parsea TANTO "" COMO "NA" a NA real
+  # (su default es na = c("", "NA")), y `readr::write_csv()` escribe NA como la
+  # cadena "NA" (su default es na = "NA"). Esa asimetria convierte una celda
+  # vacia en la cadena literal "NA" en UN solo ciclo leer->escribir, y cada
+  # corrida contamina mas celdas.
+  #
+  # Se cierra por los dos extremos: aqui se normaliza NA -> "" apenas se lee, y
+  # abajo se escribe con na = "". Normalizar ANTES de que ninguna guarda mire el
+  # valor es lo que importa: `nzchar(NA)` devuelve TRUE, asi que toda guarda de
+  # "campo vacio" escrita con nzchar() sobre el NA crudo esta INVERTIDA y
+  # propaga el NA como si fuera un valor curado por el titular.
+  prev[] <- lapply(prev, function(x) { x <- as.character(x); x[is.na(x)] <- ""; x })
   for (c in cols) if (is.null(prev[[c]])) prev[[c]] <- ""
   extra <- setdiff(names(prev), cols)
   prev[, c(cols, extra), drop = FALSE]
@@ -128,7 +140,8 @@ construir_fila <- function(slug) {
   det <- df_proyectos[df_proyectos$slug == slug, , drop = FALSE]
 
   # nombre_real, alias_corto, notas: campos del titular -> jamas se pisan.
-  nombre_real <- if (tiene_prev && nzchar(fila_prev$nombre_real)) {
+  nombre_real <- if (tiene_prev && !is.na(fila_prev$nombre_real) &&
+                  nzchar(fila_prev$nombre_real)) {
     fila_prev$nombre_real
   } else {
     det$nombre_real_sugerido
@@ -176,7 +189,9 @@ registro <- registro[order(registro$slug), , drop = FALSE]
 rownames(registro) <- NULL
 
 escribir_seguro(RUTA_REGISTRO, function(ruta) {
-  readr::write_csv(registro, ruta)  # UTF-8 garantizado, sin escapes <U+XXXX>.
+  # na = "": simetrico con la lectura de arriba. Sin esto, cada corrida
+  # reescribe las celdas vacias como la cadena "NA" (O-20 / B13-03).
+  readr::write_csv(registro, ruta, na = "")  # UTF-8 garantizado, sin escapes <U+XXXX>.
 })
 
 log_msg(sprintf("Registro sincronizado: %d filas (%d nuevos, %d bajas).",
