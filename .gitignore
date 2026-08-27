@@ -14,7 +14,6 @@ Thumbs.db
 # Nota: *.Rproj SI se versiona (ancla de here::here() en otra maquina).
 
 # Snapshots y backups locales
-_archivo/
 *.bak
 
 # Activos pesados de referencia (no se versionan)
