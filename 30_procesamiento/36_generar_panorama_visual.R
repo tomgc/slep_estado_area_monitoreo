@@ -35,7 +35,9 @@ library(stringr)
 # igual que los traspasos/backlogs de los hermanos; nunca se copia ni versiona.
 # Si el archivo no existe (o esto vuelve a NA), se degrada con gracia: los campos
 # quedan null y se reporta como advertencia.
-RUTA_DATA_JS_PORTAFOLIO <- file.path(RAIZ_PROYECTOS, "slep_monitoreo", "data.js")
+# El sitio del hermano se sirve desde docs/ desde su commit 00a1af3 ("chore(pages):
+# mueve el sitio a docs/ y deja de servir la raiz"); antes colgaba de la raiz.
+RUTA_DATA_JS_PORTAFOLIO <- file.path(RAIZ_PROYECTOS, "slep_monitoreo", "docs", "data.js")
 
 RUTA_PANORAMA_VISUAL_HTML <- file.path(RUTA_SALIDAS, "panorama_visual.html")
 RUTA_PANORAMA_VISUAL_MD   <- file.path(RUTA_SALIDAS, "panorama_visual.md")
@@ -57,22 +59,30 @@ MAX_PROXIMOS <- 3L      # tope de entradas de proximos_pasos.
 # Nombre canonico EXACTO del backlog (no se aceptan variantes).
 SUBRUTA_BACKLOG_CANONICO <- file.path("50_documentacion", "activa", "backlog_acumulativo.md")
 
-# Mapeo orden (entero estable de data.js) -> slug del hermano. Aprobado por el
-# titular (sesion de cierre). Se clava por `orden` y NO por texto de titulo: si
-# data.js reordena el array, el desfase orden<->slug es detectable a simple vista
-# por el comentario inline (titulo literal de data.js al momento de aprobar).
-MAPEO_ORDEN_SLUG <- c(
-  `1`  = "slep_minuta_asistencia",                     # "Minuta de asistencia mensual"
-  `2`  = "slep_reportes_modelo_resguardo_asistencia",  # "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio"
-  `3`  = "slep_simce_adecuado",                        # "Motor de comparacion interactivo de los resultados de los estandares de aprendizaje medidos por las pruebas Simce"
-  `4`  = "slep_idps",                                  # "Motor de comparacion interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)"
-  `5`  = "slep_categoria_desempeno",                   # "Motor de comparacion interactivo de la Categoria de Desempeno de los establecimientos educacionales del pais"
-  `6`  = "slep_aprendizajes_ep",                       # "Monitoreo de aprendizajes en la educacion parvularia"
-  `7`  = "slep_seguimiento_educacion_inicial",         # "Analisis longitudinal de preferencias de matricula de egresados de jardines infantiles"
-  `8`  = "slep_costapresente",                         # "CostaPresente"
-  `9`  = "slep_alertas_ael",                           # "Sistema de alertas de Anotate en la Lista"
-  `10` = "slep_minuta_desvinculacion",                 # "Analisis de trayectorias educativas interrumpidas"
-  `11` = "slep_rendimiento_historico"                  # "Diagnostico historico del rendimiento escolar"
+# Mapeo id (llave estable de data.js) -> slug del hermano. Se clava por `id` y NO
+# por `orden`: el propio origen declara `id` como "llave estable y unica... NO se
+# cambia una vez publicado" y `orden` como numero que "se renumera al insertar
+# proyectos". Y ya se renumero: el origen inserto un proyecto en la posicion 3 y
+# corrio en +1 todo lo posterior, de modo que el mapeo por orden asignaba a cada
+# ficha el contenido editorial de su vecino (salida verde y equivocada, A25).
+# Los 11 pares heredados del mapeo por orden (aprobados por el titular) se
+# conservan intactos: cada uno se reclavo por el titulo literal con que fue
+# aprobado, que es el comentario inline de su linea.
+# NA = entrada editorial del sitio sin hermano en la cartera. Es una declaracion
+# explicita, no una omision: un `id` que NO figure en esta tabla aborta el paso.
+MAPEO_ID_SLUG <- c(
+  asistencia    = "slep_minuta_asistencia",                     # "Minuta de asistencia mensual"
+  resguardo     = "slep_reportes_modelo_resguardo_asistencia",  # "Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio"
+  simce         = NA_character_,                                # "Minutas de resultados Simce 2025 del territorio" (proyecto nuevo del sitio, sin repo hermano; pendiente de curacion del titular)
+  estandares    = "slep_simce_adecuado",                        # "Motor de comparacion interactivo de los resultados de los estandares de aprendizaje medidos por las pruebas Simce"
+  idps          = "slep_idps",                                  # "Motor de comparacion interactivo de los resultados en los Indicadores de Desarrollo Personal y Social (IDPS)"
+  categorias    = "slep_categoria_desempeno",                   # "Motor de comparacion interactivo de la Categoria de Desempeno de los establecimientos educacionales del pais"
+  parvularia    = "slep_aprendizajes_ep",                       # "Monitoreo de aprendizajes en la educacion parvularia"
+  inicial       = "slep_seguimiento_educacion_inicial",         # "Analisis longitudinal de preferencias de matricula de egresados de jardines infantiles"
+  costapresente = "slep_costapresente",                         # "CostaPresente"
+  ael           = "slep_alertas_ael",                           # "Sistema de alertas de Anotate en la Lista"
+  trayectorias  = "slep_minuta_desvinculacion",                 # "Analisis de trayectorias educativas interrumpidas"
+  rendimiento   = "slep_rendimiento_historico"                  # "Diagnostico historico del rendimiento escolar"
 )
 
 # ---- Helpers de lectura/parsing (tolerantes) ---------------------------------
@@ -176,12 +186,14 @@ o_null <- function(x) {
 #' Parsea el arreglo PROYECTOS de un data.js del portafolio. Enfoque (B.2): el
 #' formato es JS plano y estable (claves sin comillas, valores con comillas
 #' dobles consistentes, sin trailing commas, sin funciones, comentarios fuera de
-#' los objetos), de uso interno. Por eso saneamos las 7 claves conocidas a
-#' comillas y delegamos en jsonlite -mas robusto para el array multilinea
-#' sintesis[] que una regex por campo-. tryCatch POR OBJETO: una entrada
-#' malformada se omite con advertencia sin abortar el resto (patron tolerante).
-#' Devuelve lista nombrada por `orden` (string), o NULL si el archivo no existe /
-#' no hay arreglo / ninguna entrada parsea (degradacion con gracia).
+#' los objetos), de uso interno. Por eso saneamos las claves a comillas y
+#' delegamos en jsonlite -mas robusto para el array multilinea sintesis[] que
+#' una regex por campo-. tryCatch POR OBJETO: una entrada malformada se omite
+#' con advertencia sin abortar el resto (patron tolerante).
+#' Devuelve lista nombrada por `id` (la llave estable que declara el origen), o
+#' NULL si el archivo no existe / no hay arreglo / ninguna entrada parsea
+#' (degradacion con gracia). Aborta si una entrada parsea pero no trae `id`:
+#' sin llave no hay forma de asignarla a un hermano que no sea adivinar.
 parsear_data_js <- function(ruta_abs) {
   if (is.null(ruta_abs) || is.na(ruta_abs) || !file.exists(ruta_abs)) return(NULL)
   txt <- tryCatch(readr::read_file(ruta_abs), error = function(e) NA_character_)
@@ -198,18 +210,28 @@ parsear_data_js <- function(ruta_abs) {
   res <- list()
   for (o in objs) {
     obj <- tryCatch({
-      # Quotear SOLO las 7 claves conocidas, ancladas a inicio de linea (los
-      # valores string viven en su propia linea iniciada por comilla -> no matchean).
+      # Quotear CUALQUIER clave a inicio de linea. El formato es plano y los
+      # valores string viven en su propia linea iniciada por comilla, asi que no
+      # matchean. La lista blanca anterior (7 claves fijas) rompia el objeto
+      # entero cada vez que el origen agregaba una clave: asi entro `id` (commit
+      # 15dc047 del hermano) y fallaron las 12 entradas de una vez.
       o2 <- str_replace_all(
-        o, "(?m)^(\\s*)(orden|tipo|titulo|objetivo|sintesis|estado|imgs)\\s*:", '\\1"\\2":')
+        o, "(?m)^(\\s*)([A-Za-z_][A-Za-z0-9_]*)\\s*:", '\\1"\\2":')
       jsonlite::fromJSON(o2, simplifyVector = FALSE)
     }, error = function(e) {
       log_msg(sprintf("data.js: entrada no parseable, se omite (%s).", conditionMessage(e)),
               "36_visual", "WARN")
       NULL
     })
-    if (!is.null(obj) && !is.null(obj$orden)) {
-      res[[as.character(as.integer(obj$orden))]] <- obj
+    if (!is.null(obj)) {
+      if (is.null(obj$id)) {
+        stop(sprintf(paste0(
+          "36: data.js trae una entrada sin campo `id` (titulo: \"%s\"). `id` es ",
+          "la llave del mapeo id->slug: sin ella la entrada solo podria asignarse ",
+          "adivinando por posicion, que es justo lo que este mapeo evita."),
+          o_null(unlist(obj$titulo))))
+      }
+      res[[as.character(obj$id)]] <- obj
     }
   }
   if (length(res) == 0) NULL else res
@@ -315,16 +337,35 @@ if (is.null(datos_data_js)) {
   advertencias <- c(advertencias,
     "data.js no disponible o sin entradas parseables: tipo/objetivo/sintesis quedan null para todos los proyectos.")
 }
-# Reindexado orden -> slug segun el mapeo aprobado (clave por orden estable).
+# Reindexado id -> slug segun el mapeo declarado (llave estable de data.js).
+# Guarda dura: un `id` que no figure en MAPEO_ID_SLUG, o un slug reclamado por
+# dos entradas, ABORTA nombrando la entrada. Degradar a silencio es exactamente
+# como se produce el cruce editorial (la sintesis de un proyecto en la ficha de
+# otro), que es peor que un campo nulo porque no se ve.
 datos_por_slug <- list()
 if (!is.null(datos_data_js)) {
-  for (ord in names(datos_data_js)) {
-    if (ord %in% names(MAPEO_ORDEN_SLUG)) {
-      datos_por_slug[[ MAPEO_ORDEN_SLUG[[ord]] ]] <- datos_data_js[[ord]]
-    } else {
-      advertencias <- c(advertencias,
-        sprintf("data.js: orden %s sin slug en MAPEO_ORDEN_SLUG; entrada ignorada.", ord))
+  for (id_dj in names(datos_data_js)) {
+    if (!(id_dj %in% names(MAPEO_ID_SLUG))) {
+      stop(sprintf(paste0(
+        "36: data.js trae la entrada id='%s' (\"%s\") que no figura en MAPEO_ID_SLUG. ",
+        "Declare su pareja en 30_procesamiento/36_generar_panorama_visual.R (slug del ",
+        "hermano, o NA si el sitio publica un proyecto sin repo en la cartera) y reintente."),
+        id_dj, o_null(unlist(datos_data_js[[id_dj]]$titulo))))
     }
+    slug_dj <- MAPEO_ID_SLUG[[id_dj]]
+    if (is.na(slug_dj)) {
+      advertencias <- c(advertencias, sprintf(
+        "data.js: la entrada id='%s' esta declarada sin hermano en la cartera; sus campos editoriales no se usan.",
+        id_dj))
+      next
+    }
+    if (!is.null(datos_por_slug[[slug_dj]])) {
+      stop(sprintf(paste0(
+        "36: el slug '%s' es reclamado por dos entradas de data.js (la segunda es id='%s'). ",
+        "MAPEO_ID_SLUG tiene que ser inyectivo: dos entradas en la misma ficha se pisan."),
+        slug_dj, id_dj))
+    }
+    datos_por_slug[[slug_dj]] <- datos_data_js[[id_dj]]
   }
 }
 
