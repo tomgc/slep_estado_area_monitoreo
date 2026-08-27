@@ -113,3 +113,137 @@ publicar desde antes del cierre.
 
 **Hash de documentacion (F7):** `acdc6ff`. El hash del commit de log no puede vivir en el
 log; queda en el eco de F10 y en git.
+
+---
+
+## v13 — 2026-08-27
+
+**Instrumento:** `cierre_sesion_autonomo_cc_v11.md`. **Paquete:** `paquete_cierre_v13.md`
+(segunda emision; distribuido y eliminado en F8). **Sesion:** 13. **Tramo:** 78→89.
+
+### Fases
+
+| Fase | Resultado |
+|---|---|
+| F0 | Pasa entera, sin levantamientos. |
+| F1 | Copia de trabajo en `mktemp -d`; F2-F5 ejecutados ahi. |
+| F2 | Tres inserciones por posicion estructural; los cuatro encabezados usados aparecen exactamente una vez. |
+| F3 | R12 dispara 1 vez y se aplica; catalogo aplicable vacio (v12 no dejo ninguno). |
+| F4 | I1-I4, I6, I7 verdes; I5 amarillo declarado. |
+| F5 | Compuerta pasada. |
+| F6 | Escaner OK (snapshot `20260827_095403`, poda de 1 sello); `git mv` de `traspaso_cierre_v12.md` a `archivo/`; copia de los tres destinos. |
+| F7 | Commit de documentacion `8213560`. |
+| F8 | Distribucion verificada byte a byte en los tres bloques; vehiculo eliminado. |
+| F9 | Log, commit del log y push conjunto de los dos commits. |
+
+### Disparos por rotulo del catalogo (seccion 5 del instrumento)
+
+**catalogo aplicable: vacio** (la seccion v12 registra R1-R12 con cero disparos, y la
+regla 7.3 solo detiene sobre rotulos que dispararon en el cierre anterior). Ningun cero
+de hoy puede detener, por construccion.
+
+| ID | Disparos |
+|---|---|
+| R12 | 1 (primera vez que dispara en este archivo) |
+| R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11 | 0 |
+
+`catalogo no aplicable: R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11 (11 de 12)`
+
+**R12, texto resultante:** `| **Total** | **89** | Cuadra con el total del resumen por
+sesion. |`. Aplicarlo obligo ademas a reescribir la columna `N` completa de la
+`Clasificacion tematica`, que no es una de las tres inserciones de F2: sin eso el Total
+habria contradicho la suma de sus propias categorias. La asignacion entrada por entrada
+es autoria (campo `taxonomia` del paquete); el ejecutor solo la transcribio y verifico
+que suma 89.
+
+**Consecuencia para el cierre siguiente:** el catalogo aplicable pasa a ser **{R12}**. Un
+cierre v14 en que R12 no dispare detiene por la regla 7.3.
+
+Una coincidencia textual se descarto por inspeccion, la misma que v12: "umbral de 2%" en
+la prosa preexistente del delta es una cita de SETTINGS 2.2.5, no un recuento tematico.
+
+### Cifras sin rotulo (zonas declarativas, excluido el Detalle cronologico)
+
+| Cifra | Donde | Resolucion |
+|---|---|---|
+| 70 | `**Cobertura (s13).**` — "se re-derivo entrada por entrada sobre las 70 presentes" | (a) candidata a rotulo nuevo **R13**, magnitud `backlog_total_nuevo` menos perdidas (hoy 82). No se edito: es prosa de autoria que describe una accion fechada. Segunda aparicion sin resolver la convierte en rotulo faltante |
+| 59, 54, 5 | Misma nota, correccion del sobreconteo previo | (b) cifras historicas fechadas de un tramo cerrado |
+| 67 / 68-77 / 10 | Delta de v12, las tres candidatas (a) que dejo abiertas aquel cierre | **(b) historicas legitimas.** Cada bloque del Delta es un registro por sesion: se escribe una vez, describe su propia sesion y no envejece. Reaparecen como texto nuevo del tramo 78-89, no como supervivientes stale. Quedan cerradas y no vuelven a listarse |
+
+### Invariantes
+
+| # | Resultado | Evidencia |
+|---|---|---|
+| I1 | VERDE | 82 numeros en el Detalle: 1-54 mas 62-89. `diff` contra la serie esperada vacio; `uniq -d` vacio. El hueco 55-61 es la perdida declarada y permanente |
+| I2 | VERDE | Suma de la columna Cambios = 18+6+8+13+8+1+0+2+2+3+6+10+12 = 89 = `backlog_total_nuevo` (77+12) |
+| I3 | VERDE | Filas de sesion 12 → 13 |
+| I4 | VERDE | Ver clasificacion abajo |
+| I5 | AMARILLO | El campo `taxonomia` declara "Las doce entradas nuevas", autorreferencia de cifra. Coincide con `backlog_entradas_nuevas: 12`, asi que no esta stale; se declara en vez de editarse porque es texto de autoria. Mismo caso que v12 |
+| I6 | VERDE | RUT 0, `/Users/` 0, credenciales 0, coautoria de la herramienta 0, placeholders 0, en los tres destinos y en las salidas del escaner |
+| I7 | VERDE | `traspasos/` queda con exactamente 1 vigente (`traspaso_cierre_v13.md`); 12 en `traspasos/archivo/` |
+
+### I4 — apariciones clasificadas
+
+| Linea | Aparicion | Clasificacion |
+|---|---|---|
+| 256 | `**Sesion 12 (entradas 68-77):**` | Historica legitima: cabecera de un tramo cerrado |
+| 301 | `77. Reconstruccion parcial del backlog...` | Historica legitima: el numero de la propia entrada |
+| 350 | `10 entradas nuevas (68-77) respecto al estado...` | Historica legitima: bloque del delta de v12 |
+| 367 | `` `traspaso_cierre_v12.md` (que llego a la 77) `` | Historica legitima: referencia hacia atras escrita por el ejecutor en el delta nuevo |
+
+**No queda ninguna aparicion viva de `backlog_total_previo`.** La unica que habia —el
+Total de la `Clasificacion tematica`— es la que R12 llevo a 89. `70` aparece en la nota de
+cobertura y se declara arriba como cifra sin rotulo, no como magnitud de I4: no es
+`backlog_total_previo`, ni el numero de sesion anterior, ni el recuento de filas anterior.
+
+### Desviaciones
+
+1. **La primera emision del paquete se detuvo en F5 con I4 en rojo.** La `Clasificacion
+   tematica` sumaba 77 y su fila de cierre afirma "Cuadra con el total del resumen por
+   sesion", que el cierre llevaba a 89. Aplicar R12 solo habria dejado el Total
+   contradiciendo la suma de sus categorias; no aplicarlo habria dejado
+   `backlog_total_previo` vivo. Cuadrarla exigia repartir las 12 entradas nuevas entre
+   categorias, y el paquete traia `taxonomia: Sin cambios`, que no podia ser cierto. La
+   segunda emision trae la asignacion entrada por entrada y el rojo desaparece sin que el
+   ejecutor interprete nada. **Costo: una reemision del paquete, cero reversiones del
+   arbol** (F6 nunca corrio en el primer intento).
+2. **El escaner corre antes de los `git mv` y de las copias**, que es el orden que F6
+   prescribe. Consecuencia: el snapshot `20260827_095403` no muestra
+   `traspaso_cierre_v13.md` ni el archivado de v12. No se re-ejecuto porque el orden es
+   del instrumento y una segunda corrida podaria otro sello.
+3. **`commit_cierre: 88394ad` es el `main` previo al cierre**, ni el hash de F7 ni el de
+   F9. Es la misma imposibilidad que v12 declaro en su desviacion 3: ningun archivo
+   commiteado puede contener el hash de su propio commit ni el de uno posterior. El valor
+   correcto segun F10 —el hash del commit de log— va en el eco y en git.
+4. **La fila del resumen se inserto antes de la fila `**Total**`**, no al final literal de
+   la tabla, y el Total se recalculo de 77 a 89 (82 conservadas, 7 perdidas). Misma
+   desviacion 5 de v12.
+5. **La tercera insercion es prosa, no fila.** `## Delta del backlog` no tiene ninguna fila
+   que empiece por `|`; se anexo un bloque en la forma que la seccion tiene desde su
+   creacion. Misma desviacion 2 de v12.
+6. **La columna `Modelo` de la fila del resumen dice "Opus 5"**, grafia de la fila
+   anterior. El front matter no declara el modelo, asi que es el unico campo de la fila
+   que no sale ni de las magnitudes ni de `BACKLOG_NARRATIVA`.
+7. **Artefacto preexistente en el Detalle cronologico.** La linea `0304334. [codigo]`
+   (continuacion envuelta de la entrada 75, donde el hash de un commit quedo a inicio de
+   linea) es indistinguible de una entrada numerada para cualquier chequeo de I1. Se
+   excluyo a mano. No se corrige aqui: es registro historico y POLITICA 10 prohibe
+   reescribirlo.
+8. **R13 propuesto y no incorporado al catalogo.** La seccion 5 del instrumento manda
+   agregarlo "en el mismo turno", pero el instrumento vive en `herramientas_dev`, otro
+   repositorio, y este cierre esta acotado al repo del directorio de trabajo. Queda
+   declarado aqui con su ID y su magnitud para que no se pierda.
+
+### Sucios preexistentes ajenos al cierre
+
+Ninguno. Al entrar a F0 el arbol solo tenia `?? paquete_cierre_v13.md`, que es el
+vehiculo. **El descuento que F10 aplica a su predicado es, por tanto, vacio: `git status
+--porcelain` debe quedar completamente vacio.**
+
+### Estado del push
+
+`push_autorizado: si`. **Por publicar** en el push conjunto del final de esta fase: el
+commit de documentacion `8213560` y el commit de log de este mismo cierre.
+
+**Hash de documentacion (F7):** `8213560`. El hash del commit de log no puede vivir en el
+log; queda en el eco de F10 y en git.
