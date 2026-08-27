@@ -44,7 +44,8 @@ library(fs)
 
 # ---- Parametros --------------------------------------------------------------
 
-EXCLUIR_DIRS <- c(".git", ".Rproj.user", "renv", ".quarto")
+EXCLUIR_DIRS <- c(".git", ".Rproj.user", "renv", ".quarto",
+                  "node_modules", "packrat", "venv")  # POLITICA 7.2
 INCLUIR_ARCHIVO <- FALSE  # _archivo/ fuera del snapshot por defecto (POLITICA 7.2).
 DIR_ESTRUCTURA <- file.path(RAIZ_ORQUESTADOR, "50_documentacion", "estructura")
 PATRON_SNAPSHOT <- "^\\d{8}_\\d{6}_estructura\\.(txt|md)$"
