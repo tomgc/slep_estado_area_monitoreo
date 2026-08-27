@@ -419,6 +419,79 @@ registro <- as.data.frame(
   stringsAsFactors = FALSE
 )
 
+# ---- El universo: DERIVADO del descubrimiento, no heredado del inventario ---
+# Antes esta lista salia de inventario_cartera.json (36:413), un archivo que se
+# regenera solo cuando corren los pasos 1-4. Con `run_all(only = 6)` el paso 6
+# publicaba el universo de la ultima corrida completa: fichas de proyectos que ya
+# no existen, y ausencia silenciosa de los que se agregaron despues. D-24-I.
+#
+# La fuente es ahora el registro, que el paso 1 acaba de escribir desde
+# descubrir_hermanos() (10_configuracion.R). Se usa el registro y no
+# descubrir_hermanos() directamente porque el registro es esa misma lista MAS la
+# columna que marca las bajas, y porque evita una cuarta copia del filtro del
+# universo en el repositorio.
+#
+# CAMPO DE BAJA: `categoria == "baja"` en 40_salidas/registro_proyectos.csv, que
+# escribe 31_descubrir_proyectos.R cuando un slug del registro previo ya no
+# aparece en el descubrimiento. El paso 6 lo leia (para mostrarlo como etiqueta)
+# y no lo usaba para filtrar: por eso `slep_georreferenciacion` seguia publicado
+# como tarjeta despues de desaparecer del disco. D-24-G.
+CATEGORIA_BAJA <- "baja"
+
+cat_reg <- registro$categoria
+es_baja <- !is.na(cat_reg) & cat_reg == CATEGORIA_BAJA
+# SELLO: se toma UNA sola vez y gobierna toda la fase. Otras sesiones del titular
+# escriben en la cartera en paralelo; re-listar a mitad de camino daria un
+# universo distinto entre dos puntos de la misma corrida.
+universo <- sort(registro$slug[!es_baja])
+if (any(es_baja)) {
+  log_msg(sprintf("bajas excluidas del panorama: %d (%s).", sum(es_baja),
+                  paste(sort(registro$slug[es_baja]), collapse = ", ")),
+          "36_visual", "WARN")
+}
+
+# Control de frescura del sello: el registro deberia coincidir con el
+# descubrimiento en vivo. Si no, el paso 1 no corrio en esta sesion; se advierte
+# y se sigue con el sello (no se re-sella a mitad de fase).
+if (exists("descubrir_hermanos")) {
+  vivos <- tryCatch(descubrir_hermanos(), error = function(e) character(0))
+  if (length(vivos)) {
+    faltan <- setdiff(vivos, universo)
+    sobran <- setdiff(universo, vivos)
+    if (length(faltan) || length(sobran)) {
+      log_msg(sprintf(paste0(
+        "el registro no coincide con el descubrimiento en vivo: %d en disco sin fila ",
+        "(%s), %d en el registro sin directorio (%s). Corra run_all(only = 1) para ",
+        "refrescarlo; esta corrida usa el sello del registro."),
+        length(faltan), if (length(faltan)) paste(faltan, collapse = ", ") else "-",
+        length(sobran), if (length(sobran)) paste(sobran, collapse = ", ") else "-"),
+        "36_visual", "WARN")
+    }
+  }
+}
+
+# El inventario NO desaparece: sigue aportando los sellos y las rutas
+# relativizadas que ningun otro paso produce en esta corrida. Deja de ser el
+# universo y pasa a ser una FUENTE DE CAMPOS, indexada por slug (no por
+# posicion): un indice posicional entre dos listas de largo distinto escribe en
+# la ficha equivocada sin error ni aviso.
+inv_por_slug <- stats::setNames(
+  inv$proyectos,
+  vapply(inv$proyectos, function(p) p$slug, character(1))
+)
+sin_inventario <- setdiff(universo, names(inv_por_slug))
+if (length(sin_inventario)) {
+  log_msg(sprintf(paste0(
+    "%d proyecto(s) del universo sin entrada en el inventario (%s): su ficha se ",
+    "construye igual, con los campos que dependen del inventario en nulo. Corra ",
+    "run_all(from = 1, to = 4) para poblarlos. Desaparecer en silencio es lo que ",
+    "hacia antes."),
+    length(sin_inventario), paste(sin_inventario, collapse = ", ")),
+    "36_visual", "WARN")
+}
+log_msg(sprintf("universo del panorama: %d proyectos (registro de %d filas, %d bajas excluidas).",
+                length(universo), nrow(registro), sum(es_baja)), "36_visual")
+
 # data.js del portafolio (in situ, R2): provee tipo/objetivo/sintesis editoriales.
 # Si no esta disponible, se degrada con gracia (campos null + advertencia).
 advertencias <- character(0)
@@ -467,13 +540,11 @@ abs_de <- function(rel) {
 
 # Fase 2 PUSH: estado (semaforo/proximo_paso/tipo_pendiente crudo) por slug,
 # precomputado una vez (mismo patron que datos_por_slug para data.js).
-estados_hno <- stats::setNames(
-  lapply(inv$proyectos, function(p) leer_estado_hermano(p$slug)),
-  vapply(inv$proyectos, function(p) p$slug, character(1))
-)
+estados_hno <- stats::setNames(lapply(universo, leer_estado_hermano), universo)
 
-construir_objeto <- function(p) {
-  slug <- p$slug
+construir_objeto <- function(slug) {
+  # `p` puede ser NULL: el universo manda y el inventario solo aporta campos.
+  p <- inv_por_slug[[slug]]
   rg <- registro[registro$slug == slug, , drop = FALSE]
   tiene_rg <- nrow(rg) == 1
 
@@ -537,7 +608,7 @@ construir_objeto <- function(p) {
   )
 }
 
-objetos <- lapply(inv$proyectos, construir_objeto)
+objetos <- stats::setNames(lapply(universo, construir_objeto), universo)
 
 # ---- Guarda de asimetria entre el panorama y la cartera en disco -------------
 # Hasta ahora las dos asimetrias eran MUDAS: una ficha sin repositorio y un
@@ -655,28 +726,30 @@ invisible(advertir_semaforo_desconocido(objetos))
 # ESTADO.md leido en esta misma corrida), ESTADO.md GANA (override + WARN),
 # tal como pide la Fase 3 del encargo.
 cat("\n=== Chequeo cruzado de precedencia (Fase 2 PUSH, auditoria) ===\n")
-for (i in seq_along(inv$proyectos)) {
-  p_i <- inv$proyectos[[i]]
-  eh_i <- estados_hno[[p_i$slug]]
+# Se itera por SLUG y no por indice: `objetos` y `inv$proyectos` ya no tienen
+# el mismo largo ni el mismo orden, y un `objetos[[i]]` posicional escribiria el
+# tipo_pendiente reconciliado en la ficha equivocada, sin error y sin aviso.
+for (slug_i in names(objetos)) {
+  eh_i <- estados_hno[[slug_i]]
   if (is.null(eh_i) || !isTRUE(eh_i$presente)) next  # sin ESTADO.md: nada que auditar
 
   sem_md <- eh_i$semaforo
-  tp_inventario <- objetos[[i]]$tipo_pendiente
+  tp_inventario <- objetos[[slug_i]]$tipo_pendiente
   tp_estado_md  <- eh_i$tipo_pendiente_raw
 
   diverge <- isTRUE(eh_i$sincronizado) && !is.na(tp_estado_md) && !is.na(tp_inventario) &&
     !identical(tp_estado_md, tp_inventario)
   if (diverge) {
-    objetos[[i]]$tipo_pendiente <- tp_estado_md
+    objetos[[slug_i]]$tipo_pendiente <- tp_estado_md
     advertencias <- c(advertencias, sprintf(
       "Reconciliacion tipo_pendiente [%s]: ESTADO.md (%s) difiere del inventario (%s); ESTADO.md manda.",
-      p_i$slug, tp_estado_md, tp_inventario))
+      slug_i, tp_estado_md, tp_inventario))
   }
-  tp_final <- objetos[[i]]$tipo_pendiente
+  tp_final <- objetos[[slug_i]]$tipo_pendiente
 
   cat(sprintf(
     "%-46s semaforo_estado_md=%-11s tipo_pendiente_inventario=%-16s tipo_pendiente_final=%-16s sincronizado=%-5s %s\n",
-    p_i$slug,
+    slug_i,
     if (is.na(sem_md)) "NA" else sem_md,
     if (is.na(tp_inventario)) "NA" else tp_inventario,
     if (is.na(tp_final)) "NA" else tp_final,

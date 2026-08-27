@@ -1,6 +1,6 @@
 {
   "esquema": "1",
-  "n_proyectos": 24,
+  "n_proyectos": 26,
   "proyectos": [
     {
       "slug": "slep_alertas_ael",
@@ -18,7 +18,7 @@
       },
       "fechas": {
         "traspaso": "2026-06-10",
-        "escaner": "2026-06-10",
+        "escaner": "2026-06-09",
         "actividad": "2026-06-10",
         "commit": null
       },
@@ -279,52 +279,6 @@
       "notas": null
     },
     {
-      "slug": "slep_georreferenciacion",
-      "nombre_real": "Georreferenciación de establecimientos del territorio",
-      "alias_corto": "Georreferenciación",
-      "categoria": "activo",
-      "estructura": "canonica",
-      "maneja_sensibles": false,
-      "traspaso": {
-        "correlativo": 20,
-        "total_sesiones": 20,
-        "grafia": "traspaso_cierre",
-        "colision": false,
-        "colision_detalle": null
-      },
-      "fechas": {
-        "traspaso": "2026-08-23",
-        "escaner": "2026-08-23",
-        "actividad": "2026-08-23",
-        "commit": null
-      },
-      "sellos": {
-        "md5_traspaso": "ba4c5b2584ca0b6309764495fdb6bea7",
-        "md5_resena": null,
-        "md5_backlog": "60f75cf8f8629fc37b486074cfcda0da"
-      },
-      "documentos": {
-        "resena": null,
-        "traspaso": "slep_georreferenciacion/50_documentacion/traspasos/traspaso_cierre_v20.md",
-        "backlog": "slep_georreferenciacion/50_documentacion/activa/backlog_acumulativo.md",
-        "escaner": "slep_georreferenciacion/50_documentacion/estructura/estructura_actual.md",
-        "readme": "slep_georreferenciacion/README.md",
-        "claude": "slep_georreferenciacion/CLAUDE.md",
-        "gobernanza": null
-      },
-      "cobertura": {
-        "resena": false,
-        "traspaso": true,
-        "backlog": true,
-        "escaner": true
-      },
-      "estado": {
-        "presente": true,
-        "tipo_pendiente": "nuevo"
-      },
-      "notas": "No figura en el sitio del Área (insumo/afiche). Nombre funcional."
-    },
-    {
       "slug": "slep_gestion_solicitudes_compras",
       "nombre_real": null,
       "alias_corto": null,
@@ -385,7 +339,7 @@
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-07-05",
+        "traspaso": "2026-07-04",
         "escaner": "2026-08-24",
         "actividad": "2026-08-24",
         "commit": null
@@ -477,9 +431,9 @@
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-08-23",
-        "escaner": "2026-08-23",
-        "actividad": "2026-08-23",
+        "traspaso": "2026-08-22",
+        "escaner": "2026-08-22",
+        "actividad": "2026-08-22",
         "commit": null
       },
       "sellos": {
@@ -516,26 +470,26 @@
       "estructura": "canonica",
       "maneja_sensibles": false,
       "traspaso": {
-        "correlativo": null,
-        "total_sesiones": 0,
-        "grafia": null,
+        "correlativo": 11,
+        "total_sesiones": 11,
+        "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": null,
+        "traspaso": "2026-08-24",
         "escaner": "2026-08-24",
         "actividad": "2026-08-24",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": null,
+        "md5_traspaso": "a5e37c7d77d8b50994229a5f479693e2",
         "md5_resena": null,
         "md5_backlog": "c077b7958422a8090e1c282836e56a4d"
       },
       "documentos": {
         "resena": null,
-        "traspaso": null,
+        "traspaso": "slep_minuta_buenas_senales/50_documentacion/traspasos/traspaso_cierre_v11_slep_minuta_buenas_senales.md",
         "backlog": "slep_minuta_buenas_senales/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_minuta_buenas_senales/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_minuta_buenas_senales/README.md",
@@ -544,7 +498,7 @@
       },
       "cobertura": {
         "resena": false,
-        "traspaso": false,
+        "traspaso": true,
         "backlog": true,
         "escaner": true
       },
@@ -691,6 +645,52 @@
         "tipo_pendiente": "deuda_tecnica"
       },
       "notas": "Sitio web del Área que aloja este data.js. No es pipeline analítico."
+    },
+    {
+      "slug": "slep_normativa_convivencia",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 2,
+        "total_sesiones": 2,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-08-27",
+        "escaner": "2026-08-27",
+        "actividad": "2026-08-27",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "ec9123bbc67af4f86c5de56e83c910b6",
+        "md5_resena": null,
+        "md5_backlog": "ed5f34571fdfcd6cc9c5f00861527821"
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": "slep_normativa_convivencia/50_documentacion/traspasos/traspaso_cierre_v02.md",
+        "backlog": "slep_normativa_convivencia/50_documentacion/activa/backlog_acumulativo.md",
+        "escaner": "slep_normativa_convivencia/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_normativa_convivencia/README.md",
+        "claude": "slep_normativa_convivencia/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "bloqueante"
+      },
+      "notas": null
     },
     {
       "slug": "slep_observatorio_medios",
@@ -884,26 +884,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 78,
-        "total_sesiones": 78,
+        "correlativo": 86,
+        "total_sesiones": 86,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-08-24",
-        "escaner": "2026-08-24",
-        "actividad": "2026-08-24",
+        "traspaso": "2026-08-27",
+        "escaner": "2026-08-27",
+        "actividad": "2026-08-27",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "eb7fda5c0a297a3b3d9312900200ac67",
+        "md5_traspaso": "ccae710ea2b1dc7a13a4f53b7fb6aa1d",
         "md5_resena": null,
-        "md5_backlog": "7a0a0eb29a83f2410485feb641fc6f2c"
+        "md5_backlog": "247144030613d9e082ac76c1f0a4da79"
       },
       "documentos": {
         "resena": null,
-        "traspaso": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/traspasos/traspaso_cierre_v78.md",
+        "traspaso": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/traspasos/traspaso_cierre_v86.md",
         "backlog": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_reportes_modelo_resguardo_asistencia/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_reportes_modelo_resguardo_asistencia/README.md",
@@ -918,7 +918,7 @@
       },
       "estado": {
         "presente": true,
-        "tipo_pendiente": "no_bloqueante"
+        "tipo_pendiente": "bloqueante"
       },
       "notas": "Nombre curado del sitio del Área (orden 2)."
     },
@@ -1015,6 +1015,52 @@
       "notas": "Nombre curado del sitio del Área (orden 7)."
     },
     {
+      "slug": "slep_servicio_educativo_regional",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": 30,
+        "total_sesiones": 30,
+        "grafia": "traspaso_cierre",
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": "2026-08-27",
+        "escaner": "2026-08-27",
+        "actividad": "2026-08-27",
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": "c124301f721f1bbffd231d44072c36ba",
+        "md5_resena": null,
+        "md5_backlog": "29e5d7592a3b8dd4fa0f3ca682f856d7"
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": "slep_servicio_educativo_regional/50_documentacion/traspasos/traspaso_cierre_v30.md",
+        "backlog": "slep_servicio_educativo_regional/50_documentacion/activa/backlog_acumulativo.md",
+        "escaner": "slep_servicio_educativo_regional/50_documentacion/estructura/estructura_actual.md",
+        "readme": "slep_servicio_educativo_regional/README.md",
+        "claude": "slep_servicio_educativo_regional/CLAUDE.md",
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": true,
+        "backlog": true,
+        "escaner": true
+      },
+      "estado": {
+        "presente": true,
+        "tipo_pendiente": "nuevo"
+      },
+      "notas": null
+    },
+    {
       "slug": "slep_simce_adecuado",
       "nombre_real": "Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce",
       "alias_corto": "Simce estándares",
@@ -1022,26 +1068,26 @@
       "estructura": "canonica",
       "maneja_sensibles": true,
       "traspaso": {
-        "correlativo": 26,
-        "total_sesiones": 26,
+        "correlativo": 27,
+        "total_sesiones": 27,
         "grafia": "traspaso_cierre",
         "colision": false,
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-08-24",
-        "escaner": "2026-08-24",
-        "actividad": "2026-08-24",
+        "traspaso": "2026-08-26",
+        "escaner": "2026-08-27",
+        "actividad": "2026-08-27",
         "commit": null
       },
       "sellos": {
-        "md5_traspaso": "8faa8e6883d549faeee98e5b110976be",
+        "md5_traspaso": "2bdc4b00ee332c4010b6537e558519dd",
         "md5_resena": "826fb8a4dc9b21f986cab1309dc369c0",
-        "md5_backlog": "468aa9899d96082cd4c95d3f751454f4"
+        "md5_backlog": "5732f62072c1eca37d0b29193e089543"
       },
       "documentos": {
         "resena": "slep_simce_adecuado/50_documentacion/activa/resena_slep_simce_adecuado.md",
-        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v26.md",
+        "traspaso": "slep_simce_adecuado/50_documentacion/traspasos/traspaso_cierre_v27.md",
         "backlog": "slep_simce_adecuado/50_documentacion/activa/backlog_acumulativo.md",
         "escaner": "slep_simce_adecuado/50_documentacion/estructura/estructura_actual.md",
         "readme": "slep_simce_adecuado/README.md",
@@ -1056,7 +1102,7 @@
       },
       "estado": {
         "presente": true,
-        "tipo_pendiente": "ninguno"
+        "tipo_pendiente": "deuda_tecnica"
       },
       "notas": "Nombre curado del sitio del Área (orden 3)."
     },
@@ -1075,7 +1121,7 @@
         "colision_detalle": null
       },
       "fechas": {
-        "traspaso": "2026-05-28",
+        "traspaso": "2026-05-27",
         "escaner": "2026-08-24",
         "actividad": "2026-08-24",
         "commit": null
@@ -1105,6 +1151,52 @@
         "tipo_pendiente": "ninguno"
       },
       "notas": "No figura en el sitio (antecesor de slep_simce_adecuado). Nombre funcional."
+    },
+    {
+      "slug": "slep_territorio_costa_central",
+      "nombre_real": null,
+      "alias_corto": null,
+      "categoria": "activo",
+      "estructura": "no_canonica",
+      "maneja_sensibles": false,
+      "traspaso": {
+        "correlativo": null,
+        "total_sesiones": 0,
+        "grafia": null,
+        "colision": false,
+        "colision_detalle": null
+      },
+      "fechas": {
+        "traspaso": null,
+        "escaner": null,
+        "actividad": null,
+        "commit": null
+      },
+      "sellos": {
+        "md5_traspaso": null,
+        "md5_resena": null,
+        "md5_backlog": null
+      },
+      "documentos": {
+        "resena": null,
+        "traspaso": null,
+        "backlog": null,
+        "escaner": null,
+        "readme": "slep_territorio_costa_central/README.md",
+        "claude": null,
+        "gobernanza": null
+      },
+      "cobertura": {
+        "resena": false,
+        "traspaso": false,
+        "backlog": false,
+        "escaner": false
+      },
+      "estado": {
+        "presente": false,
+        "tipo_pendiente": null
+      },
+      "notas": null
     }
   ]
 }

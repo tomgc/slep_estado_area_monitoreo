@@ -1,8 +1,34 @@
 # Cartera de proyectos Área de Monitoreo
 
-Generado: 2026-08-27 · 24 proyectos
+Generado: 2026-08-27 · 26 proyectos
 
 > Versión texto del panorama visual (mismo orden y campos que las filas; orden por tipo_pendiente, estado y fecha).
+
+## slep_normativa_convivencia
+- **slug:** `slep_normativa_convivencia`
+- **tipo de pendiente:** bloqueante
+- **semaforo:** activo
+- **estado:** sin clasificar
+- **maneja sensibles:** FALSE
+- **última actualización:** 2026-08-27
+- **reseña del itinerario:** Biblioteca web pública de normativa chilena de convivencia educativa para el equipo de convivencia del SLEP Costa Central: un sitio estático (Quarto + Pagefind en GitHub Pages, pipeline en R) que indexa leyes, decretos, circulares, resoluciones y dictámenes a nivel de artículo, con citación textual verificable, trazabilidad de fuente, navegación temática y capa interpretativa validada por humanos. Existe desde el 2026-08-25.
+- **próximos pasos:**
+  - Entregar la pauta de validación al equipo de convivencia (4 bloques: OCR, 34 temas frágiles, piezas, decisión del slug del DFL 1) junto con el CSV del cruce referencia↔instrumentos. Cuando respondan, la vía A arranca con el guion del ensayo como mapa. La sesión de alcance del módulo de reglamentos espera el cruce completado. El `commit_cierre` de este archivo lo actualiza la apertura siguiente con el hash del eco del cierre v02.
+
+## Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio
+- **slug:** `slep_reportes_modelo_resguardo_asistencia`
+- **tipo:** Reporte · Directores/as
+- **tipo de pendiente:** bloqueante
+- **semaforo:** activo
+- **estado:** sin clasificar
+- **maneja sensibles:** TRUE
+- **última actualización:** 2026-08-26
+- **síntesis:** El Plan para el Fortalecimiento de la Asistencia Educativa del SLEP Costa Central fija como uno de sus objetivos establecer un marco institucional de trabajo en materia de asistencia para todos los establecimientos del territorio. Lo anterior se materializa a través del Modelo de Resguardo de la Asistencia Educativa del Territorio, el cual, además de orientaciones, planes de acción y actividades de socialización, evaluación y mejora, tiene como uno de sus componentes un reporte sobre esta temática dirigido a todos los directores y directoras del SLEP. Este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de cada establecimiento. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa.
+- **reseña del itinerario:** `slep_reportes_modelo_resguardo_asistencia` genera, por lote y cada mes, un reporte por director/a para los 73 establecimientos del SLEP Costa Central, implementando el "Modelo de Resguardo de la Asistencia Educativa del Territorio": un PDF (Quarto + typst + tinytable) más una planilla xlsx por establecimiento. Cada reporte muestra la asistencia del propio EE y su posición frente al territorio de forma anonimizada (percentiles y medianas, sin nombrar a otros EE) y cierra con la identificación nominal de los estudiantes en alerta del propio EE. Es variante de la minuta ejecutiva (`slep_minuta_…
+- **próximos pasos:**
+  - Resolver P86-1 con decisión formal del titular: declarar el tratamiento de origen étnico en gobernanza_datos.md o dejar de exigir la columna. Es el único bloqueante que ocurre en cada corrida y no depende de ninguna medición pendiente.
+  - 11.1 Inventario
+  - Descripción: el pipeline exige cod_etnia_alu, la deriva, la persiste en datos_<rbd>.rds y la publica agregada en los 73 PDF. gobernanza_dat…
 
 ## Monitoreo de aprendizajes en la educación parvularia
 - **slug:** `slep_aprendizajes_ep`
@@ -46,19 +72,6 @@ Generado: 2026-08-27 · 24 proyectos
   - Pendiente 1 (P1): Validación cross-OS en Windows
   - Descripción: Clonar el repo en una máquina Windows, configurar ~/.Renviron, verificar NBSP en ruta OneDrive, ejecutar pipeline ETL + App en…
 
-## Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio
-- **slug:** `slep_reportes_modelo_resguardo_asistencia`
-- **tipo:** Reporte · Directores/as
-- **tipo de pendiente:** bloqueante
-- **semaforo:** activo
-- **estado:** sin clasificar
-- **maneja sensibles:** TRUE
-- **última actualización:** sin traspaso
-- **síntesis:** El Plan para el Fortalecimiento de la Asistencia Educativa del SLEP Costa Central fija como uno de sus objetivos establecer un marco institucional de trabajo en materia de asistencia para todos los establecimientos del territorio. Lo anterior se materializa a través del Modelo de Resguardo de la Asistencia Educativa del Territorio, el cual, además de orientaciones, planes de acción y actividades de socialización, evaluación y mejora, tiene como uno de sus componentes un reporte sobre esta temática dirigido a todos los directores y directoras del SLEP. Este reporte entrega información pertinente, oportuna, precisa y accionable sobre la asistencia de cada establecimiento. Tiene una frecuencia mensual e incluye, además de indicadores con distintos grados de segmentación, el detalle de cada estudiante que gatilla una de las alertas definidas como críticas para el resguardo de su trayectoria educativa.
-- **reseña del itinerario:** `slep_reportes_modelo_resguardo_asistencia` genera, por lote y cada mes, un reporte por director/a para los 73 establecimientos del SLEP Costa Central, implementando el "Modelo de Resguardo de la Asistencia Educativa del Territorio": un PDF (Quarto + typst + tinytable) más una planilla xlsx por establecimiento. Cada reporte muestra la asistencia del propio EE y su posición frente al territorio de forma anonimizada (percentiles y medianas, sin nombrar a otros EE) y cierra con la identificación nominal de los estudiantes en alerta del propio EE. Es variante de la minuta ejecutiva (`slep_minuta_…
-- **próximos pasos:**
-  - Resolver P86-1 con decisión formal del titular: declarar el tratamiento de origen étnico en gobernanza_datos.md o dejar de exigir la columna. Es el único bloqueante que ocurre en cada corrida y no depende de ninguna medición pendiente.
-
 ## Motor de comparación interactivo de la Categoría de Desempeño de los establecimientos educacionales del país
 - **slug:** `slep_categoria_desempeno`
 - **tipo:** Motor de comparación
@@ -73,6 +86,20 @@ Generado: 2026-08-27 · 24 proyectos
   - Re-clonar cualquier clon previo del repositorio, ya que el historial fue reescrito y los hashes anteriores dejaron de existir (acción manual del titular, una sola vez).
   - Qué: entrada 90 (incidente PII, ver traspaso v27 §4) agregada al
   - Por qué: v26 no generó entrada (mantenimiento de suite, precedente
+
+## Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce
+- **slug:** `slep_simce_adecuado`
+- **tipo:** Motor de comparación
+- **tipo de pendiente:** deuda tecnica
+- **semaforo:** activo
+- **estado:** sin clasificar
+- **maneja sensibles:** TRUE
+- **última actualización:** 2026-08-26
+- **síntesis:** Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente. La herramienta organiza esta información a escala nacional, ponderando los resultados de cada prueba según el número de estudiantes que la rindió, permitiendo recorrer los resultados por establecimiento, comuna, SLEP, región y nivel nacional, a lo largo de todos los años para los cuales existen resultados. Su pantalla única de visualización pone especial atención en el nivel Adecuado (el más exigente) como indicador de logro, con la mirada puesta en cómo evoluciona en cada territorio y cómo se compara entre grupos socioeconómicos equivalentes.
+- **próximos pasos:**
+  - Regenerar el motor con `33_generar_html.R` y verificar visualmente la migración tipográfica, con foco en la tabla comparativa (contenedor `min-width:1000px`) y los popups RBD.
+  - ¿Pipeline corre de cero sin intervención manual? → Sí, no tocado en su lógica (solo CSS/template).
+  - ¿Outputs reproducibles e idempotentes? → No verificado (no se regeneró el motor esta sesión).
 
 ## Minuta de asistencia mensual
 - **slug:** `slep_minuta_asistencia`
@@ -115,20 +142,6 @@ Generado: 2026-08-27 · 24 proyectos
   - 11.1 Inventario
   - 11.2 Evaluación de deuda técnica
 
-## Motor de comparación interactivo de los resultados de los estándares de aprendizaje medidos por las pruebas Simce
-- **slug:** `slep_simce_adecuado`
-- **tipo:** Motor de comparación
-- **tipo de pendiente:** deuda tecnica
-- **semaforo:** activo
-- **estado:** sin clasificar
-- **maneja sensibles:** TRUE
-- **última actualización:** 2026-07-01
-- **síntesis:** Desarrollamos un motor de comparación interactivo de los resultados de las pruebas Simce expresados según los estándares de aprendizaje, que clasifican el logro de los estudiantes en tres niveles: Adecuado, Elemental e Insuficiente. La herramienta organiza esta información a escala nacional, ponderando los resultados de cada prueba según el número de estudiantes que la rindió, permitiendo recorrer los resultados por establecimiento, comuna, SLEP, región y nivel nacional, a lo largo de todos los años para los cuales existen resultados. Su pantalla única de visualización pone especial atención en el nivel Adecuado (el más exigente) como indicador de logro, con la mirada puesta en cómo evoluciona en cada territorio y cómo se compara entre grupos socioeconómicos equivalentes.
-- **próximos pasos:**
-  - Regenerar el motor con `33_generar_html.R` y verificar visualmente la migración tipográfica, con foco en la tabla comparativa (contenedor `min-width:1000px`) y los popups RBD.
-  - ¿Pipeline corre de cero sin intervención manual? → Sí, no tocado esta sesión.
-  - ¿Outputs reproducibles e idempotentes? → Sí, 34_historico_pct_adecuado_costa_central.R usa overwrite=TRUE.
-
 ## Diagnóstico histórico del rendimiento escolar
 - **slug:** `slep_rendimiento_historico`
 - **tipo:** Diagnóstico
@@ -168,6 +181,32 @@ Generado: 2026-08-27 · 24 proyectos
 - **próximos pasos:**
   - Item 11 (bloqueado, sin nueva información)
   - Tooltip "vs evaluación anterior": de title a body (cosmético, menor)
+
+## slep_servicio_educativo_regional
+- **slug:** `slep_servicio_educativo_regional`
+- **tipo de pendiente:** nuevo
+- **semaforo:** activo
+- **estado:** sin clasificar
+- **maneja sensibles:** FALSE
+- **última actualización:** 2026-08-26
+- **reseña del itinerario:** Producir productos cartográficos y de visualización de datos para el SLEP Costa Central (Servicio Local de Educación Pública que cubre Puchuncaví, Quintero, Concón y Viña del Mar, Región de Valparaíso). El proyecto nació en junio de 2026 como un afiche cartográfico estático imprimible en plóter (A0, 841×1189 mm) que georreferencia los 97 establecimientos educacionales del territorio del SLEP, y creció hasta abarcar tres productos: - Variante 1 (afiche con inset): panel norte (Puchuncaví, Quintero, Concón) más inset de Viña del Mar a escala separada. Completada en las sesiones 1–3. - Variante …
+- **próximos pasos:**
+  - Redactar el acta complementaria del fork (`decision_fork_genesis_sin_historial`), que bloquea la ejecución limpia del fork porque su encargo debe citar decisiones que hoy sólo viven en un andamio de análisis.
+  - Archivo: 50_documentacion/andamios/20260826_pendiente_fork_nacional_sostenedores.md.
+  - Qué se hizo: conversación exploratoria sobre una tercera variante de
+
+## slep_minuta_buenas_senales
+- **slug:** `slep_minuta_buenas_senales`
+- **tipo de pendiente:** nuevo
+- **semaforo:** activo
+- **estado:** sin clasificar
+- **maneja sensibles:** FALSE
+- **última actualización:** 2026-07-11
+- **reseña del itinerario:** slep_minuta_buenas_senales consolida indicadores positivos de distintos proyectos SLEP en una minuta breve para el equipo de comunicaciones, con el propósito de difundir buenas noticias de la educación pública del territorio (4 comunas, SLEP Costa Central). Es puramente consumidor: no decide qué es "positivo"; esa regla vive en cada proyecto fuente vía el contrato `indicadores_positivos`.
+- **próximos pasos:**
+  - P-CTX-4: integrar el contexto en el consumidor (validar el esquema de ambos parquets, poblar las columnas hoy en NA de 33_armar_minuta.R, renderizar la senal en el .docx y el HTML).
+  - Inventario
+  - Descripción: validar los dos parquets de contexto en el consumidor, poblar las
 
 ## slep_estudio_oferta_demanda
 - **slug:** `slep_estudio_oferta_demanda`
@@ -209,25 +248,6 @@ Generado: 2026-08-27 · 24 proyectos
   - Validar visualmente el panel de detalle fijo (B1) en los módulos privado y público, y commitear el archivo de la app.
   - Inventario de pendientes vigentes
   - Auditoría de cierre (POLITICA §5.6)
-
-## Georreferenciación de establecimientos del territorio
-- **slug:** `slep_georreferenciacion`
-- **tipo de pendiente:** nuevo
-- **semaforo:** sin dato
-- **estado:** sin clasificar
-- **maneja sensibles:** FALSE
-- **última actualización:** sin traspaso
-
-## slep_minuta_buenas_senales
-- **slug:** `slep_minuta_buenas_senales`
-- **tipo de pendiente:** nuevo
-- **semaforo:** activo
-- **estado:** sin clasificar
-- **maneja sensibles:** FALSE
-- **última actualización:** sin traspaso
-- **reseña del itinerario:** slep_minuta_buenas_senales consolida indicadores positivos de distintos proyectos SLEP en una minuta breve para el equipo de comunicaciones, con el propósito de difundir buenas noticias de la educación pública del territorio (4 comunas, SLEP Costa Central). Es puramente consumidor: no decide qué es "positivo"; esa regla vive en cada proyecto fuente vía el contrato `indicadores_positivos`.
-- **próximos pasos:**
-  - P-CTX-4: integrar el contexto en el consumidor (validar el esquema de ambos parquets, poblar las columnas hoy en NA de 33_armar_minuta.R, renderizar la senal en el .docx y el HTML).
 
 ## Sistema de alertas de Anótate en la Lista
 - **slug:** `slep_alertas_ael`
@@ -301,6 +321,14 @@ Generado: 2026-08-27 · 24 proyectos
 
 ## Reseñas del portafolio
 - **slug:** `slep_resena_proyectos`
+- **tipo de pendiente:** sin dato
+- **semaforo:** sin dato
+- **estado:** sin clasificar
+- **maneja sensibles:** FALSE
+- **última actualización:** sin traspaso
+
+## slep_territorio_costa_central
+- **slug:** `slep_territorio_costa_central`
 - **tipo de pendiente:** sin dato
 - **semaforo:** sin dato
 - **estado:** sin clasificar
