@@ -65,15 +65,6 @@ AUXILIARES_SEMILLA <- c("slep_monitoreo", "slep_resena_proyectos")
 # (seccion 9). No es error, es senal en el panorama.
 DIAS_OBSOLETO <- 21L
 
-# Margen de tolerancia para la regla de desincronizacion de ESTADO.md (Fase 2,
-# paso 32, resolver_estado()). Cubre el patron de "falso-desync" cuando un
-# traspaso se guarda pasada la medianoche de su fecha de cierre declarada:
-# ultima_actividad queda 1 dia detras del mtime real sin ser un desync de
-# contenido. Acota exactamente ese patron (no mas): un ESTADO.md solo se
-# considera desincronizado si ultima_actividad esta a MAS de este margen del
-# mtime del traspaso. P-DESYNC-MARGEN (traspaso v05, seccion 11).
-MARGEN_DESYNC_DIAS <- 1L
-
 # Lectura de metadatos git del hermano (fecha del ultimo commit). Apagado por
 # defecto para no invocar git en 16+ repos en cada arranque de jornada
 # (seccion 8). Solo lectura de metadatos; nunca operaciones que escriban.
@@ -90,8 +81,6 @@ TZ_ORQUESTADOR <- tryCatch({
 }, error = function(e) "")
 
 # ---- Rutas del orquestador (todas bajo RAIZ_ORQUESTADOR) ----------------------
-
-RUTA_INSUMOS    <- file.path(RAIZ_ORQUESTADOR, "20_insumos")
 
 RUTA_SALIDAS         <- file.path(RAIZ_ORQUESTADOR, "40_salidas")
 RUTA_CACHE           <- file.path(RUTA_SALIDAS, "cache")

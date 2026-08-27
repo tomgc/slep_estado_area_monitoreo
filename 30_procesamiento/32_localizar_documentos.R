@@ -265,9 +265,9 @@ correlativo_de_sesion <- function(x) {
 #' en que el archivo se toco en ESTE disco, no la fecha del trabajo: un traspaso
 #' guardado pasada la medianoche de su fecha de cierre declarada, un `git clone`
 #' o un `git checkout` reescriben el mtime de golpe y producian desincronizados
-#' falsos. `MARGEN_DESYNC_DIAS` existia solo para amortiguar ese ruido; con la
-#' comparacion por correlativo no hay ruido que amortiguar y la constante queda
-#' SIN USO (se conserva, no se elimina: ver el pendiente declarado en el log).
+#' falsos. El margen de tolerancia en dias que existia solo para amortiguar
+#' ruido; con la comparacion por correlativo no hay ruido que amortiguar, asi
+#' que se retiro de 10_configuracion.R (D-24-E).
 #'
 #' `sincronizado` se conserva como logico DERIVADO y ESTRICTO
 #' (`veredicto == "sincronizado"`) para los consumidores que ya lo leen: un
