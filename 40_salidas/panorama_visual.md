@@ -8,43 +8,43 @@ Generado: 2026-08-27 · 24 proyectos
 - **slug:** `slep_aprendizajes_ep`
 - **tipo:** Monitoreo
 - **tipo de pendiente:** bloqueante
-- **semaforo:** sin dato
+- **semaforo:** activo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-08-18
 - **síntesis:** En conjunto con la coordinación de Educación Parvularia del Área de Mejora Continua y siguiendo los principios de las Bases Curriculares de la Educación Parvularia vigentes, construimos un sistema de monitoreo de aprendizajes para la educación inicial del SLEP Costa Central. Este sistema organiza las evaluaciones realizadas por las educadoras por ámbito, núcleo y objetivo de aprendizaje y los presenta en informes interactivos que permiten segmentar los resultados por momento evaluativo (diagnóstico, primer semestre y segundo semestre) y diversos niveles de agrupación (territorio, jardín infantil, educadora y párvulo). Su aporte es hacer visible, en un mismo lugar, la cobertura curricular y el logro de los objetivos de aprendizaje a lo largo de los tres momentos de evaluación del año, lo que permite realizar un seguimiento longitudinal y una priorización pedagógica pertinente y oportuna para cada nivel de la educación inicial.
 - **reseña del itinerario:** `slep_aprendizajes_ep` es el sistema de procesamiento y reporte de las evaluaciones de aprendizaje de párvulos del SLEP Costa Central (unidad SATP). Toma las evaluaciones que las educadoras registran en plantillas Excel contra el marco curricular de las Bases Curriculares de la Educación Parvularia 2018, las consolida, las transforma en un contrato de datos JSON y genera informes HTML autocontenidos para educadoras, directoras y nivel central, sobre 24 jardines infantiles y 73 salas. Está construido en R (ETL, consolidador, generador de informes) con una capa de render en JavaScript y CSS, ve…
 - **próximos pasos:**
+  - Sembrar el root de verificación para cerrar la acreditación pendiente, abrir la PR y autorizar el merge, para poder correr por primera vez el pipeline completo sobre datos reales.
   - Inventario
   - Evaluación de deuda técnica
-  - Auditoría de cierre
 
 ## slep_lectoescritura
 - **slug:** `slep_lectoescritura`
 - **tipo de pendiente:** bloqueante
-- **semaforo:** sin dato
+- **semaforo:** activo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-07-12
 - **reseña del itinerario:** slep_lectoescritura es la plataforma de monitoreo del desarrollo de la lectoescritura de los estudiantes del SLEP Costa Central. Integra las principales evaluaciones de lectura del territorio (SIMCE Lectura, DIA/Reactivación, PAES Competencia Lectora, y fuentes futuras como DIA Educación Parvularia y evaluaciones en jardines) en una vista comparable en el tiempo, para orientar decisiones técnico-pedagógicas. Construida en R (arquitectura de dos raíces: código en GitHub privado, datos en OneDrive institucional), para el equipo de análisis del SLEP. Iniciada el 2026-07-08.
 - **próximos pasos:**
+  - El fix del bug destapo un problema de modelo: el reporte publica una "cobertura SIMCE" que no deberia existir. SIMCE (y PAES) se aplican de forma externa y censal por la Agencia; su cobertura es 100% por construccion y el SLEP no la controla. Hay que decidir si los instrumentos externos salen del modelo tripartito y que estado reemplaza a la cobertura para ellos (las celdas afectadas son establecimientos que SI rindieron y cuyo resultado la Agencia no publico). Toca el invariante tripartito y la decision 20260708_decision_modelo_fuentes.md.
   - Inventario
   - *Descripción:* el fix de BUG-08-01 mudó 24 celdas de aplicado a sin_aplicacion,
-  - *Hecho de dominio (establecido por el titular al cierre de esta sesión):* SIMCE se
 
 ## CostaPresente
 - **slug:** `slep_costapresente`
 - **tipo:** Plataforma · CostaPresente
 - **tipo de pendiente:** bloqueante
-- **semaforo:** sin dato
+- **semaforo:** activo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-05-31
 - **síntesis:** CostaPresente nace para apoyar el seguimiento de las trayectorias escolares de los estudiantes que, en algún momento de los últimos años, han pasado por algún establecimiento del SLEP Costa Central. A partir de registros mensuales de asistencia reconstruye, para cada estudiante, dónde ha estado matriculado y cómo ha evolucionado su escolaridad en términos de asistencia, promoción y retiros.
 - **próximos pasos:**
+  - Validar el pipeline completo (ETL + app) en una maquina Windows: configurar entorno, verificar la ruta de datos institucional y correr end-to-end con el mismo output que en macOS.
   - Pendiente 1 (P1): Validación cross-OS en Windows
   - Descripción: Clonar el repo en una máquina Windows, configurar ~/.Renviron, verificar NBSP en ruta OneDrive, ejecutar pipeline ETL + App en…
-  - Contexto: Todo el desarrollo y pruebas han sido en macOS arm64. Los colegas que usarán la app son usuarios Windows. La portabilidad real no…
 
 ## Reportes del Modelo de Resguardo de la Asistencia Educativa del Territorio
 - **slug:** `slep_reportes_modelo_resguardo_asistencia`
@@ -199,16 +199,16 @@ Generado: 2026-08-27 · 24 proyectos
 - **slug:** `slep_seguimiento_educacion_inicial`
 - **tipo:** Análisis longitudinal
 - **tipo de pendiente:** nuevo
-- **semaforo:** sin dato
+- **semaforo:** activo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-06-14
 - **síntesis:** Para los párvulos y sus familias, las transiciones entre los niveles iniciales son momentos clave de su trayectoria educativa. Para un sostenedor, esta información es un insumo estratégico para la toma de decisiones en torno a las proyecciones del servicio educativo que ofrece. A partir de la sistematización y análisis de las preferencias de matrícula de los egresados de jardines infantiles del SLEP Costa Central, identificamos y visualizamos los itinerarios de los párvulos desde los niveles medios hacia los niveles de transición en las escuelas. El resultado es una aplicación interactiva con diagramas de flujo y tablas comparativas que permiten cuantificar el número de niños y niñas que permanecen en nuestras comunidades, cuántos migran a establecimientos de otros sostenedores y cuántos no se logran localizar. Su aporte es ofrecer al territorio una mirada de la continuidad de las trayectorias en un tramo crítico, con información útil para decisiones de oferta y de captación.
 - **reseña del itinerario:** Seguimiento Educación Inicial es un sistema de análisis longitudinal de cohortes de párvulos para el SLEP Costa Central (Viña del Mar, Concón, Quintero, Puchuncaví). Rastrea transiciones de educación parvularia a básica en tres periodos académicos (2023→2024, 2024→2025, 2025→2026). Dos módulos: el privado (RUT real, retención en el directorio de 97 establecimientos SLEP CC) y el público (MRUN enmascarado, flujos territoriales entre todos los sostenedores de las cuatro comunas, sobre datos abiertos Mineduc). Interfaz Shiny offline unificada con selector de módulo, Sankey echarts4r, tablas reac…
 - **próximos pasos:**
+  - Validar visualmente el panel de detalle fijo (B1) en los módulos privado y público, y commitear el archivo de la app.
   - Inventario de pendientes vigentes
   - Auditoría de cierre (POLITICA §5.6)
-  - #2 ¿pipeline corre de cero sin intervención? → Sí.
 
 ## Georreferenciación de establecimientos del territorio
 - **slug:** `slep_georreferenciacion`
@@ -271,7 +271,7 @@ Generado: 2026-08-27 · 24 proyectos
 ## slep_reporte_emergencia
 - **slug:** `slep_reporte_emergencia`
 - **tipo de pendiente:** verificacion_y_decision_titular
-- **semaforo:** sin dato
+- **semaforo:** amarillo
 - **estado:** sin clasificar
 - **datos sensibles:** sin clasificar
 - **última actualización:** 2026-07-24

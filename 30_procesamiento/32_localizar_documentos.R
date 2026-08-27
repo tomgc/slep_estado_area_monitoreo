@@ -145,6 +145,17 @@ seccion_md <- function(cuerpo_lineas, titulo) {
   trimws(paste(sec[nzchar(trimws(sec))], collapse = " "))
 }
 
+#' Extrae el correlativo entero de una etiqueta de sesion del front matter
+#' ("v13", "V07", "13"). Devuelve NA_integer_ si no hay entero legible.
+#' No compone el identificador desde el nombre del archivo: el vNN del traspaso
+#' sale de resolver_traspaso(), y este helper solo lee lo que el ESTADO declara.
+correlativo_de_sesion <- function(x) {
+  if (is.null(x) || length(x) != 1L || is.na(x) || !nzchar(x)) return(NA_integer_)
+  m <- regmatches(x, regexpr("[0-9]+", x))
+  if (!length(m)) return(NA_integer_)
+  suppressWarnings(as.integer(m))
+}
+
 #' Resuelve el ESTADO.md (Fase 2 PUSH) de un hermano y decide la fuente de
 #' lectura del estado en esta corrida: PUSH (leer ESTADO.md directo) vs PULL
 #' (recomputar desde traspaso/backlog, comportamiento Fase 1).
@@ -152,29 +163,34 @@ seccion_md <- function(cuerpo_lineas, titulo) {
 #' Devuelve un `veredicto` de TRES estados, no un logico de dos:
 #'   "sincronizado"   : se pudo comparar y la comparacion pasa.
 #'   "desincronizado" : se pudo comparar y la comparacion falla.
-#'   "indeterminado"  : NO se pudo comparar (falta el traspaso o el ESTADO.md).
+#'   "indeterminado"  : NO se pudo comparar (falta el traspaso, el ESTADO.md o
+#'                       su `sesion_actual`).
 #'
 #' El tercer estado existe por B-14-01: cuando `resolver_traspaso()` devolvia NA,
 #' la rama de comparacion no se evaluaba y `sincronizado` quedaba TRUE por
 #' defecto, es decir, un dato ausente se leia como afirmacion positiva. Esa
-#' conversion silenciosa, y no el regex, es la causa raiz: el regex solo decidia
-#' cuantos repos caian en ella.
+#' conversion silenciosa, y no el regex, era la causa raiz.
 #'
-#' Regla de desincronizacion (encargo Fase 2, con margen desde P-DESYNC-MARGEN):
-#' si `ultima_actividad` del ESTADO es ANTERIOR (por fecha) al mtime del
-#' traspaso vigente EN MAS DE `MARGEN_DESYNC_DIAS` dias, el ESTADO se considera
-#' stale -> se trata como si no existiera (PULL). El margen (1 dia por defecto)
-#' tolera el patron de traspasos guardados pasada la medianoche de su fecha de
-#' cierre declarada sin ocultar desyncs de contenido reales (mas de 1 dia de
-#' diferencia). La comparacion es por FECHA (mismo dia = sincronizado); el mtime
-#' se lee en runtime y NO se persiste.
+#' REGLA DE SINCRONIA (O-38 / P6): se compara `sesion_actual` del front matter
+#' contra el correlativo del traspaso vigente que resuelve resolver_traspaso().
+#' Un ESTADO cuya sesion declarada va DETRAS del ultimo traspaso escrito esta
+#' desincronizado; si va igual o delante, esta sincronizado.
+#'
+#' Por que NO se usa el mtime del traspaso (regla anterior). El mtime es la fecha
+#' en que el archivo se toco en ESTE disco, no la fecha del trabajo: un traspaso
+#' guardado pasada la medianoche de su fecha de cierre declarada, un `git clone`
+#' o un `git checkout` reescriben el mtime de golpe y producian desincronizados
+#' falsos. `MARGEN_DESYNC_DIAS` existia solo para amortiguar ese ruido; con la
+#' comparacion por correlativo no hay ruido que amortiguar y la constante queda
+#' SIN USO (se conserva, no se elimina: ver el pendiente declarado en el log).
 #'
 #' `sincronizado` se conserva como logico DERIVADO y ESTRICTO
 #' (`veredicto == "sincronizado"`) para los consumidores que ya lo leen: un
 #' indeterminado NO afirma sincronia. La decision de APAGAR un campo, en cambio,
-#' exige la afirmacion negativa explicita (`veredicto == "desincronizado"`);
-#' ver las compuertas del paso 36.
-resolver_estado <- function(ruta_proyecto, ruta_traspaso) {
+#' exige la afirmacion negativa explicita (`veredicto == "desincronizado"`).
+#'
+#' @param traspaso lista devuelta por resolver_traspaso() (se usa `$correlativo`).
+resolver_estado <- function(ruta_proyecto, traspaso) {
   ruta <- file.path(ruta_proyecto, SUBRUTA_ESTADO)
   vacio <- list(presente = FALSE, sincronizado = FALSE, veredicto = "indeterminado",
                 fuente = "PULL", ruta = NA_character_, meta = list(), cuerpo = "",
@@ -185,33 +201,27 @@ resolver_estado <- function(ruta_proyecto, ruta_traspaso) {
   L  <- readLines(ruta, warn = FALSE, encoding = "UTF-8")
   fm <- parsear_front_matter(L)
   meta <- fm$meta
-  ua_raw <- if (is.null(meta$ultima_actividad)) NA_character_ else meta$ultima_actividad
-  ua <- suppressWarnings(as.Date(ua_raw))
-  # Fecha de calendario LOCAL del mtime, con la tz capturada al bootstrap
-  # (TZ_ORQUESTADOR). Explicita para no depender del cache de tz de R, que bajo
-  # locale C puede caer a UTC y correr la fecha +1 dia (archivos de noche).
-  tz_loc <- if (exists("TZ_ORQUESTADOR")) TZ_ORQUESTADOR else ""
-  mt <- if (!is.na(ruta_traspaso) && file.exists(ruta_traspaso))
-          as.Date(format(file.mtime(ruta_traspaso), "%Y-%m-%d", tz = tz_loc)) else NA
 
-  veredicto <- "sincronizado"; motivo <- "sincronizado"
-  if (is.na(ua)) {
-    veredicto <- "desincronizado"; motivo <- "ultima_actividad ausente o ilegible"
-  } else if (is.na(mt)) {
-    # B-14-01: sin traspaso legible no hay con que comparar. Antes esta rama no
-    # existia y el veredicto caia en "sincronizado" por omision.
+  # Tolerancia con aviso: si el correlativo del traspaso no llega envuelto en la
+  # lista de resolver_traspaso(), se acepta el entero desnudo. No se adivina.
+  vnn <- if (is.list(traspaso)) traspaso$correlativo else traspaso
+  vnn <- if (is.null(vnn)) NA_integer_ else suppressWarnings(as.integer(vnn))
+  ses <- correlativo_de_sesion(meta$sesion_actual)
+
+  if (is.na(ses)) {
+    veredicto <- "indeterminado"
+    motivo <- "sin sesion_actual legible en el front matter: la sincronia no se puede medir"
+  } else if (is.na(vnn)) {
     veredicto <- "indeterminado"
     motivo <- "sin traspaso legible: la sincronia no se puede medir"
+  } else if (ses < vnn) {
+    veredicto <- "desincronizado"
+    motivo <- sprintf("desync: sesion_actual v%02d < traspaso vigente v%02d", ses, vnn)
   } else {
-    margen <- if (exists("MARGEN_DESYNC_DIAS")) MARGEN_DESYNC_DIAS else 0L
-    if (ua < (mt - margen)) {
-      veredicto <- "desincronizado"
-      motivo <- sprintf(
-        "desync: ultima_actividad %s < mtime traspaso %s - margen %dd",
-        ua, mt, margen
-      )
-    }
+    veredicto <- "sincronizado"
+    motivo <- sprintf("sincronizado: sesion_actual v%02d >= traspaso vigente v%02d", ses, vnn)
   }
+
   tp <- if (is.null(meta$tipo_pendiente) || !nzchar(meta$tipo_pendiente))
            NA_character_ else meta$tipo_pendiente
   prox <- seccion_md(fm$cuerpo, "Proximo paso")
@@ -264,7 +274,7 @@ lista_documentos <- stats::setNames(
       ruta_claude      = buscar_raiz(ruta, "CLAUDE.md"),
       ruta_gobernanza  = resolver_gobernanza(ruta),
       maneja_sensibles = !is.na(resolver_gobernanza(ruta)),
-      estado           = resolver_estado(ruta, tr$ruta)   # Fase 2 PUSH (decide PUSH/PULL)
+      estado           = resolver_estado(ruta, tr)   # Fase 2 PUSH (decide PUSH/PULL)
     )
   }),
   df_proyectos$slug

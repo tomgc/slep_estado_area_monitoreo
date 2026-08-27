@@ -9,8 +9,8 @@
 #             reescribe. Lectura de hermanos confinada a 50_documentacion/ (R2).
 #             Fase 2 PUSH: consume `semaforo` (+ "Proximo paso") de ESTADO.md de
 #             cada hermano, con fallback a PULL. Reusa en sesion la decision de
-#             sincronizacion YA computada por resolver_estado() (32, con margen
-#             P-DESYNC-MARGEN) via `lista_documentos`; si corre standalone
+#             sincronizacion YA computada por resolver_estado() (32, que compara
+#             sesion_actual contra el vNN del traspaso) via `lista_documentos`;
 #             (run_all(only=6), sin ese objeto en sesion) cae a una relectura
 #             autocontenida que reusa el MISMO parser/formula (ver
 #             leer_estado_hermano()). Deteccion de desync/tipo_pendiente NO se
@@ -296,18 +296,18 @@ parsear_data_js <- function(ruta_abs) {
 #'
 #' Camino primario: si `lista_documentos` existe EN SESION (36 corrio como
 #' parte de un run_all() completo, tras el paso 32), reusa integramente la
-#' decision de sincronizacion ya computada por resolver_estado() -incluido el
-#' margen de tolerancia P-DESYNC-MARGEN- sin releer ni reinterpretar nada.
+#' decision de sincronizacion ya computada por resolver_estado() -incluido su
+#' veredicto de tres estados- sin releer ni reinterpretar nada.
 #' Evita una segunda implementacion de la regla de desync que podria divergir
-#' de la de 32 (p. ej. una version sin margen reintroduciria el falso-desync
-#' de medianoche ya corregido).
+#' de la de 32 (la duplicacion previa, B-14-03, divergia en tres puntos que
+#' nadie media: ver cargar_reglas_sincronia()).
 #'
 # ---- Fuente unica del veredicto de sincronia (B-14-03) -----------------------
 # La deteccion de desync vive SOLO en 32_localizar_documentos.R. Este paso la
 # CARGA y la LLAMA; no la reimplementa. Antes habia aqui una segunda copia de la
 # formula. El booleano era identico (verificado por barrido exhaustivo sobre
 # ua x mt x margen: 0 divergencias), pero el payload adjunto divergia en tres
-# puntos que nadie medisa:
+# puntos que nadie media:
 #   1. extraia "Proximo paso" con bloque_seccion() (laxo: cualquier nivel,
 #      insensible a mayusculas, por subcadena) en vez de seccion_md() (estricto:
 #      "## Proximo paso" exacto). Divergencia LATENTE: los 23 ESTADO.md de la
@@ -376,7 +376,7 @@ leer_estado_hermano <- function(slug) {
   # ---- Fallback standalone: la MISMA regla, resuelta en vivo -----------------
   dir_hno <- file.path(RAIZ_PROYECTOS, slug)
   tr  <- resolver_traspaso(dir_hno)
-  est <- resolver_estado(dir_hno, tr$ruta)
+  est <- resolver_estado(dir_hno, tr)
   if (!isTRUE(est$presente)) return(vacio)
 
   sem <- est$meta$semaforo
