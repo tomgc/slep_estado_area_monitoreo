@@ -50,19 +50,28 @@ los commits.
 
 | Categoria | N | Descripcion |
 |---|---|---|
-| Andamiaje/estructura | 3 | Estructura Rama A, .gitignore, .Rproj, git. |
-| Pipeline determinista | 6 | Scripts 31-36 (36 nuevo en s4). |
-| Utilidades/gobernanza por codigo | 2 | escribir_seguro/atomico; descubrir_hermanos. |
-| Sintesis cualitativa | 5 | 14 fichas L2 iniciales + 3 re-sintetizadas (s2) + 0 nuevas (s3). |
-| Operacion/regeneracion | 4 | Corridas run_all de regeneracion (s2, s3, s4 x2). |
-| Documentacion | 8 | README, CLAUDE, cobertura (x2), esbozo Fase 2, decision, traspasos (x2: v03 commiteado + v04), parche POLITICA/SETTINGS. |
-| Robustez/bugfix | 7 | id integer en PASOS, UTF-8 con readr, em-dash mojibake, exclusion .git, fix paso 31 (columnas extra), mojibake B6 (paso 36), bug lateral tz UTC en deteccion de desync. |
-| Gobernanza hermanos | 8 | gobernanza_datos.md en 3+2 proyectos, merge docs/suitedoc, push, conexion GitHub orquestador. |
-| Estandarizacion de cartera | 5 | Auditoria de backlogs + 4 renames/reubicaciones + 1 volcado crudo eliminado. |
-| Informe visual (P4) | 5 | Script 36 (HTML+MD autocontenidos), integracion a run_all, registro ampliado (2 columnas), integracion data.js (P-DATA-JS-RUTA), rediseno acordeon + cambio de titulo. |
+| Andamiaje/estructura | 5 | Estructura Rama A, .gitignore y .Rproj, escaner del propio repo, tests, siembra del registro. |
+| Pipeline determinista | 6 | Scripts 31-35 y el orquestador 00_run_all.R. |
+| Utilidades/gobernanza por codigo | 2 | 10_utils.R y 10_configuracion.R: escritura confinada y descubrimiento de hermanos. |
+| Sintesis cualitativa | 2 | 14 fichas L2 iniciales y la re-sintesis de 3 en s2. |
+| Operacion/regeneracion | 7 | Corridas de run_all para regenerar salidas o incorporar hermanos nuevos. |
+| Documentacion | 7 | README, CLAUDE, cobertura, esbozo Fase 2, traspaso v03, parches normativos, delta de la KB, reconstruccion del backlog. |
+| Robustez/bugfix | 6 | id integer, UTF-8 bajo locale C, em-dash, paso 31 truncando columnas, mojibake B6, acceso [[ ]] del paso 6. |
+| Gobernanza hermanos | 9 | gobernanza_datos.md en 5 proyectos, merge docs/suitedoc, conexion y push a GitHub, alineacion de remoto, rescate de traspaso ajeno. |
+| Estandarizacion de cartera | 11 | Auditoria y renombrado de backlogs, correccion del universo, decision sobre desalineaciones de nombre, censo documental de la cartera. |
+| Informe visual (P4) | 5 | Diseno, script 36, columnas nuevas del registro, data.js in situ, rediseno acordeon. |
 | Cierre de deuda menor | 2 | Paleta real sincronizada, auditoria archivada como andamio. |
-| Arquitectura Fase 2 (ESTADO.md) | 3 | Diseno PUSH/PULL completo, propagacion batch a 13 hermanos (+2 regeneraciones), lector con fallback en el orquestador. |
+| Arquitectura Fase 2 (ESTADO.md) | 3 | Diseno PUSH/PULL, propagacion a 13 hermanos, lector con fallback. |
 | Gobernanza de proceso (asistente) | 1 | Parche POLITICA 0.5 / SETTINGS 2.2.15 (registro de errores del asistente). |
+| Rescate e integracion del repositorio | 4 | CATEGORIA NUEVA (s13): apertura de emergencia, tramos A y B del rescate, reversion de la regresion normativa. |
+| Perdidas (55-61) | 7 | Nunca llegaron a git en las sesiones 8 a 10. Irrecuperables. No se reconstruyen. |
+| **Total** | **77** | Cuadra con el total del resumen por sesion. |
+
+**Cobertura (s13).** La tabla se re-derivo entrada por entrada sobre las 70 presentes
+mas la fila de perdidas: una entrada, una categoria, sin doble conteo. Antes sumaba 59
+sobre 54 entradas clasificables, un sobreconteo de 5 sin origen documentado. Las
+entradas 55-61 no se reconstruyen: su hueco es permanente y declararlo es la conducta
+correcta (traspaso v12).
 
 ## Resumen estadistico por sesion
 
