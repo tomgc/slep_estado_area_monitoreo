@@ -183,13 +183,73 @@ o_null <- function(x) {
   if (is.na(x) || !nzchar(trimws(x))) NA_character_ else x
 }
 
-#' Parsea el arreglo PROYECTOS de un data.js del portafolio. Enfoque (B.2): el
-#' formato es JS plano y estable (claves sin comillas, valores con comillas
-#' dobles consistentes, sin trailing commas, sin funciones, comentarios fuera de
-#' los objetos), de uso interno. Por eso saneamos las claves a comillas y
-#' delegamos en jsonlite -mas robusto para el array multilinea sintesis[] que
-#' una regex por campo-. tryCatch POR OBJETO: una entrada malformada se omite
-#' con advertencia sin abortar el resto (patron tolerante).
+#' Copia de `txt` con el INTERIOR de cada string literal reemplazado por un
+#' caracter neutro, conservando la longitud (y por lo tanto todas las
+#' posiciones). Es lo que permite buscar llaves y claves sin que el contenido de
+#' los strings confunda la busqueda: los parrafos de `sintesis` ya traen dos
+#' puntos en la prosa, y nada impide que traigan una llave o una comilla
+#' escapada.
+enmascarar_strings <- function(txt) {
+  m <- gregexpr('"(?:[^"\\\\]|\\\\.)*"', txt, perl = TRUE)[[1]]
+  if (m[1] == -1L) return(txt)
+  ch <- strsplit(txt, "", fixed = TRUE)[[1]]
+  largos <- attr(m, "match.length")
+  for (k in seq_along(m)) {
+    if (largos[k] > 2L) ch[(m[k] + 1L):(m[k] + largos[k] - 2L)] <- "\a"
+  }
+  paste(ch, collapse = "")
+}
+
+#' Quotea las claves de UN objeto. Recibe el objeto y su version enmascarada:
+#' busca sobre la enmascarada (donde no hay contenido de strings que confundir)
+#' y reescribe sobre la original, de atras hacia adelante para no correr las
+#' posiciones que quedan por procesar. A diferencia del quoteo por linea que
+#' reemplaza, no exige que la clave abra la linea: `{ icono: "x" }` tambien cae.
+sanear_claves <- function(obj, obj_mask) {
+  m <- gregexpr("(?<![A-Za-z0-9_])[A-Za-z_][A-Za-z0-9_]*(?=\\s*:)", obj_mask, perl = TRUE)[[1]]
+  if (m[1] == -1L) return(obj)
+  largos <- attr(m, "match.length")
+  for (k in rev(seq_along(m))) {
+    obj <- paste0(substr(obj, 1L, m[k] - 1L),
+                  '"', substr(obj, m[k], m[k] + largos[k] - 1L), '"',
+                  substr(obj, m[k] + largos[k], nchar(obj)))
+  }
+  obj
+}
+
+#' Objetos top-level del arreglo, con sus claves ya entre comillas. Cuenta
+#' profundidad de llaves sobre el texto enmascarado, de modo que tolera objetos
+#' anidados -`valor: [{icono, texto}]`, que el catalogo del origen ya propone- y
+#' llaves dentro de strings. Reemplaza al split por `\{[^{}]*\}`, que asumia
+#' objetos planos y partia la entrada en pedazos en cuanto habia uno anidado.
+#' character(0) si las llaves no cierran: donde termina un objeto no se adivina.
+objetos_saneados <- function(arr) {
+  mask <- enmascarar_strings(arr)
+  pos <- gregexpr("[{}]", mask)[[1]]
+  if (pos[1] == -1L) return(character(0))
+  prof <- 0L
+  ini <- NA_integer_
+  res <- character(0)
+  for (p in pos) {
+    if (substr(mask, p, p) == "{") {
+      if (prof == 0L) ini <- p
+      prof <- prof + 1L
+    } else {
+      prof <- prof - 1L
+      if (prof < 0L) return(character(0))
+      if (prof == 0L) res <- c(res, sanear_claves(substr(arr, ini, p), substr(mask, ini, p)))
+    }
+  }
+  if (prof != 0L) character(0) else res
+}
+
+#' Parsea el arreglo PROYECTOS de un data.js del portafolio. El formato es JS de
+#' uso interno (claves sin comillas, valores con comillas dobles consistentes,
+#' sin trailing commas, sin funciones, comentarios fuera de los objetos): se
+#' sanean las claves y se delega en jsonlite, mas robusto para el array
+#' multilinea sintesis[] que una regex por campo. tryCatch POR OBJETO: una
+#' entrada malformada se omite con advertencia sin abortar el resto (patron
+#' tolerante).
 #' Devuelve lista nombrada por `id` (la llave estable que declara el origen), o
 #' NULL si el archivo no existe / no hay arreglo / ninguna entrada parsea
 #' (degradacion con gracia). Aborta si una entrada parsea pero no trae `id`:
@@ -204,21 +264,15 @@ parsear_data_js <- function(ruta_abs) {
             "36_visual", "WARN")
     return(NULL)
   }
-  # Objetos top-level: { ... } sin llaves anidadas (formato plano observado).
-  objs <- str_match_all(arr, "(?s)\\{[^{}]*\\}")[[1]][, 1]
-  if (length(objs) == 0) return(NULL)
+  objs <- objetos_saneados(arr)
+  if (length(objs) == 0) {
+    log_msg("data.js: el arreglo PROYECTOS no arrojo objetos top-level (llaves sin cerrar); se omiten campos editoriales.",
+            "36_visual", "WARN")
+    return(NULL)
+  }
   res <- list()
   for (o in objs) {
-    obj <- tryCatch({
-      # Quotear CUALQUIER clave a inicio de linea. El formato es plano y los
-      # valores string viven en su propia linea iniciada por comilla, asi que no
-      # matchean. La lista blanca anterior (7 claves fijas) rompia el objeto
-      # entero cada vez que el origen agregaba una clave: asi entro `id` (commit
-      # 15dc047 del hermano) y fallaron las 12 entradas de una vez.
-      o2 <- str_replace_all(
-        o, "(?m)^(\\s*)([A-Za-z_][A-Za-z0-9_]*)\\s*:", '\\1"\\2":')
-      jsonlite::fromJSON(o2, simplifyVector = FALSE)
-    }, error = function(e) {
+    obj <- tryCatch(jsonlite::fromJSON(o, simplifyVector = FALSE), error = function(e) {
       log_msg(sprintf("data.js: entrada no parseable, se omite (%s).", conditionMessage(e)),
               "36_visual", "WARN")
       NULL
