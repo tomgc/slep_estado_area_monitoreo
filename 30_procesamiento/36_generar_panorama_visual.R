@@ -791,9 +791,22 @@ objetos <- objetos[ord]
 
 # ---- JSON para embeber -------------------------------------------------------
 
+# `objetos` esta NOMBRADO por slug (necesario para los bucles por nombre, que
+# reemplazaron al indice posicional). Pero jsonlite serializa una lista nombrada
+# como objeto {} y no como array [], y el JS del propio artefacto hace
+# CARTERA.forEach(...): un objeto revienta ahi con TypeError y aborta el render
+# ENTERO (lista, KPIs, banda de atencion, filtros). unname() antes de serializar
+# conserva los nombres donde hacen falta y devuelve el array donde hace falta.
 json_cartera <- jsonlite::toJSON(
-  objetos, auto_unbox = TRUE, na = "null", null = "null", pretty = TRUE
+  unname(objetos), auto_unbox = TRUE, na = "null", null = "null", pretty = TRUE
 )
+# Guarda: el payload embebido DEBE ser un array. Un objeto pasa todos los
+# chequeos de conteo (jsonlite lo parsea igual, y son las mismas 26 fichas) y
+# rompe solo en el navegador. Por eso se comprueba la FORMA, no el contenido.
+if (!startsWith(trimws(as.character(json_cartera)), "[")) {
+  stop("36: el JSON de la cartera no es un array. El JS hace CARTERA.forEach() ",
+       "y un objeto aborta el render completo sin que ningun conteo lo note.")
+}
 # Blindaje para embeber en <script>: evitar cierre prematuro.
 json_embebido <- str_replace_all(as.character(json_cartera), "</", "<\\\\/")
 
@@ -884,6 +897,7 @@ body{margin:0;background:var(--cream);color:var(--ink);
 .punto{display:inline-block;width:7px;height:7px;border-radius:999px;flex:0 0 auto}
 /*__SEM_PUNTO__*/
 .punto.sem-na{background:var(--line)}
+.atn-card.sem-na{border-left-color:var(--line)}
 /* P-DESIGN-PANORAMA-ADOPCION: KPIs, banda de atencion y filtros. Reusan
    integramente los tokens de :root ya existentes (--plum/--olive/--amber/
    --danger/--slate/--ocean/--line/--cream/--card/--muted/--ink-2); no se
@@ -1067,10 +1081,10 @@ function fila(p){
 function renderKPIs(cartera){
   const div=document.getElementById("kpis");
   if(!div) return;
-  const ETQ={activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado",na:"sin dato"};
-  const cont={activo:0,pausa:0,bloqueado:0,cerrado:0,na:0};
+/*__SEM_ETQ_KPI__*/
+/*__SEM_CONT_KPI__*/
   cartera.forEach(p=>{ cont[bucketSemaforo(p)]++; });
-  ["activo","pausa","bloqueado","cerrado","na"].forEach(k=>{
+/*__SEM_ORDEN_KPI__*/.forEach(k=>{
     const item=el("div","kpi kpi-"+k);
     item.appendChild(el("div","kpi-num",String(cont[k])));
     item.appendChild(el("div","kpi-lbl",ETQ[k]));
@@ -1110,7 +1124,7 @@ function renderAtencion(cartera){
 function renderFiltros(cartera){
   const div=document.getElementById("filtros");
   if(!div) return;
-  const ETQ_SEM={activo:"activo",pausa:"pausa",bloqueado:"bloqueado",cerrado:"cerrado",na:"sin dato"};
+/*__SEM_ETQ_FILTRO__*/
   const ETQ_TP={bug:"bug",bloqueante:"bloqueante",deuda_heredada:"deuda heredada",
     deuda_tecnica:"deuda tecnica",nuevo:"nuevo",cosmetica:"cosmetica",ninguno:"ninguno",na:"sin dato"};
 
@@ -1154,7 +1168,7 @@ function renderFiltros(cartera){
     return g;
   }
 
-  div.appendChild(grupo("Semáforo",["activo","pausa","bloqueado","cerrado","na"],ETQ_SEM,FILTRO.semaforo));
+  div.appendChild(grupo("Semáforo",/*__SEM_ORDEN_FILTRO__*/,ETQ_SEM,FILTRO.semaforo));
   div.appendChild(grupo("Pendiente",[...TIPOS_PENDIENTE,"na"],ETQ_TP,FILTRO.tp));
 }
 
@@ -1208,16 +1222,47 @@ js <- sub("/*__SEM_ETIQUETA__*/",
 js <- sub("/*__SEM_LISTA__*/",
   sprintf("const SEMAFOROS = [%s];",
           paste(sprintf('"%s"', nom_sem), collapse = ",")), js, fixed = TRUE)
+# Los KPIs y los filtros tambien derivan del enum. Antes tenian listas literales
+# de cuatro valores: `amarillo` quedaba fuera, cont['amarillo'] era undefined,
+# undefined++ daba NaN y la ficha desaparecia de los agregados aunque se viera
+# bien en la lista. El bucket "na" se agrega al final porque no es un valor del
+# enum sino el cajon de los que no lo son.
+orden_kpi <- c(nom_sem, "na")
+js <- sub("/*__SEM_ETQ_KPI__*/",
+  sprintf("  const ETQ={%s,na:\"sin dato\"};",
+          paste(sprintf('%s:"%s"', nom_sem, nom_sem), collapse = ",")), js, fixed = TRUE)
+js <- sub("/*__SEM_CONT_KPI__*/",
+  sprintf("  const cont={%s};", paste(sprintf("%s:0", orden_kpi), collapse = ",")),
+  js, fixed = TRUE)
+js <- sub("/*__SEM_ORDEN_KPI__*/",
+  sprintf("  [%s]", paste(sprintf('"%s"', orden_kpi), collapse = ",")), js, fixed = TRUE)
+js <- sub("/*__SEM_ETQ_FILTRO__*/",
+  sprintf("  const ETQ_SEM={%s,na:\"sin dato\"};",
+          paste(sprintf('%s:"%s"', nom_sem, nom_sem), collapse = ",")), js, fixed = TRUE)
+js <- sub("/*__SEM_ORDEN_FILTRO__*/",
+  sprintf("[%s]", paste(sprintf('"%s"', orden_kpi), collapse = ",")), js, fixed = TRUE)
 
 # Guarda de auto-consistencia: cada valor del enum DEBE tener su regla CSS y
 # figurar en la lista del JS. Si no, la ficha saldria con clase inexistente y
 # contada como "sin dato": exactamente el defecto que este bloque cierra.
 for (s in nom_sem) {
-  if (!grepl(sprintf(".punto.sem-%s{", s), css, fixed = TRUE)) {
-    stop(sprintf("36: el valor de semaforo '%s' esta en RANGO_SEMAFORO y no tiene regla CSS .punto.sem-%s", s, s))
+  for (fam in c(".punto.sem-%s{", ".atn-card.sem-%s{")) {
+    if (!grepl(sprintf(fam, s), css, fixed = TRUE)) {
+      stop(sprintf("36: el valor de semaforo '%s' esta en RANGO_SEMAFORO y no tiene regla CSS %s",
+                   s, sub("%s\\{", paste0(s, "{"), fam)))
+    }
   }
   if (!grepl(sprintf('"%s"', s), sub("^.*const SEMAFOROS = \\[", "", js), fixed = FALSE)) {
     stop(sprintf("36: el valor de semaforo '%s' no llego a la lista SEMAFOROS del JS", s))
+  }
+}
+
+# El bucket "na" no es un valor del enum (es el cajon de los que no lo son),
+# pero la UI le asigna clase igual que a los demas: si falta, una ficha sin
+# semaforo pierde su marca visual en silencio.
+for (fam in c(".punto.sem-na{", ".atn-card.sem-na{")) {
+  if (!grepl(fam, css, fixed = TRUE)) {
+    stop(sprintf("36: falta la regla CSS %s para el bucket 'na'.", fam))
   }
 }
 if (grepl("__SEM_", paste(css, js), fixed = TRUE)) {
