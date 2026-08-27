@@ -328,9 +328,15 @@ leer_estado_hermano <- function(slug, ruta_traspaso) {
     est <- ld$estado
     sem <- est$meta$semaforo
     tp  <- est$tipo_pendiente
+    # B-14-01: APAGAR un campo exige la afirmacion negativa explicita, no la
+    # ausencia de la afirmacion positiva. Un veredicto "indeterminado" (no se
+    # pudo medir la sincronia) conserva los campos; solo "desincronizado" los
+    # apaga. Antes se gateaba por isTRUE(sincronizado), que trataba el dato
+    # ausente como dato negativo.
+    apaga <- identical(est$veredicto, "desincronizado")
     return(list(
-      semaforo = if (isTRUE(est$sincronizado) && !is.null(sem) && nzchar(sem)) sem else NA_character_,
-      proximo_paso = if (isTRUE(est$sincronizado) && !is.null(est$proximo) && !is.na(est$proximo)) est$proximo else NA_character_,
+      semaforo = if (!apaga && !is.null(sem) && nzchar(sem)) sem else NA_character_,
+      proximo_paso = if (!apaga && !is.null(est$proximo) && !is.na(est$proximo)) est$proximo else NA_character_,
       tipo_pendiente_raw = if (is.null(tp) || is.na(tp) || !nzchar(tp)) NA_character_ else tp,
       sincronizado = isTRUE(est$sincronizado),
       presente = isTRUE(est$presente)

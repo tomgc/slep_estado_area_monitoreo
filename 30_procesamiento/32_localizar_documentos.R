@@ -16,7 +16,12 @@
 
 # Grafias coexistentes del traspaso vigente (seccion 6 del encargo):
 #   traspaso_cierre_vNN.md | traspaso-cierre-vNN.md | CONTEXTO_VNN.md
-PATRON_TRASPASO <- "(?i)^(traspaso[_-]cierre[_-]v\\d+|contexto_v\\d+)\\.md$"
+# El sufijo tras el correlativo es OPCIONAL y debe abrir con "_" o "-": la
+# cartera usa traspaso_cierre_vNN_<slug>.md en al menos un hermano, y el ancla
+# "$" pegada al correlativo lo dejaba fuera sin aviso (B-14-01). El sufijo no
+# puede empezar por letra o digito, para no capturar nombres tematicos como
+# traspaso_cierre_react_v01.md ni contexto_proyecto.md.
+PATRON_TRASPASO <- "(?i)^(traspaso[_-]cierre[_-]v\\d+|contexto_v\\d+)([_-].*)?\\.md$"
 # Correlativo entero embebido en el nombre (tolera ceros a la izquierda).
 PATRON_CORRELATIVO <- "(?i)v0*(\\d+)"
 # Reseña de portafolio.
@@ -144,19 +149,35 @@ seccion_md <- function(cuerpo_lineas, titulo) {
 #' lectura del estado en esta corrida: PUSH (leer ESTADO.md directo) vs PULL
 #' (recomputar desde traspaso/backlog, comportamiento Fase 1).
 #'
+#' Devuelve un `veredicto` de TRES estados, no un logico de dos:
+#'   "sincronizado"   : se pudo comparar y la comparacion pasa.
+#'   "desincronizado" : se pudo comparar y la comparacion falla.
+#'   "indeterminado"  : NO se pudo comparar (falta el traspaso o el ESTADO.md).
+#'
+#' El tercer estado existe por B-14-01: cuando `resolver_traspaso()` devolvia NA,
+#' la rama de comparacion no se evaluaba y `sincronizado` quedaba TRUE por
+#' defecto, es decir, un dato ausente se leia como afirmacion positiva. Esa
+#' conversion silenciosa, y no el regex, es la causa raiz: el regex solo decidia
+#' cuantos repos caian en ella.
+#'
 #' Regla de desincronizacion (encargo Fase 2, con margen desde P-DESYNC-MARGEN):
 #' si `ultima_actividad` del ESTADO es ANTERIOR (por fecha) al mtime del
 #' traspaso vigente EN MAS DE `MARGEN_DESYNC_DIAS` dias, el ESTADO se considera
 #' stale -> se trata como si no existiera (PULL). El margen (1 dia por defecto)
 #' tolera el patron de traspasos guardados pasada la medianoche de su fecha de
 #' cierre declarada sin ocultar desyncs de contenido reales (mas de 1 dia de
-#' diferencia). Tambien cae a PULL si falta ESTADO.md o su `ultima_actividad`
-#' es ilegible. La comparacion es por FECHA (mismo dia = sincronizado); el
-#' mtime se lee en runtime y NO se persiste.
+#' diferencia). La comparacion es por FECHA (mismo dia = sincronizado); el mtime
+#' se lee en runtime y NO se persiste.
+#'
+#' `sincronizado` se conserva como logico DERIVADO y ESTRICTO
+#' (`veredicto == "sincronizado"`) para los consumidores que ya lo leen: un
+#' indeterminado NO afirma sincronia. La decision de APAGAR un campo, en cambio,
+#' exige la afirmacion negativa explicita (`veredicto == "desincronizado"`);
+#' ver las compuertas del paso 36.
 resolver_estado <- function(ruta_proyecto, ruta_traspaso) {
   ruta <- file.path(ruta_proyecto, SUBRUTA_ESTADO)
-  vacio <- list(presente = FALSE, sincronizado = FALSE, fuente = "PULL",
-                ruta = NA_character_, meta = list(), cuerpo = "",
+  vacio <- list(presente = FALSE, sincronizado = FALSE, veredicto = "indeterminado",
+                fuente = "PULL", ruta = NA_character_, meta = list(), cuerpo = "",
                 proximo = NA_character_, tipo_pendiente = NA_character_,
                 motivo = "sin ESTADO.md")
   if (!file.exists(ruta)) return(vacio)
@@ -173,13 +194,18 @@ resolver_estado <- function(ruta_proyecto, ruta_traspaso) {
   mt <- if (!is.na(ruta_traspaso) && file.exists(ruta_traspaso))
           as.Date(format(file.mtime(ruta_traspaso), "%Y-%m-%d", tz = tz_loc)) else NA
 
-  sincronizado <- TRUE; motivo <- "sincronizado"
+  veredicto <- "sincronizado"; motivo <- "sincronizado"
   if (is.na(ua)) {
-    sincronizado <- FALSE; motivo <- "ultima_actividad ausente o ilegible"
-  } else if (!is.na(mt)) {
+    veredicto <- "desincronizado"; motivo <- "ultima_actividad ausente o ilegible"
+  } else if (is.na(mt)) {
+    # B-14-01: sin traspaso legible no hay con que comparar. Antes esta rama no
+    # existia y el veredicto caia en "sincronizado" por omision.
+    veredicto <- "indeterminado"
+    motivo <- "sin traspaso legible: la sincronia no se puede medir"
+  } else {
     margen <- if (exists("MARGEN_DESYNC_DIAS")) MARGEN_DESYNC_DIAS else 0L
     if (ua < (mt - margen)) {
-      sincronizado <- FALSE
+      veredicto <- "desincronizado"
       motivo <- sprintf(
         "desync: ultima_actividad %s < mtime traspaso %s - margen %dd",
         ua, mt, margen
@@ -192,8 +218,9 @@ resolver_estado <- function(ruta_proyecto, ruta_traspaso) {
 
   list(
     presente       = TRUE,
-    sincronizado   = sincronizado,
-    fuente         = if (sincronizado) "PUSH" else "PULL",
+    sincronizado   = identical(veredicto, "sincronizado"),
+    veredicto      = veredicto,
+    fuente         = if (identical(veredicto, "desincronizado")) "PULL" else "PUSH",
     ruta           = ruta,
     meta           = meta,
     cuerpo         = trimws(paste(fm$cuerpo, collapse = "\n")),
