@@ -50,22 +50,22 @@ los commits.
 
 | Categoria | N | Descripcion |
 |---|---|---|
-| Andamiaje/estructura | 5 | Estructura Rama A, .gitignore y .Rproj, escaner del propio repo, tests, siembra del registro. |
+| Andamiaje/estructura | 7 | Estructura Rama A, .gitignore y .Rproj, escaner del propio repo, tests, siembra del registro. |
 | Pipeline determinista | 6 | Scripts 31-35 y el orquestador 00_run_all.R. |
-| Utilidades/gobernanza por codigo | 2 | 10_utils.R y 10_configuracion.R: escritura confinada y descubrimiento de hermanos. |
+| Utilidades/gobernanza por codigo | 3 | 10_utils.R y 10_configuracion.R: escritura confinada y descubrimiento de hermanos. |
 | Sintesis cualitativa | 2 | 14 fichas L2 iniciales y la re-sintesis de 3 en s2. |
-| Operacion/regeneracion | 7 | Corridas de run_all para regenerar salidas o incorporar hermanos nuevos. |
-| Documentacion | 7 | README, CLAUDE, cobertura, esbozo Fase 2, traspaso v03, parches normativos, delta de la KB, reconstruccion del backlog. |
-| Robustez/bugfix | 6 | id integer, UTF-8 bajo locale C, em-dash, paso 31 truncando columnas, mojibake B6, acceso [[ ]] del paso 6. |
+| Operacion/regeneracion | 8 | Corridas de run_all para regenerar salidas o incorporar hermanos nuevos. |
+| Documentacion | 9 | README, CLAUDE, cobertura, esbozo Fase 2, traspaso v03, parches normativos, delta de la KB, reconstruccion del backlog. |
+| Robustez/bugfix | 9 | id integer, UTF-8 bajo locale C, em-dash, paso 31 truncando columnas, mojibake B6, acceso [[ ]] del paso 6. |
 | Gobernanza hermanos | 9 | gobernanza_datos.md en 5 proyectos, merge docs/suitedoc, conexion y push a GitHub, alineacion de remoto, rescate de traspaso ajeno. |
-| Estandarizacion de cartera | 11 | Auditoria y renombrado de backlogs, correccion del universo, decision sobre desalineaciones de nombre, censo documental de la cartera. |
+| Estandarizacion de cartera | 12 | Auditoria y renombrado de backlogs, correccion del universo, decision sobre desalineaciones de nombre, censo documental de la cartera. |
 | Informe visual (P4) | 5 | Diseno, script 36, columnas nuevas del registro, data.js in situ, rediseno acordeon. |
-| Cierre de deuda menor | 2 | Paleta real sincronizada, auditoria archivada como andamio. |
+| Cierre de deuda menor | 3 | Paleta real sincronizada, auditoria archivada como andamio. |
 | Arquitectura Fase 2 (ESTADO.md) | 3 | Diseno PUSH/PULL, propagacion a 13 hermanos, lector con fallback. |
 | Gobernanza de proceso (asistente) | 1 | Parche POLITICA 0.5 / SETTINGS 2.2.15 (registro de errores del asistente). |
-| Rescate e integracion del repositorio | 4 | CATEGORIA NUEVA (s13): apertura de emergencia, tramos A y B del rescate, reversion de la regresion normativa. |
+| Rescate e integracion del repositorio | 5 | CATEGORIA NUEVA (s13): apertura de emergencia, tramos A y B del rescate, reversion de la regresion normativa. |
 | Perdidas (55-61) | 7 | Nunca llegaron a git en las sesiones 8 a 10. Irrecuperables. No se reconstruyen. |
-| **Total** | **77** | Cuadra con el total del resumen por sesion. |
+| **Total** | **89** | Cuadra con el total del resumen por sesion. |
 
 **Cobertura (s13).** La tabla se re-derivo entrada por entrada sobre las 70 presentes
 mas la fila de perdidas: una entrada, una categoria, sin doble conteo. Antes sumaba 59
@@ -89,7 +89,8 @@ correcta (traspaso v12).
 | 10 | v10 | 3 (perdidas) | n/d | Consolidacion de backlog atrasado, fix del escaner (`.github`), resto del patron visual, cobertura ESTADO.md 16/17 |
 | 11 | v11 | 6 | n/d | Resolucion de P3 (desalineacion de nombres) e incorporacion de los hermanos nuevos descubiertos en disco |
 | 12 | v12 | 10 | Opus 5 | Apertura de emergencia, rescate del repositorio en dos tramos, primer censo completo del estado documental de la cartera y trazado de la ruta hacia un comando unico de actualizacion y publicacion. |
-| **Total** | | **77** (70 conservadas, 7 perdidas) | | |
+| 13 | v13 | 12 | Opus 5 | Desbloqueo del candado por I8, retorno del pipeline a operacion, censo de backlogs de la cartera y correccion de los tres defectos apilados de data.js. |
+| **Total** | | **89** (82 conservadas, 7 perdidas) | | |
 
 ## Detalle cronologico
 
@@ -304,6 +305,32 @@ a git: el trabajo se hizo sobre una copia perdida. No se reconstruyen. Producto
 adicional: la ruta de siete encargos hacia el comando unico y el inventario consolidado
 de 21 pendientes. [gobernanza]
 
+**Sesion 13 (entradas 78-89):**
+
+78. Mudanza de `registro_proyectos.csv` a `40_salidas/` y salida del control de versiones, con guarda de ausencia en sus lectores reales (D-01). Resuelve I8 y POLITICA 1.3 punto 5.
+
+79. Apertura del candado 0bis: `cierre_incompleto` a `no` y `sesion_abierta` a `true`, tras cerrar el hueco que la sesion 12 dejo declarado.
+
+80. Restauracion de `renv` y regeneracion del escaner: el pipeline vuelve a operacion y se apaga I7.
+
+81. Censo de backlogs de los 26 directorios de la cartera, con seis casos de autotest y dos controles negativos. Veredicto de la duda 6: accidente aislado, no patron.
+
+82. Cuadratura de la clasificacion tematica del backlog, re-derivada entrada por entrada, con categoria nueva "Rescate e integracion del repositorio" y fila explicita de las entradas perdidas 55-61.
+
+83. Versionado del motor y del arnes del censo en `andamios/`, el arnes reescrito autocontenido para correr desde cualquier directorio.
+
+84. Correccion de las descripciones del registro en `README.md`, `CLAUDE.md` y `ventana_insumos`, que describian el mundo anterior a D-01.
+
+85. Diagnostico de solo lectura de `data.js` y `estado_proyecto`: tres defectos apilados en el primero, y en el segundo una columna nunca curada en vez de un defecto de extraccion.
+
+86. Correccion del frente A en el paso 6: ruta a `docs/data.js`, saneador de claves generalizado y mapeo reclavado por `id`, con guarda contra omision silenciosa. Once fichas recuperan contenido editorial.
+
+87. Endurecimiento del parser de `data.js` ante objetos anidados, con recorrido unico y strings enmascarados, inmune a la proxima clave y a la proxima forma.
+
+88. Ordenacion del repositorio segun SETTINGS 4.7: dos documentos superados a `_archivo/20260826/`, exclusiones del escaner completadas y marcador depositado. Entregado como PR #4, sin mergear.
+
+89. Linea base fechada del registro depositada en `andamios/` antes de intervenir la idempotencia del paso 1, porque el archivo dejo de versionarse y su estado curado vivia en una sola copia fuera del repositorio.
+
 
 ## Delta del backlog
 
@@ -335,3 +362,17 @@ completa, y lo que midio fue una deuda de custodia extendida: 20 de 25
 hermanos sin campos de candado y siete entradas de backlog perdidas sin que
 nadie lo notara en dos meses. La sesion siguiente deberia devolver el peso al
 producto, empezando por las dos degradaciones del panorama.
+
+12 entradas nuevas (78-89) respecto al estado reflejado en
+`traspaso_cierre_v12.md` (que llego a la 77). Sin categorias nuevas ni
+reclasificaciones de entradas previas. Las doce se reparten entre las catorce
+categorias existentes, una entrada una categoria: Andamiaje/estructura 78 y 88;
+Utilidades/gobernanza por codigo 83; Operacion/regeneracion 80; Documentacion 82
+y 84; Robustez/bugfix 85, 86 y 87; Estandarizacion de cartera 81; Cierre de deuda
+menor 89; Rescate e integracion del repositorio 79.
+
+La sesion se reparte entre desbloqueo (78-80), instrumentacion de medicion
+(81-83) y correccion del producto publicado (85-87). Es la primera sesion en que
+medir precede a corregir por regla explicita, y las dos correcciones que produjo
+se apoyan en diagnosticos que desmontaron supuestos de un ano. La categoria
+Robustez/bugfix es la que mas crece, de 6 a 9.
