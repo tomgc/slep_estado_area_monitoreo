@@ -9,7 +9,7 @@ maneja_sensibles: false
 tipo_pendiente: bug
 sesion_abierta: false
 maquina: MacBook-Pro-de-Tomas
-commit_cierre: e93fa5f
+commit_cierre: 3267d1f
 traspaso_vigente: traspaso_cierre_v14.md
 cierre_incompleto: no
 insumos_verificados: 2026-08-27
