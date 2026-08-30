@@ -50,22 +50,22 @@ los commits.
 
 | Categoria | N | Descripcion |
 |---|---|---|
-| Andamiaje/estructura | 7 | Estructura Rama A, .gitignore y .Rproj, escaner del propio repo, tests, siembra del registro. |
-| Pipeline determinista | 6 | Scripts 31-35 y el orquestador 00_run_all.R. |
-| Utilidades/gobernanza por codigo | 3 | 10_utils.R y 10_configuracion.R: escritura confinada y descubrimiento de hermanos. |
+| Andamiaje/estructura | 8 | Estructura Rama A, .gitignore y .Rproj, escaner del propio repo, tests, siembra del registro. |
+| Pipeline determinista | 7 | Scripts 31-35 y el orquestador 00_run_all.R. |
+| Utilidades/gobernanza por codigo | 4 | 10_utils.R y 10_configuracion.R: escritura confinada y descubrimiento de hermanos. |
 | Sintesis cualitativa | 2 | 14 fichas L2 iniciales y la re-sintesis de 3 en s2. |
 | Operacion/regeneracion | 8 | Corridas de run_all para regenerar salidas o incorporar hermanos nuevos. |
 | Documentacion | 9 | README, CLAUDE, cobertura, esbozo Fase 2, traspaso v03, parches normativos, delta de la KB, reconstruccion del backlog. |
-| Robustez/bugfix | 9 | id integer, UTF-8 bajo locale C, em-dash, paso 31 truncando columnas, mojibake B6, acceso [[ ]] del paso 6. |
+| Robustez/bugfix | 17 | id integer, UTF-8 bajo locale C, em-dash, paso 31 truncando columnas, mojibake B6, acceso [[ ]] del paso 6. |
 | Gobernanza hermanos | 9 | gobernanza_datos.md en 5 proyectos, merge docs/suitedoc, conexion y push a GitHub, alineacion de remoto, rescate de traspaso ajeno. |
-| Estandarizacion de cartera | 12 | Auditoria y renombrado de backlogs, correccion del universo, decision sobre desalineaciones de nombre, censo documental de la cartera. |
-| Informe visual (P4) | 5 | Diseno, script 36, columnas nuevas del registro, data.js in situ, rediseno acordeon. |
-| Cierre de deuda menor | 3 | Paleta real sincronizada, auditoria archivada como andamio. |
+| Estandarizacion de cartera | 13 | Auditoria y renombrado de backlogs, correccion del universo, decision sobre desalineaciones de nombre, censo documental de la cartera. |
+| Informe visual (P4) | 7 | Diseno, script 36, columnas nuevas del registro, data.js in situ, rediseno acordeon. |
+| Cierre de deuda menor | 4 | Paleta real sincronizada, auditoria archivada como andamio. |
 | Arquitectura Fase 2 (ESTADO.md) | 3 | Diseno PUSH/PULL, propagacion a 13 hermanos, lector con fallback. |
 | Gobernanza de proceso (asistente) | 1 | Parche POLITICA 0.5 / SETTINGS 2.2.15 (registro de errores del asistente). |
 | Rescate e integracion del repositorio | 5 | CATEGORIA NUEVA (s13): apertura de emergencia, tramos A y B del rescate, reversion de la regresion normativa. |
 | Perdidas (55-61) | 7 | Nunca llegaron a git en las sesiones 8 a 10. Irrecuperables. No se reconstruyen. |
-| **Total** | **89** | Cuadra con el total del resumen por sesion. |
+| **Total** | **104** | Cuadra con el total del resumen por sesion. |
 
 **Cobertura (s13).** La tabla se re-derivo entrada por entrada sobre las 70 presentes
 mas la fila de perdidas: una entrada, una categoria, sin doble conteo. Antes sumaba 59
@@ -90,7 +90,8 @@ correcta (traspaso v12).
 | 11 | v11 | 6 | n/d | Resolucion de P3 (desalineacion de nombres) e incorporacion de los hermanos nuevos descubiertos en disco |
 | 12 | v12 | 10 | Opus 5 | Apertura de emergencia, rescate del repositorio en dos tramos, primer censo completo del estado documental de la cartera y trazado de la ruta hacia un comando unico de actualizacion y publicacion. |
 | 13 | v13 | 12 | Opus 5 | Desbloqueo del candado por I8, retorno del pipeline a operacion, censo de backlogs de la cartera y correccion de los tres defectos apilados de data.js. |
-| **Total** | | **89** (82 conservadas, 7 perdidas) | | |
+| 14 | v14 | 15 | Opus 5 | Sincronia medida en vez de supuesta, universo real de la cartera y guardas de forma sobre el artefacto publicado. |
+| **Total** | | **104** (97 conservadas, 7 perdidas) | | |
 
 ## Detalle cronologico
 
@@ -332,6 +333,38 @@ de 21 pendientes. [gobernanza]
 89. Linea base fechada del registro depositada en `andamios/` antes de intervenir la idempotencia del paso 1, porque el archivo dejo de versionarse y su estado curado vivia en una sola copia fuera del repositorio.
 
 
+**Sesion 14 (entradas 90-104):**
+
+90. Merge del PR #4 de ordenacion del repositorio, con el conflicto resuelto tomando los snapshots del escaner de `main` por ser salidas regenerables, y cierre del candado 0bis que la sesion 13 dejo en rojo.
+
+91. Correccion de `PATRON_TRASPASO` en `32_localizar_documentos.R`, anclado con `$` y ciego a los sufijos de slug: 0 de 11 traspasos de un hermano coincidian con el patron.
+
+92. Introduccion de un veredicto de sincronia de tres estados, con `indeterminado` para el caso en que la medicion no es posible: hasta aqui un `NA` se leia como `sincronizado` por omision, falso negativo silencioso de once sesiones.
+
+93. Unificacion de las dos semanticas de desync que convivian entre el paso 6 y el localizador, conservando la del localizador en los tres puntos donde el payload divergia.
+
+94. Migracion de la deteccion de sincronia de `mtime` a `vNN` (`sesion_actual` contra el traspaso mas reciente), que resuelve O-38 en su causa y cierra el pendiente P6 heredado.
+
+95. Incorporacion de `amarillo` al enum de semaforos, con su clase CSS, y advertencia nombrada ante cualquier valor fuera del enum.
+
+96. Correccion de los consumidores del enum que conservaban listas literales: los KPIs sumaban 25 contra un pie que declaraba 26 y no existia chip `amarillo`.
+
+97. Guarda de forma sobre el payload JSON del panorama, que aborta si deja de ser un array, tras publicar una pagina en blanco durante nueve minutos que ningun chequeo de cantidad detecto.
+
+98. Advertencia nombrada cuando la seccion de proximo paso de un `ESTADO.md` no calza la forma canonica, en vez de devolver vacio mudo.
+
+99. Retiro de las constantes huerfanas `MARGEN_DESYNC_DIAS` y `RUTA_INSUMOS`, con cero consumidores verificado.
+
+100. Correccion de la no idempotencia del paso 1 (O-20 / B13-03): `write_csv(na = "NA")` con `read_csv(na = c("", "NA"))` convertia cada celda vacia en la cadena `"NA"` en cada ciclo, 73 celdas contaminadas.
+
+101. Unificacion de la zona horaria del paso 3, que calculaba en UTC mientras el resto del pipeline usa `TZ_ORQUESTADOR`; el margen de un dia lo enmascaraba hasta que la migracion a `vNN` lo retiro.
+
+102. El universo del panorama pasa a derivarse del descubrimiento en vez de heredarse de un `inventario_cartera.json` congelado, y el paso 6 filtra las bajas: el panorama publicaba un proyecto inexistente y omitia tres directorios, dos de ellos activos.
+
+103. Guarda de asimetria entre el panorama y la cartera, correccion del nombre del campo de sensibilidad (`datos_sensibles` a `maneja_sensibles`) y tolerancia con advertencia nombrada para el hermano con esquema no canonico.
+
+104. Versionado del driver del censo de backlogs y control positivo del instrumento con huecos plantados, que cierra la duda 1 de la sesion 13 a favor del supuesto.
+
 ## Delta del backlog
 
 7 entradas nuevas (48-54) respecto al estado reflejado en `traspaso_cierre_v05.md`
@@ -376,3 +409,7 @@ La sesion se reparte entre desbloqueo (78-80), instrumentacion de medicion
 medir precede a corregir por regla explicita, y las dos correcciones que produjo
 se apoyan en diagnosticos que desmontaron supuestos de un ano. La categoria
 Robustez/bugfix es la que mas crece, de 6 a 9.
+
+15 entradas nuevas (90-104) respecto al estado reflejado en `traspaso_cierre_v13.md` (que llego a la 89). Sin categorias nuevas ni reclasificaciones de entradas previas. Las quince se reparten entre las quince categorias existentes, una entrada una categoria: Andamiaje/estructura 90; Pipeline determinista 102; Utilidades/gobernanza por codigo 104; Robustez/bugfix 91, 92, 93, 94, 97, 98, 100 y 101; Estandarizacion de cartera 103; Informe visual (P4) 95 y 96; Cierre de deuda menor 99. La columna N queda: Andamiaje/estructura 8, Pipeline determinista 7, Utilidades/gobernanza por codigo 4, Sintesis cualitativa 2, Operacion/regeneracion 8, Documentacion 9, Robustez/bugfix 17, Gobernanza hermanos 9, Estandarizacion de cartera 13, Informe visual (P4) 7, Cierre de deuda menor 4, Arquitectura Fase 2 (ESTADO.md) 3, Gobernanza de proceso (asistente) 1, Rescate e integracion del repositorio 5, Perdidas (55-61) 7. Total 104.
+
+El peso de la sesion se movio desde generar producto hacia impedir que el pipeline afirme lo que no midio: las correcciones dominantes son de defectos silenciosos (el NA leido como sincronizado, la fecha en UTC, la celda vacia convertida en cadena, el universo congelado, el payload serializado como objeto) y varias entradas instalan guardas que los harian visibles. Es la primera sesion en que los hallazgos mas consecuentes los trae la verificacion adversaria y no la tarea planificada. Robustez/bugfix vuelve a ser la categoria que mas crece, de 9 a 17, y pasa a ser la mayor de la tabla sin llegar al umbral de subdivision.

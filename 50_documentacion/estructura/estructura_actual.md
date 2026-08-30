@@ -1,10 +1,10 @@
 # Estructura del proyecto (escaner)
 
 - Raiz       : slep_estado_proyectos_monitoreo
-- Fecha      : 2026-08-27 09:54:03
+- Fecha      : 2026-08-30 01:05:32
 - Directorios: 19
-- Archivos   : 120
-- Tamano     : 2.22M
+- Archivos   : 132
+- Tamano     : 2.56M
 
 ## Arbol
 
@@ -14,25 +14,25 @@ slep_estado_proyectos_monitoreo/
 .github/
   workflows/
     pages.yml  (704)
-.gitignore  (1.1K)
+.gitignore  (1.09K)
 .Renviron.example  (1.93K)
 .Rhistory  (76)
 .Rprofile  (26)
-00_escanear_proyecto.R  (5.57K)
+00_escanear_proyecto.R  (5.63K)
 00_run_all.R  (4.66K)
 10_utils/
-  10_configuracion.R  (6.91K)
+  10_configuracion.R  (6.32K)
   10_locale.R  (8.91K)
   10_utils.R  (6.15K)
   10_validar_portabilidad.R  (16.4K)
 20_insumos/
 30_procesamiento/
-  31_descubrir_proyectos.R  (7.76K)
-  32_localizar_documentos.R  (11.4K)
-  33_extraer_metadatos.R  (3.16K)
+  31_descubrir_proyectos.R  (8.75K)
+  32_localizar_documentos.R  (18K)
+  33_extraer_metadatos.R  (3.73K)
   34_compilar_inventario.R  (6.99K)
   35_compilar_panorama.R  (8.98K)
-  36_generar_panorama_visual.R  (55.3K)
+  36_generar_panorama_visual.R  (70.8K)
 40_salidas/
   .Rhistory  (0)
   cache/
@@ -50,25 +50,24 @@ slep_estado_proyectos_monitoreo/
     slep_seguimiento_educacion_inicial.md  (2.01K)
     slep_simce_adecuado.md  (1.78K)
     slep_simce_estandares_aprendizaje.md  (1.92K)
-  inventario_cartera.json  (36K)
-  inventario_cartera.parquet  (20.9K)
-  panorama_visual.html  (59.6K)
-  panorama_visual.md  (30.4K)
-  panorama.md  (31.7K)
-  registro_proyectos.csv  (3.14K)
+  inventario_cartera.json  (38.6K)
+  inventario_cartera.parquet  (21.2K)
+  panorama_visual.html  (63.5K)
+  panorama_visual.md  (33.6K)
+  panorama.md  (34.6K)
+  registro_proyectos.csv  (3.16K)
 50_documentacion/
   .DS_Store  (14K)
   activa/
     .DS_Store  (6K)
     50_locale_utf8.md  (2.06K)
-    backlog_acumulativo.md  (25K)
+    50_ordenacion_repositorio.md  (4.08K)
+    backlog_acumulativo.md  (28.1K)
     decisiones/
       20260628_decision_arquitectura_orquestador.md  (4.21K)
       20260710_decision_desalineacion_nombres_repos.md  (5.38K)
-    esbozo_fase2_estado_estandarizado.md  (4.36K)
-    ESTADO.md  (1.61K)
+    ESTADO.md  (1.51K)
     POLITICA_PROYECTO.md  (42.8K)
-    reporte_cobertura_documental.md  (6.46K)
     SETTINGS_Y_PROMPTS_OPERACIONALES.md  (137K)
   andamios/
     .DS_Store  (6K)
@@ -94,8 +93,14 @@ slep_estado_proyectos_monitoreo/
     20260826_encargo_diagnostico_a05.md  (6.93K)
     20260826_encargo_ordenacion_a03.md  (8.51K)
     20260826_encargo_rescate_tramo_b_v2.md  (12.2K)
+    20260826_pendientes_ruta_e_itinerario.md  (12.2K)
     20260826_registro_proyectos_linea_base.csv  (3.14K)
     20260826_verificacion_frente_a.md  (21.2K)
+    20260827_censo_backlogs_driver.R  (6.72K)
+    20260827_encargo_apertura_v14.md  (20.6K)
+    20260827_encargo_ruta_v14.md  (27.4K)
+    20260827_encargo_ruta_v14b.md  (23.8K)
+    20260827_encargo_universo_v14c.md  (21.4K)
     auditoria_backlogs_20260629.md  (11.9K)
     design_handoff_monitoreo_cartera/
       assets/
@@ -119,15 +124,21 @@ slep_estado_proyectos_monitoreo/
       20260701_panorama_semaforo_log.md  (17.1K)
       20260702_panorama_rediseno_log.md  (12.4K)
       20260702_patron_visual_handoff_log.md  (16.8K)
-      cierres_log.md  (6.87K)
-    paquete_cierre_v13.md  (32.7K)
+      20260827_apertura_v14_log.md  (26.9K)
+      20260827_ruta_v14_log.md  (33K)
+      20260827_ruta_v14b_log.md  (41.5K)
+      20260827_universo_v14c_log.md  (41.7K)
+      cierres_log.md  (15K)
+    paquete_cierre_v14.md  (48K)
   estructura/
-    20260824_083051_estructura.md  (3.93K)
-    20260824_083051_estructura.txt  (3.93K)
-    20260826_182938_estructura.md  (4.72K)
-    20260826_182938_estructura.txt  (4.72K)
-    estructura_actual.md  (4.72K)
-    estructura_actual.txt  (4.72K)
+    20260827_090022_estructura.md  (5.18K)
+    20260827_090022_estructura.txt  (5.18K)
+    20260827_090029_estructura.md  (5.18K)
+    20260827_090029_estructura.txt  (5.18K)
+    20260827_095403_estructura.md  (5.37K)
+    20260827_095403_estructura.txt  (5.37K)
+    estructura_actual.md  (5.37K)
+    estructura_actual.txt  (5.37K)
   traspasos/
     .DS_Store  (8K)
     archivo/
@@ -142,7 +153,8 @@ slep_estado_proyectos_monitoreo/
       traspaso_cierre_v09.md  (22.3K)
       traspaso_cierre_v10.md  (26.6K)
       traspaso_cierre_v11.md  (24.5K)
-    traspaso_cierre_v12.md  (29.1K)
+      traspaso_cierre_v12.md  (29.1K)
+    traspaso_cierre_v13.md  (26.8K)
 CLAUDE.md  (15K)
 README.md  (6.9K)
 renv.lock  (65.7K)
@@ -154,13 +166,13 @@ tests/
 ## Conteo por extension
 
 ```
-  md                 69
-  R                  15
+  md                 79
+  R                  16
   otf                6
   (sin extension)    5
   csv                5
+  txt                4
   png                3
-  txt                3
   html               2
   Rhistory           2
   css                1
