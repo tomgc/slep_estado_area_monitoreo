@@ -58,7 +58,7 @@ if (file.exists(html_ruta)) {
   html <- paste(readLines(html_ruta, encoding = "UTF-8", warn = FALSE), collapse = "\n")
   afirmar(!grepl("https?://|jsdelivr|unpkg|googleapis|gstatic|cdnjs", html, perl = TRUE), "sin URLs externas ni CDN")
   afirmar(grepl("default-src 'none'", html, fixed = TRUE), "CSP bloquea toda conexión de red")
-  afirmar(grepl("data:font/woff2;base64", html, fixed = TRUE), "fuentes embebidas")
+  afirmar(grepl("data:font/otf;base64", html, fixed = TRUE) && !grepl("Geist", html, fixed = TRUE), "solo gobCL embebida")
 } else {
   afirmar(FALSE, "existe 40_salidas/atalaya_preview.html (correr 39 primero)")
 }

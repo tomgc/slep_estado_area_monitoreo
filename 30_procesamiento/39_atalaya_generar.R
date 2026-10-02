@@ -9,7 +9,7 @@
 #             ninguna referencia de red y aborta si la encuentra.
 # Insumos   : tests/fixtures/cartera_demo/<proyecto>/*.md (cartera demo)
 #             30_procesamiento/plantillas/atalaya/plantilla.html
-#             30_procesamiento/plantillas/atalaya/fuentes/*.woff2 (OFL)
+#             30_procesamiento/plantillas/atalaya/fuentes/gobCL_*.otf
 #             30_procesamiento/plantillas/atalaya/iconos/*.svg (Lucide, ISC)
 # Salidas   : 40_salidas/atalaya_preview.html
 #             40_salidas/atalaya_preview_datos.json (mismo dataset, legible)
@@ -49,17 +49,20 @@ reemplazar_marcador <- function(txt, marcador, valor) {
   paste0(substr(txt, 1L, pos - 1L), valor, substr(txt, pos + attr(pos, "match.length"), nchar(txt)))
 }
 
+# Unica familia permitida: gobCL (tipografia institucional del Gobierno de Chile).
 css_fuentes <- function() {
   def <- list(
-    list(familia = "Geist",      archivo = "geist-latin-wght-normal.woff2"),
-    list(familia = "Geist Mono", archivo = "geist-mono-latin-wght-normal.woff2")
+    list(peso = 300L, archivo = "gobCL_Light.otf"),
+    list(peso = 400L, archivo = "gobCL_Regular.otf"),
+    list(peso = 700L, archivo = "gobCL_Bold.otf"),
+    list(peso = 900L, archivo = "gobCL_Heavy.otf")
   )
   reglas <- vapply(def, function(f) {
     ruta <- file.path(ATALAYA_FUENTES, f$archivo)
     if (!file.exists(ruta)) stop(sprintf("39: falta la fuente %s.", ruta))
     b64 <- jsonlite::base64_enc(readBin(ruta, "raw", file.info(ruta)$size))
-    sprintf("@font-face{font-family:'%s';font-style:normal;font-weight:100 900;font-display:swap;src:url(data:font/woff2;base64,%s) format('woff2');}",
-            f$familia, gsub("\n", "", b64))
+    sprintf("@font-face{font-family:'gobCL';font-style:normal;font-weight:%d;font-display:swap;src:url(data:font/otf;base64,%s) format('opentype');}",
+            f$peso, gsub("\n", "", b64))
   }, "")
   paste(reglas, collapse = "\n")
 }
