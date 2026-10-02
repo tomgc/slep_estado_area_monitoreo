@@ -1,6 +1,8 @@
 # Encargo para Claude Design: propuestas de mejora del Portafolio de Proyectos
 
-> Texto para pegar en Claude Design junto con los adjuntos listados en la respuesta del chat.
+> Texto para pegar en Claude Design (desde "Contexto" hacia abajo). Adjuntar todo el contenido de esta carpeta:
+> `portafolio_preview.html`, `portafolio_preview_datos.json`, `colors_and_type.css`, `fuentes/` (4 archivos gobCL) y `capturas/` (12 imágenes).
+> Copia fechada 2026-10-02 del prototipo (commit 398469c); el original se regenera con `30_procesamiento/39_portafolio_generar.R`.
 
 ---
 

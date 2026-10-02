@@ -1,0 +1,289 @@
+/* ============================================================
+   SLEP Costa Central — Colors & Type
+   Servicio Local de Educación Pública Costa Central
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   Webfonts
+   ----------------------------------------------------------- */
+
+/* gobCL — Chilean Government typeface. Used for institutional
+   headlines, the logo lockup, and any "official" voice. */
+@font-face {
+  font-family: "gobCL";
+  src: url("fonts/gobCL_Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "gobCL";
+  src: url("fonts/gobCL_Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "gobCL";
+  src: url("fonts/gobCL_Heavy.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Museo Sans — secondary humanist sans for body copy, UI, captions. */
+@font-face {
+  font-family: "Museo Sans";
+  src: url("fonts/MuseoSans-100.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Sans";
+  src: url("fonts/MuseoSans-300.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Sans";
+  src: url("fonts/MuseoSans_500.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Sans";
+  src: url("fonts/MuseoSans_700.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* -----------------------------------------------------------
+   Color tokens
+   -----------------------------------------------------------
+   Two palettes coexist:
+
+   1) MARK COLORS — the four bright quadrants inside the "C"
+      monogram. Used as accents, illustration, data viz, and
+      programmatic identity. NEVER use as page backgrounds at
+      full strength; they belong in small doses or in the mark.
+
+   2) BRAND PALETTE — the official "Paleta de colores 1" used
+      for collateral, UI, and editorial. Warm + cool, mature,
+      built to live alongside long-form copy and institutional
+      content. Plum is the primary container color; cream is
+      the primary canvas; blue is the primary action.
+   ----------------------------------------------------------- */
+
+:root {
+  /* --- Mark colors (logo monogram) --- */
+  --mark-red:    #EE2D49;   /* upper-left + lower-left of "C" */
+  --mark-pink:   #F8A0AE;   /* mid-left (drop-shadow tone) */
+  --mark-yellow: #FFC92E;
+  --mark-green:  #9BC93E;
+  --mark-blue:   #2A8FD9;
+
+  /* --- Brand palette (Paleta de colores 1) --- */
+  --plum:        #4A2746;   /* primary deep, header/footer fills */
+  --cream:       #FFF6E0;   /* primary canvas, warm off-white */
+  --ocean:       #0062A0;   /* primary action / link */
+  --slate:       #747474;   /* neutral mid-gray, secondary text */
+  --olive:       #75924E;   /* supportive, success, nature */
+  --sand:        #BCA493;   /* warm neutral, dividers / muted */
+  --coral:       #E88663;   /* warm accent, highlights, energy */
+
+  /* --- Extended neutrals (derived) --- */
+  --ink:         #1C1212;   /* near-black with plum undertone */
+  --ink-2:       #2E2230;   /* softer body ink */
+  --paper:       #FFFFFF;   /* hard white, for cards on cream */
+  --cream-50:    #FFFBEF;   /* tinted on cream */
+  --cream-200:   #F4E9CC;   /* hover surface on cream */
+  --line:        #E7DFC9;   /* hairline on cream surfaces */
+  --line-strong: #C8BDA0;   /* divider on cream */
+  --plum-80:     #66394F;   /* plum hover */
+  --plum-20:     #EEDCE5;   /* plum-tinted surface */
+  --ocean-80:    #00558A;   /* ocean hover */
+  --ocean-20:    #D4E4F1;   /* ocean-tinted surface */
+
+  /* --- Semantic --- */
+  --fg-1:        var(--ink);
+  --fg-2:        var(--ink-2);
+  --fg-3:        var(--slate);
+  --fg-on-dark: var(--cream);
+  --fg-on-plum: var(--cream);
+  --fg-link:     var(--ocean);
+
+  --bg-1:        var(--cream);    /* default page */
+  --bg-2:        var(--paper);    /* elevated card */
+  --bg-3:        var(--cream-50); /* subtle wash */
+  --bg-inverse:  var(--plum);
+
+  --accent:      var(--coral);
+  --success:     var(--olive);
+  --info:        var(--ocean);
+  --warning:     var(--mark-yellow);
+  --danger:      var(--mark-red);
+
+  --border-1:    var(--line);
+  --border-2:    var(--line-strong);
+  --border-strong: var(--plum);
+
+  /* --- Spacing scale (4px base) --- */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+
+  /* --- Radii ---
+     The brand leans rectangular & institutional. Tiny rounding
+     only — never pill or fully-rounded except on the logo dot. */
+  --radius-0:  0;
+  --radius-1:  2px;
+  --radius-2:  4px;
+  --radius-3:  8px;
+  --radius-full: 9999px;
+
+  /* --- Elevation ---
+     Very restrained. The brand is print-flat first. */
+  --shadow-1: 0 1px 0 rgba(28, 18, 18, 0.05);
+  --shadow-2: 0 2px 8px rgba(74, 39, 70, 0.08);
+  --shadow-3: 0 8px 24px rgba(74, 39, 70, 0.12);
+
+  /* --- Type families --- */
+  --font-display: "gobCL", "Arial Black", system-ui, sans-serif;
+  --font-body:    "Museo Sans", "gobCL", system-ui, -apple-system, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", "Menlo", monospace;
+
+  /* --- Type scale ---
+     Display uses gobCL Heavy in ALL CAPS for the brand voice
+     of headlines (mirrors the logo). Long-form body is Museo
+     Sans 300/500. */
+  --fs-display-1: clamp(48px, 6vw, 88px);
+  --fs-display-2: clamp(36px, 4.5vw, 64px);
+  --fs-h1:        clamp(32px, 3.4vw, 44px);
+  --fs-h2:        28px;
+  --fs-h3:        22px;
+  --fs-h4:        18px;
+  --fs-body:      16px;
+  --fs-body-lg:   18px;
+  --fs-caption:   14px;
+  --fs-overline:  12px;
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
+  --lh-normal:  1.5;
+  --lh-loose:   1.65;
+
+  --tracking-tight:  -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide:    0.06em;
+  --tracking-overline: 0.12em;
+}
+
+/* -----------------------------------------------------------
+   Element-level base styles
+   ----------------------------------------------------------- */
+
+html, body {
+  background: var(--bg-1);
+  color: var(--fg-1);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+  font-family: var(--font-display);
+  color: var(--fg-1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 900;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1, .h1 { font-size: var(--fs-h1); text-transform: uppercase; }
+h2, .h2 { font-size: var(--fs-h2); }
+h3, .h3 { font-size: var(--fs-h3); font-weight: 700; }
+h4, .h4 { font-size: var(--fs-h4); font-weight: 700; font-family: var(--font-body); letter-spacing: 0; }
+
+.display-1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--fs-display-1);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.display-2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--fs-display-2);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.eyebrow, .overline {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--fs-overline);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+p {
+  margin: 0 0 var(--space-4) 0;
+  color: var(--fg-2);
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
+  text-wrap: pretty;
+  max-width: 68ch;
+}
+
+a {
+  color: var(--fg-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+a:hover { color: var(--ocean-80); text-decoration-thickness: 2px; }
+
+small, .caption {
+  font-size: var(--fs-caption);
+  color: var(--fg-3);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--cream-200);
+  padding: 1px 6px;
+  border-radius: var(--radius-1);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-1);
+  margin: var(--space-6) 0;
+}
+
+::selection { background: var(--mark-yellow); color: var(--ink); }
+
