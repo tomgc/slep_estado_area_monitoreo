@@ -1,10 +1,10 @@
 {
-  "esquema": "atalaya/1",
+  "esquema": "portafolio/1",
   "fecha_ref": "2026-10-02",
   "perfil": "demo",
   "fuente": {
     "raiz": "tests/fixtures/cartera_demo",
-    "generador": "30_procesamiento/39_atalaya_generar.R"
+    "generador": "30_procesamiento/39_portafolio_generar.R"
   },
   "taxonomias": {
     "pulso": [

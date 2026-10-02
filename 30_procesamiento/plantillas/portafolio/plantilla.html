@@ -7,7 +7,7 @@
 <title>Portafolio de Proyectos · Área de Monitoreo</title>
 <script>
 /* Tema antes del primer pintado: evita el destello claro/oscuro. */
-try { var t = JSON.parse(localStorage.getItem('atalaya:prefs') || '{}').tema; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+try { var t = JSON.parse(localStorage.getItem('portafolio:prefs') || '{}').tema; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
 <style>
 /*@@FUENTES@@*/
@@ -704,9 +704,9 @@ mark { background: var(--accent-soft); color: inherit; border-radius: 2px; box-s
 <div class="sr" aria-live="polite" id="live"></div>
 
 <!-- ============================================================
-     DATA: dataset generado por R (39_atalaya_generar.R). Reemplazable.
+     DATA: dataset generado por R (39_portafolio_generar.R). Reemplazable.
      ============================================================ -->
-<script type="application/json" id="atalaya-datos">@@DATOS@@</script>
+<script type="application/json" id="portafolio-datos">@@DATOS@@</script>
 
 <script>
 (() => {
@@ -715,7 +715,7 @@ mark { background: var(--accent-soft); color: inherit; border-radius: 2px; box-s
 /* ============================================================
    DATA
    ============================================================ */
-const DATA = JSON.parse(document.getElementById('atalaya-datos').textContent);
+const DATA = JSON.parse(document.getElementById('portafolio-datos').textContent);
 
 /* ============================================================
    LOGIC (puro: sin DOM)
@@ -860,7 +860,7 @@ function consulta(S) {
 /* ============================================================
    STATE (preferencias en localStorage)
    ============================================================ */
-const KEY = 'atalaya:prefs';
+const KEY = 'portafolio:prefs';
 const DEF = { tema: 'light', vista: 'panorama', densidad: 'comoda', detalle: 'estandar', orden: 'relevancia', agrupar: 'pulso',
   filtros: { pulso: [], fase: [], categoria: [], tecnologia: [], prioridad: [], senal: [] }, favoritos: [], soloFav: false, mapaTec: false, verMas: {} };
 const S = (() => {

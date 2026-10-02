@@ -1,7 +1,7 @@
 # ==============================================================================
-# 37_atalaya_extraer.R
+# 37_portafolio_extraer.R
 # ------------------------------------------------------------------------------
-# Proposito : Lector de documentacion Markdown de Atalaya. Convierte la carpeta
+# Proposito : Lector de documentacion Markdown del Portafolio. Convierte la carpeta
 #             de un proyecto en una lista de documentos, cada uno dividido en
 #             secciones con un ROL (identidad, estado, inmediato, futuro, plan,
 #             historial, bloqueos...) y con sus ITEMS (viñetas, checkboxes,
@@ -9,7 +9,7 @@
 #             La unidad de clasificacion es la SECCION, no el archivo: el
 #             nombre del archivo solo aporta el rol por defecto.
 # Insumos   : carpeta de un proyecto (solo *.md).
-# Salidas   : listas R consumidas por 38_atalaya_derivar.R.
+# Salidas   : listas R consumidas por 38_portafolio_derivar.R.
 # Dependen. : solo R base (sin commonmark ni yaml, ausentes de renv.lock).
 # Autor     : Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
 # Fecha     : 2026-10-02

@@ -1,19 +1,19 @@
 # ==============================================================================
-# tests/test_atalaya.R
+# tests/test_portafolio.R
 # ------------------------------------------------------------------------------
-# Proposito : Pruebas del pipeline de Atalaya sobre la cartera demo:
+# Proposito : Pruebas del pipeline del Portafolio sobre la cartera demo:
 #             (1) ningun dato declarado sin fuente; (2) cada caso demo produce
 #             la senal que ejemplifica; (3) TODO, BACKLOG e historial no se
 #             mezclan; (4) el HTML generado no contiene referencias de red.
-# Uso       : Rscript tests/test_atalaya.R
+# Uso       : Rscript tests/test_portafolio.R
 # Autor     : Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
 # Fecha     : 2026-10-02
 # ==============================================================================
 
 source(here::here("10_utils", "10_locale.R"))
-asegurar_locale_utf8("test_atalaya")
-source(here::here("30_procesamiento", "37_atalaya_extraer.R"), encoding = "UTF-8")
-source(here::here("30_procesamiento", "38_atalaya_derivar.R"), encoding = "UTF-8")
+asegurar_locale_utf8("test_portafolio")
+source(here::here("30_procesamiento", "37_portafolio_extraer.R"), encoding = "UTF-8")
+source(here::here("30_procesamiento", "38_portafolio_derivar.R"), encoding = "UTF-8")
 
 fallas <- 0L
 afirmar <- function(cond, msg) {
@@ -53,14 +53,14 @@ afirmar(P[["vitrina"]]$pulso$valor == "activo" && P[["vitrina"]]$avance$valor ==
 afirmar(P[["pulso-cli"]]$metricas$futuro_prioridad$alta == 2, "pulso-cli: prioridades leídas desde tabla")
 
 cat("HTML autocontenido\n")
-html_ruta <- here::here("40_salidas", "atalaya_preview.html")
+html_ruta <- here::here("40_salidas", "portafolio_preview.html")
 if (file.exists(html_ruta)) {
   html <- paste(readLines(html_ruta, encoding = "UTF-8", warn = FALSE), collapse = "\n")
   afirmar(!grepl("https?://|jsdelivr|unpkg|googleapis|gstatic|cdnjs", html, perl = TRUE), "sin URLs externas ni CDN")
   afirmar(grepl("default-src 'none'", html, fixed = TRUE), "CSP bloquea toda conexión de red")
   afirmar(grepl("data:font/otf;base64", html, fixed = TRUE) && !grepl("Geist", html, fixed = TRUE), "solo gobCL embebida")
 } else {
-  afirmar(FALSE, "existe 40_salidas/atalaya_preview.html (correr 39 primero)")
+  afirmar(FALSE, "existe 40_salidas/portafolio_preview.html (correr 39 primero)")
 }
 
 cat(sprintf("\n%d falla(s)\n", fallas))

@@ -1,42 +1,42 @@
 # ==============================================================================
-# 39_atalaya_generar.R
+# 39_portafolio_generar.R
 # ------------------------------------------------------------------------------
-# Proposito : Genera atalaya_preview.html: un unico HTML autocontenido (CSS, JS,
+# Proposito : Genera portafolio_preview.html: un unico HTML autocontenido (CSS, JS,
 #             fuentes, iconos y dataset embebidos) que se abre con doble clic,
 #             sin servidor, sin Internet, sin R ni Node una vez generado.
 #             Flujo: Markdown -> 37 (extraer) -> 38 (derivar) -> dataset JSON
 #             -> plantilla -> HTML. Al final verifica que el HTML no contenga
 #             ninguna referencia de red y aborta si la encuentra.
 # Insumos   : tests/fixtures/cartera_demo/<proyecto>/*.md (cartera demo)
-#             30_procesamiento/plantillas/atalaya/plantilla.html
-#             30_procesamiento/plantillas/atalaya/fuentes/gobCL_*.otf
-#             30_procesamiento/plantillas/atalaya/iconos/*.svg (Lucide, ISC)
-# Salidas   : 40_salidas/atalaya_preview.html
-#             40_salidas/atalaya_preview_datos.json (mismo dataset, legible)
-# Uso       : Rscript 30_procesamiento/39_atalaya_generar.R
+#             30_procesamiento/plantillas/portafolio/plantilla.html
+#             30_procesamiento/plantillas/portafolio/fuentes/gobCL_*.otf
+#             30_procesamiento/plantillas/portafolio/iconos/*.svg (Lucide, ISC)
+# Salidas   : 40_salidas/portafolio_preview.html
+#             40_salidas/portafolio_preview_datos.json (mismo dataset, legible)
+# Uso       : Rscript 30_procesamiento/39_portafolio_generar.R
 #             (si renv no puede iniciar por red: RENV_ACTIVATE_PROJECT=FALSE)
-#             o en Positron: source(here::here("30_procesamiento", "39_atalaya_generar.R"))
+#             o en Positron: source(here::here("30_procesamiento", "39_portafolio_generar.R"))
 # Dependen. : jsonlite, here (ambos en renv.lock) y R base.
 # Autor     : Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
 # Fecha     : 2026-10-02
 # ==============================================================================
 
 source(here::here("10_utils", "10_locale.R"))
-asegurar_locale_utf8("39_atalaya_generar")
+asegurar_locale_utf8("39_portafolio_generar")
 
-source(here::here("30_procesamiento", "37_atalaya_extraer.R"), encoding = "UTF-8")
-source(here::here("30_procesamiento", "38_atalaya_derivar.R"), encoding = "UTF-8")
+source(here::here("30_procesamiento", "37_portafolio_extraer.R"), encoding = "UTF-8")
+source(here::here("30_procesamiento", "38_portafolio_derivar.R"), encoding = "UTF-8")
 
 # ---- Configuracion -----------------------------------------------------------
 
-ATALAYA_RAIZ_DEMO  <- here::here("tests", "fixtures", "cartera_demo")
+PORTAFOLIO_RAIZ_DEMO  <- here::here("tests", "fixtures", "cartera_demo")
 # Fecha de referencia fija para la demo: la salida es byte-estable.
-ATALAYA_FECHA_DEMO <- as.Date("2026-10-02")
-ATALAYA_PLANTILLA  <- here::here("30_procesamiento", "plantillas", "atalaya", "plantilla.html")
-ATALAYA_FUENTES    <- here::here("30_procesamiento", "plantillas", "atalaya", "fuentes")
-ATALAYA_ICONOS     <- here::here("30_procesamiento", "plantillas", "atalaya", "iconos")
-ATALAYA_SALIDA     <- here::here("40_salidas", "atalaya_preview.html")
-ATALAYA_SALIDA_JSON <- here::here("40_salidas", "atalaya_preview_datos.json")
+PORTAFOLIO_FECHA_DEMO <- as.Date("2026-10-02")
+PORTAFOLIO_PLANTILLA  <- here::here("30_procesamiento", "plantillas", "portafolio", "plantilla.html")
+PORTAFOLIO_FUENTES    <- here::here("30_procesamiento", "plantillas", "portafolio", "fuentes")
+PORTAFOLIO_ICONOS     <- here::here("30_procesamiento", "plantillas", "portafolio", "iconos")
+PORTAFOLIO_SALIDA     <- here::here("40_salidas", "portafolio_preview.html")
+PORTAFOLIO_SALIDA_JSON <- here::here("40_salidas", "portafolio_preview_datos.json")
 
 # ---- Ensamblado --------------------------------------------------------------
 
@@ -58,7 +58,7 @@ css_fuentes <- function() {
     list(peso = 900L, archivo = "gobCL_Heavy.otf")
   )
   reglas <- vapply(def, function(f) {
-    ruta <- file.path(ATALAYA_FUENTES, f$archivo)
+    ruta <- file.path(PORTAFOLIO_FUENTES, f$archivo)
     if (!file.exists(ruta)) stop(sprintf("39: falta la fuente %s.", ruta))
     b64 <- jsonlite::base64_enc(readBin(ruta, "raw", file.info(ruta)$size))
     sprintf("@font-face{font-family:'gobCL';font-style:normal;font-weight:%d;font-display:swap;src:url(data:font/otf;base64,%s) format('opentype');}",
@@ -68,7 +68,7 @@ css_fuentes <- function() {
 }
 
 sprite_iconos <- function() {
-  archivos <- sort(list.files(ATALAYA_ICONOS, pattern = "\\.svg$", full.names = TRUE))
+  archivos <- sort(list.files(PORTAFOLIO_ICONOS, pattern = "\\.svg$", full.names = TRUE))
   simbolos <- vapply(archivos, function(a) {
     s <- leer_texto(a)
     s <- gsub("<!--.*?-->", "", s, perl = TRUE)
@@ -100,15 +100,15 @@ verificar_sin_red <- function(html) {
   invisible(TRUE)
 }
 
-generar_atalaya_preview <- function(raiz = ATALAYA_RAIZ_DEMO, fecha_ref = ATALAYA_FECHA_DEMO,
-                                    salida = ATALAYA_SALIDA, salida_json = ATALAYA_SALIDA_JSON) {
+generar_portafolio_preview <- function(raiz = PORTAFOLIO_RAIZ_DEMO, fecha_ref = PORTAFOLIO_FECHA_DEMO,
+                                    salida = PORTAFOLIO_SALIDA, salida_json = PORTAFOLIO_SALIDA_JSON) {
   ds <- construir_dataset(raiz, fecha_ref = fecha_ref, perfil = "demo",
                           raiz_rotulo = "tests/fixtures/cartera_demo")
   json <- jsonlite::toJSON(ds, auto_unbox = TRUE, null = "null", na = "null", digits = 4)
   # Un "</" dentro de <script> cerraria la etiqueta: se escapa como "<\/".
   json_embebido <- gsub("</", "<\\/", json, fixed = TRUE)
 
-  html <- leer_texto(ATALAYA_PLANTILLA)
+  html <- leer_texto(PORTAFOLIO_PLANTILLA)
   html <- reemplazar_marcador(html, "/*@@FUENTES@@*/", css_fuentes())
   html <- reemplazar_marcador(html, "<!--@@ICONOS@@-->", sprite_iconos())
   html <- reemplazar_marcador(html, "@@DATOS@@", json_embebido)
@@ -119,9 +119,9 @@ generar_atalaya_preview <- function(raiz = ATALAYA_RAIZ_DEMO, fecha_ref = ATALAY
   writeLines(enc2utf8(jsonlite::prettify(json, indent = 2)), salida_json, useBytes = TRUE)
 
   n <- length(ds$proyectos)
-  message(sprintf("[39_atalaya] %d proyectos, %d relaciones -> %s (%.0f KB)",
+  message(sprintf("[39_portafolio] %d proyectos, %d relaciones -> %s (%.0f KB)",
                   n, length(ds$relaciones), salida, file.info(salida)$size / 1024))
   invisible(salida)
 }
 
-generar_atalaya_preview()
+generar_portafolio_preview()

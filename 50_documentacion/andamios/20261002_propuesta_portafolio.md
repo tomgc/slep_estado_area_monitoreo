@@ -1,4 +1,6 @@
-# Propuesta de diseño: visualizador panorámico de la cartera ("Atalaya")
+# Propuesta de diseño: visualizador panorámico de la cartera
+
+> **Nota (2026-10-02):** el equipo eligió el nombre **Portafolio de Proyectos** (subtítulo: Área de Monitoreo). "Atalaya" aparece en este documento solo como el nombre propuesto originalmente; archivos y código usan `portafolio`.
 
 - **Naturaleza:** documento de análisis y diseño (fases 1 a 3 de la especificación, más el plan del MVP). No contiene código.
 - **Fecha:** 2026-10-02.

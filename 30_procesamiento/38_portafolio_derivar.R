@@ -1,20 +1,20 @@
 # ==============================================================================
-# 38_atalaya_derivar.R
+# 38_portafolio_derivar.R
 # ------------------------------------------------------------------------------
-# Proposito : Normalizacion de Atalaya. Toma lo extraido por 37 y construye el
-#             dataset `atalaya/1`: un objeto por proyecto con pulso, fase,
+# Proposito : Normalizacion del Portafolio. Toma lo extraido por 37 y construye el
+#             dataset `portafolio/1`: un objeto por proyecto con pulso, fase,
 #             avance, actividad, proximo paso, bloqueos, items por horizonte,
 #             hitos, metricas y senales; mas las relaciones entre proyectos.
 #             Regla rectora: ningun dato se inventa. Cada campo interpretativo
 #             lleva su procedencia (declarado / inferido / ausente) y su fuente.
-# Insumos   : salida de extraer_proyecto() (37_atalaya_extraer.R).
+# Insumos   : salida de extraer_proyecto() (37_portafolio_extraer.R).
 # Salidas   : lista R serializable a JSON (consumida por 39).
 # Dependen. : solo R base.
 # Autor     : Area de Monitoreo y Seguimiento de Procesos y Resultados Educativos
 # Fecha     : 2026-10-02
 # ==============================================================================
 
-ESQUEMA_ATALAYA <- "atalaya/1"
+ESQUEMA_PORTAFOLIO <- "portafolio/1"
 
 # ---- Taxonomias (fuente unica: viajan en el dataset, la UI no las redefine) --
 
@@ -553,10 +553,10 @@ construir_dataset <- function(raiz, fecha_ref = Sys.Date(), perfil = "demo", rai
   extraidos <- Filter(function(e) length(e$documentos) > 0, extraidos)
   proyectos <- lapply(extraidos, derivar_proyecto, fecha_ref = fecha_ref)
   list(
-    esquema = ESQUEMA_ATALAYA,
+    esquema = ESQUEMA_PORTAFOLIO,
     fecha_ref = format(fecha_ref),
     perfil = perfil,
-    fuente = list(raiz = raiz_rotulo, generador = "30_procesamiento/39_atalaya_generar.R"),
+    fuente = list(raiz = raiz_rotulo, generador = "30_procesamiento/39_portafolio_generar.R"),
     taxonomias = list(pulso = TAX_PULSO, fase = TAX_FASE, prioridad = TAX_PRIORIDAD,
                       categoria_item = TAX_CATEGORIA_ITEM),
     umbrales = list(sin_actividad_aviso = UMBRAL_SIN_ACTIVIDAD_AVISO,
